@@ -19,7 +19,7 @@ struct Card: Identifiable {
         self.suit = suit
         self.rank = rank
         
-        if(self.suit == "joker"){
+        if(self.rank == "joker"){
             self.imagePath = self.suit + "_" + self.rank
         }
         else {
@@ -39,9 +39,25 @@ extension Card {
                 cards.append(card)
             }
         }
-        cards.append(Card(suit: "joker", rank: "red"))
-        cards.append(Card(suit: "joker", rank: "black"))
-
+        
+        cards.append(Card(suit: "red", rank: "joker"))
+        cards.append(Card(suit: "black", rank: "joker"))
+        
         return cards
     }()
+    
+    static let sampleHand: [Card] = [
+        Card(suit: "hearts", rank: "ace"),
+        Card(suit: "diamonds", rank: "5"),
+        Card(suit: "clubs", rank: "jack"),
+        Card(suit: "spades", rank: "king"),
+        Card(suit: "red", rank: "joker"),
+        Card(suit: "hearts", rank: "9"),
+        Card(suit: "spades", rank: "10")
+    ]
+    
+    static let sampleDoubleHand: [Card] = [
+        Card(suit: "hearts", rank: "ace"),
+        Card(suit: "diamonds", rank: "3")
+    ]
 }

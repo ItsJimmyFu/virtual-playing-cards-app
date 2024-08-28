@@ -11,8 +11,7 @@ import SwiftUI
 struct VirtualPlayingCardsApp: App {
     var body: some Scene {
         WindowGroup {
-            @State var hand = Array(Card.defaultDeck[1...7])
-            CardHandView(hand: $hand)
+            CardHandView()
         }
     }
 }

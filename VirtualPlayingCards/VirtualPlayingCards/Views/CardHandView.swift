@@ -9,25 +9,44 @@ import SwiftUI
 
 struct CardHandView: View {
     
-    @Binding var hand: [Card]
+    @State var hand :[Card] = Card.sampleDoubleHand
+    @State var selectedCards : [Bool] = Array(repeating: false, count: 100)
+    let yShift : CGFloat = 75
     
     var body: some View {
-        GeometryReader {geometry in
-            HStack (spacing: 0){
-                ForEach(hand) { card in
-                    Image(card.imagePath)
-                        .resizable()
+        GeometryReader { geometry in
+            //Get the width of the card image based on screen size and hand count
+            //let cardWidth : CGFloat = geometry.size.width / (1 + CGFloat(hand.count-1) / 5)
+            let cardWidth : CGFloat = 200
+            
+            ScrollView(.horizontal) {
+                HStack (spacing:0) {
+                    Spacer(minLength: 0)
+                    ForEach(hand.indices, id: \.self) { index in
+                        Button(action: {
+                            selectedCards[index].toggle()
+                        }) {
+                            Image(hand[index].imagePath)
+                                .resizable()
+                                .background(Color.white)
+                                .border(selectedCards[index] ? Color.yellow : Color.black,width: selectedCards[index] ? 2 : 0.5)
+                        }
                         .scaledToFit()
-                        .clipped()
-                        .frame(width: geometry.size.width / CGFloat(hand.count))
+                        .frame(width: cardWidth)
+                        .offset(x:-CGFloat(index) * cardWidth + CGFloat(index)*cardWidth/5,y:  selectedCards[index] ? 0 : yShift)
+                        .animation(.easeInOut(duration: 0.5), value: selectedCards[index])
+                    }
                 }
+                .frame(width: cardWidth / 5 * (CGFloat(hand.count) + 4), alignment: .leading)
+                .padding(.vertical,yShift)
             }
+            .border(Color.black)
+            .padding(.vertical, -yShift)
         }
         .padding()
     }
 }
 
 #Preview {
-    @State var hand = Array(Card.defaultDeck[1...6])
-    return CardHandView(hand: $hand)
+    return CardHandView()
 }
