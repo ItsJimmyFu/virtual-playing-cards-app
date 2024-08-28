@@ -60,4 +60,11 @@ extension Card {
         Card(suit: "hearts", rank: "ace"),
         Card(suit: "diamonds", rank: "3")
     ]
+    
+    static let activeCards : [Card] = [
+        Card(suit: "spades", rank: "3"),
+        Card(suit: "diamonds", rank: "3"),
+        Card(suit: "hearts", rank: "3"),
+        Card(suit: "clubs", rank: "3")
+    ]
 }

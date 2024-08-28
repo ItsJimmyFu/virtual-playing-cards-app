@@ -13,7 +13,7 @@ struct HandView: View {
     @State var selectedCards : [Bool] = Array(repeating: false, count: 100)
     @State var cardWidth : CGFloat
     
-    let yShift : CGFloat = 75
+    let yShift : CGFloat = 40
     
     var body: some View {
         GeometryReader { geometry in

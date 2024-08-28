@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct GameView: View {
+    @State var activeCards : [Card] = []
     var body: some View {
-        let cardWidth : CGFloat = 150
+        let cardWidth : CGFloat = 100
         VStack {
-            DeckView(cardWidth: cardWidth)
-            HandView(cardWidth: cardWidth)
+            HStack{
+                Spacer()
+                DeckView(cardWidth: 100, activeCards: $activeCards)
+                Spacer()
+                ActiveCardsView(cardWidth: 100, activeCards: $activeCards)
+                Spacer()
+                
+            }
+            HandView(cardWidth: 200)
         }
     }
 }

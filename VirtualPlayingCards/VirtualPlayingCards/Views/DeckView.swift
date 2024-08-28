@@ -9,36 +9,26 @@ import SwiftUI
 
 struct DeckView: View {
     @State var hand :[Card] = Card.defaultDeck
-    @State var showTop : Bool = true
     @State var cardWidth : CGFloat
+    @Binding var activeCards : [Card]
     
     var body: some View {
         ZStack {
+            if(hand.count == 0){
+                EmptyCardView(cardWidth: cardWidth)
+            }
             ForEach(hand.indices, id: \.self) { index in
                 if(index == (hand.count-1)){
-                    if(showTop){
-                        Image(hand[index].imagePath)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: cardWidth)
-                            .background(Color.white)
-                            .border(Color.black,width:0.5)
-                            .onTapGesture {
-                                hand.popLast()
-                                showTop = false
-                            }
-                    }
-                    else {
-                        Image("back")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: cardWidth)
-                            .background(Color.white)
-                            .border(Color.black,width:0.5)
-                            .onTapGesture {
-                                showTop = true
-                            }
-                    }
+                    Image("back")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: cardWidth)
+                        .background(Color.white)
+                        .border(Color.black,width:0.5)
+                        .onTapGesture {
+                            activeCards = []
+                            activeCards.append(hand.popLast()!)
+                        }
                 }
                 else{
                     let randomOffsetX = CGFloat(Float.random(in: -5...5))
@@ -57,5 +47,6 @@ struct DeckView: View {
 }
 
 #Preview {
-    DeckView(cardWidth: 200)
+    @State var activeCards : [Card] = []
+    return DeckView(cardWidth: 200,activeCards: $activeCards)
 }
