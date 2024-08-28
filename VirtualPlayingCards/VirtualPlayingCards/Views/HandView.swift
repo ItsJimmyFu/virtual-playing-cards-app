@@ -7,17 +7,18 @@
 
 import SwiftUI
 
-struct CardHandView: View {
+struct HandView: View {
     
     @State var hand :[Card] = Card.sampleDoubleHand
     @State var selectedCards : [Bool] = Array(repeating: false, count: 100)
+    @State var cardWidth : CGFloat
+    
     let yShift : CGFloat = 75
     
     var body: some View {
         GeometryReader { geometry in
             //Get the width of the card image based on screen size and hand count
             //let cardWidth : CGFloat = geometry.size.width / (1 + CGFloat(hand.count-1) / 5)
-            let cardWidth : CGFloat = 200
             
             ScrollView(.horizontal) {
                 HStack (spacing:0) {
@@ -40,7 +41,6 @@ struct CardHandView: View {
                 .frame(width: cardWidth / 5 * (CGFloat(hand.count) + 4), alignment: .leading)
                 .padding(.vertical,yShift)
             }
-            .border(Color.black)
             .padding(.vertical, -yShift)
         }
         .padding()
@@ -48,5 +48,6 @@ struct CardHandView: View {
 }
 
 #Preview {
-    return CardHandView()
+    let cardWidth : CGFloat = 200
+    return HandView(cardWidth: cardWidth)
 }

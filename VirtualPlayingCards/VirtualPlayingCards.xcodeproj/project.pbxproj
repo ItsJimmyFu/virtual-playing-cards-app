@@ -8,21 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		BFA5A4322C7ECF8800017535 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4312C7ECF8800017535 /* DeckView.swift */; };
+		BFA5A4342C7F461500017535 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4332C7F461500017535 /* GameView.swift */; };
 		BFEF98B12C72353000A01B69 /* VirtualPlayingCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */; };
 		BFEF98B52C72353200A01B69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B42C72353200A01B69 /* Assets.xcassets */; };
 		BFEF98B92C72353200A01B69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B82C72353200A01B69 /* Preview Assets.xcassets */; };
-		BFEF98C02C72361900A01B69 /* CardHandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98BF2C72361900A01B69 /* CardHandView.swift */; };
+		BFEF98C02C72361900A01B69 /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98BF2C72361900A01B69 /* HandView.swift */; };
 		BFEF98C42C7236F600A01B69 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98C32C7236F600A01B69 /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BFA5A4312C7ECF8800017535 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		BFA5A4332C7F461500017535 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		BFEF98AD2C72353000A01B69 /* VirtualPlayingCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualPlayingCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualPlayingCardsApp.swift; sourceTree = "<group>"; };
 		BFEF98B42C72353200A01B69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BFEF98B62C72353200A01B69 /* VirtualPlayingCards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VirtualPlayingCards.entitlements; sourceTree = "<group>"; };
 		BFEF98B82C72353200A01B69 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BFEF98BF2C72361900A01B69 /* CardHandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHandView.swift; sourceTree = "<group>"; };
+		BFEF98BF2C72361900A01B69 /* HandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandView.swift; sourceTree = "<group>"; };
 		BFEF98C32C7236F600A01B69 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,8 +79,9 @@
 		BFEF98C12C7236E000A01B69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BFEF98BF2C72361900A01B69 /* CardHandView.swift */,
+				BFEF98BF2C72361900A01B69 /* HandView.swift */,
 				BFA5A4312C7ECF8800017535 /* DeckView.swift */,
+				BFA5A4332C7F461500017535 /* GameView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,8 +166,9 @@
 			files = (
 				BFEF98B12C72353000A01B69 /* VirtualPlayingCardsApp.swift in Sources */,
 				BFEF98C42C7236F600A01B69 /* Card.swift in Sources */,
-				BFEF98C02C72361900A01B69 /* CardHandView.swift in Sources */,
+				BFEF98C02C72361900A01B69 /* HandView.swift in Sources */,
 				BFA5A4322C7ECF8800017535 /* DeckView.swift in Sources */,
+				BFA5A4342C7F461500017535 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

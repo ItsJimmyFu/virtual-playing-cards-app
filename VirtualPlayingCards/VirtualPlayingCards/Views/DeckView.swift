@@ -10,10 +10,9 @@ import SwiftUI
 struct DeckView: View {
     @State var hand :[Card] = Card.defaultDeck
     @State var showTop : Bool = true
+    @State var cardWidth : CGFloat
     
     var body: some View {
-        
-        let cardWidth : CGFloat = 200
         ZStack {
             ForEach(hand.indices, id: \.self) { index in
                 if(index == (hand.count-1)){
@@ -58,5 +57,5 @@ struct DeckView: View {
 }
 
 #Preview {
-    DeckView()
+    DeckView(cardWidth: 200)
 }
