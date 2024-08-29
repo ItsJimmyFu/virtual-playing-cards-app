@@ -9,10 +9,11 @@ import SwiftUI
 
 struct HandView: View {
     
-    @State var hand : [Card]
-    @State var selectedCards : [Bool] = Array(repeating: false, count: 10)
+    @Binding var hand : [Card]
     @State var cardWidth : CGFloat
+    @State var selectedCards : [Card] = []
     @Binding var activeCards : [Card]
+    
     
     let yShift : CGFloat = 40
     @State private var cardHeight : CGFloat? = nil
@@ -25,8 +26,14 @@ struct HandView: View {
                 HStack (spacing:0) {
                     Spacer(minLength: 0)
                     ForEach(hand.indices, id: \.self) { index in
+                        let selected : Bool = selectedCards.contains(hand[index])
                         Button(action: {
-                            selectedCards[index].toggle()
+                            if(selected){
+                                selectedCards = selectedCards.filter { $0 != hand[index] }
+                            }
+                            else {
+                                selectedCards.append(hand[index])
+                            }
                         }) {
                             Image(hand[index].imagePath)
                                 .resizable()
@@ -36,12 +43,12 @@ struct HandView: View {
                                             cardHeight = geometry.size.height + yShift
                                         }
                                 })
-                                .border(selectedCards[index] ? Color.yellow : Color.black, width: selectedCards[index] ? 2 : 0.5)
+                                .border(selected ? Color.yellow : Color.black, width: selected ? 2 : 0.5)
                         }
                         .scaledToFit()
                         .frame(width: cardWidth)
-                        .offset(x:-CGFloat(index) * cardWidth + CGFloat(index)*cardWidth/5,y:  selectedCards[index] ? 0 : yShift)
-                        .animation(.easeInOut(duration: 0.5), value: selectedCards[index])
+                        .offset(x:-CGFloat(index) * cardWidth + CGFloat(index)*cardWidth/5,y:  selected ? 0 : yShift)
+                        .animation(.easeInOut(duration: 0.5), value: selected)
                     }
                 }
                 .frame(width: cardWidth / 5 * (CGFloat(hand.count) + 4), height: cardHeight, alignment: .topLeading)
@@ -49,23 +56,9 @@ struct HandView: View {
             }
             .padding(.vertical, -yShift)
             Button(action: {
-                activeCards = []
-                for index in hand.indices {
-                    if(selectedCards[index] == true){
-                        activeCards.append(hand[index])
-                    }
-                }
-                for index in selectedCards.indices.reversed() {
-                    if(selectedCards[index] == true){
-                        print(index)
-                        if(index < hand.count){
-                            hand.remove(at:index)
-                        }
-                    }
-                }
-                
-                selectedCards = Array(repeating: false, count: hand.count)
-                
+                hand = hand.filter { !selectedCards.contains($0)}
+                activeCards = selectedCards
+                selectedCards = []
             }, label: {
                 Text("Play Cards")
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
@@ -82,7 +75,7 @@ struct HandView: View {
 
 #Preview {
     let cardWidth : CGFloat = 200
-    @State var playedCards : [Card] = []
+    @State var activeCards : [Card] = []
     @State var hand : [Card] = Card.sampleDoubleHand
-    return HandView(hand: hand, cardWidth: cardWidth, activeCards: $playedCards)
+    return HandView(hand: $hand, cardWidth: cardWidth, activeCards: $activeCards)
 }
