@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Card: Identifiable {
+struct Card: Identifiable, Equatable {
     let id: UUID
     let suit: String
     let rank: String
@@ -25,6 +25,10 @@ struct Card: Identifiable {
         else {
             self.imagePath = self.rank + "_of_" + self.suit
         }
+    }
+    
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 

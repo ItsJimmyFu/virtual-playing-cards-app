@@ -20,7 +20,7 @@ struct GameView: View {
                 Spacer()
                 
             }
-            HandView(cardWidth: 200)
+            HandView(hand: Card.sampleHand, cardWidth: 200, activeCards: $activeCards)
         }
     }
 }
