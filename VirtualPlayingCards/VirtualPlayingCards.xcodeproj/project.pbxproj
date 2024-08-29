@@ -13,6 +13,7 @@
 		BFA5A4382C7F4CD400017535 /* EmptyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4372C7F4CD400017535 /* EmptyCardView.swift */; };
 		BFA5A43A2C806EC800017535 /* OpponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4392C806EC800017535 /* OpponentView.swift */; };
 		BFA5A43C2C806EF800017535 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43B2C806EF800017535 /* Player.swift */; };
+		BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43D2C80982400017535 /* AdvancedHandView.swift */; };
 		BFEF98B12C72353000A01B69 /* VirtualPlayingCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */; };
 		BFEF98B52C72353200A01B69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B42C72353200A01B69 /* Assets.xcassets */; };
 		BFEF98B92C72353200A01B69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B82C72353200A01B69 /* Preview Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		BFA5A4372C7F4CD400017535 /* EmptyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCardView.swift; sourceTree = "<group>"; };
 		BFA5A4392C806EC800017535 /* OpponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentView.swift; sourceTree = "<group>"; };
 		BFA5A43B2C806EF800017535 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		BFA5A43D2C80982400017535 /* AdvancedHandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedHandView.swift; sourceTree = "<group>"; };
 		BFEF98AD2C72353000A01B69 /* VirtualPlayingCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualPlayingCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualPlayingCardsApp.swift; sourceTree = "<group>"; };
 		BFEF98B42C72353200A01B69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				BFA5A4352C7F4BE100017535 /* ActiveCardsView.swift */,
 				BFA5A4372C7F4CD400017535 /* EmptyCardView.swift */,
 				BFA5A4392C806EC800017535 /* OpponentView.swift */,
+				BFA5A43D2C80982400017535 /* AdvancedHandView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				BFA5A4342C7F461500017535 /* GameView.swift in Sources */,
 				BFA5A43C2C806EF800017535 /* Player.swift in Sources */,
 				BFA5A4382C7F4CD400017535 /* EmptyCardView.swift in Sources */,
+				BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

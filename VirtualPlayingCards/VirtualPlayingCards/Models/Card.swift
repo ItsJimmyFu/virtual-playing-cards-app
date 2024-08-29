@@ -60,6 +60,30 @@ extension Card {
         Card(suit: "spades", rank: "10")
     ]
     
+    static let largeSampleHand: [Card] = [
+        Card(suit: "hearts", rank: "ace"),
+        Card(suit: "diamonds", rank: "5"),
+        Card(suit: "clubs", rank: "jack"),
+        Card(suit: "spades", rank: "king"),
+        Card(suit: "red", rank: "joker"),
+        Card(suit: "hearts", rank: "9"),
+        Card(suit: "spades", rank: "10"),
+        Card(suit: "hearts", rank: "ace"),
+        Card(suit: "diamonds", rank: "5"),
+        Card(suit: "clubs", rank: "jack"),
+        Card(suit: "spades", rank: "king"),
+        Card(suit: "red", rank: "joker"),
+        Card(suit: "hearts", rank: "9"),
+        Card(suit: "spades", rank: "10"),
+        Card(suit: "hearts", rank: "ace"),
+        Card(suit: "diamonds", rank: "5"),
+        Card(suit: "clubs", rank: "jack"),
+        Card(suit: "spades", rank: "king"),
+        Card(suit: "red", rank: "joker"),
+        Card(suit: "hearts", rank: "9"),
+        Card(suit: "spades", rank: "10")
+    ]
+    
     static let sampleDoubleHand: [Card] = [
         Card(suit: "hearts", rank: "ace"),
         Card(suit: "diamonds", rank: "3")

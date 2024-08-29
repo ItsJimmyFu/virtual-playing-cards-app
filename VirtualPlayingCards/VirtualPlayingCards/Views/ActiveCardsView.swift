@@ -30,12 +30,14 @@ struct ActiveCardsView: View {
                         .offset(x:-CGFloat(index) * cardWidth + CGFloat(index)*cardWidth/5,y:  0)
                 }
             }
-            .frame(width: cardWidth / 5 * (CGFloat(activeCards.count) + 4))
+            .frame(width: cardWidth / 5 * (CGFloat(activeCards.count) + 4),alignment: .leading)
         }
     }
 }
 
 #Preview {
-    @State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2")]
+    //@State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2")]
+    //@State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2"), Card(suit:"hearts", rank: "2")]
+    @State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2"), Card(suit:"hearts", rank: "2"), Card(suit: "clubs", rank: "2")]
     return ActiveCardsView(cardWidth: 200, activeCards: $activeCards)
 }

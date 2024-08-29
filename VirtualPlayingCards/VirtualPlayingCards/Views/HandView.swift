@@ -20,9 +20,10 @@ struct HandView: View {
     
     var body: some View {
         VStack {
+            
             //Get the width of the card image based on screen size and hand count
             //let cardWidth : CGFloat = geometry.size.width / (1 + CGFloat(hand.count-1) / 5)
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 HStack (spacing:0) {
                     Spacer(minLength: 0)
                     ForEach(hand.indices, id: \.self) { index in
@@ -43,7 +44,7 @@ struct HandView: View {
                                             cardHeight = geometry.size.height + yShift
                                         }
                                 })
-                                .border(selected ? Color.yellow : Color.black, width: selected ? 2 : 0.5)
+                                .border(selected ? Color.yellow : Color.black, width: selected ? 3 : 0.5)
                         }
                         .scaledToFit()
                         .frame(width: cardWidth)
@@ -52,6 +53,7 @@ struct HandView: View {
                     }
                 }
                 .frame(width: cardWidth / 5 * (CGFloat(hand.count) + 4), height: cardHeight, alignment: .topLeading)
+                .border(Color.black)
                 .padding(.vertical,yShift)
             }
             .padding(.vertical, -yShift)
@@ -60,12 +62,12 @@ struct HandView: View {
                 activeCards = selectedCards
                 selectedCards = []
             }, label: {
-                Text("Play Cards")
+                Text("Play Selected Cards")
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                     .bold()
                     .padding(5)
-                    .border(Color.yellow, width:1)
+                    .border(Color.yellow, width:3)
                     
             })
         }
@@ -76,6 +78,12 @@ struct HandView: View {
 #Preview {
     let cardWidth : CGFloat = 200
     @State var activeCards : [Card] = []
-    @State var hand : [Card] = Card.sampleDoubleHand
+    @State var hand : [Card] = [
+        Card(suit: "diamonds", rank: "ace"),
+        Card(suit: "diamonds", rank: "2"),
+        //Card(suit: "diamonds", rank: "3"),
+        //Card(suit: "diamonds", rank: "4"),
+        Card(suit: "diamonds", rank: "5")
+    ]
     return HandView(hand: $hand, cardWidth: cardWidth, activeCards: $activeCards)
 }
