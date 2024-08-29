@@ -55,7 +55,6 @@ struct HandView: View {
                         activeCards.append(hand[index])
                     }
                 }
-                print(selectedCards)
                 for index in selectedCards.indices.reversed() {
                     if(selectedCards[index] == true){
                         print(index)

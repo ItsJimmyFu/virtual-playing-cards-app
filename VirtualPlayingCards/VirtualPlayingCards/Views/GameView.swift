@@ -9,9 +9,14 @@ import SwiftUI
 
 struct GameView: View {
     @State var activeCards : [Card] = []
+    @State var opponents : [Player] = Player.defaultOpponents
+    @State var turn: Int = 2
+    
     var body: some View {
         let cardWidth : CGFloat = 100
         VStack {
+            OpponentView(players: $opponents, activePlayer: $turn)
+            Spacer()
             HStack{
                 Spacer()
                 DeckView(cardWidth: 100, activeCards: $activeCards)
