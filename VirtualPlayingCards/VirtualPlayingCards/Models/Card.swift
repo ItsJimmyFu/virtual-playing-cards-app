@@ -12,7 +12,7 @@ struct Card: Identifiable, Equatable {
     let suit: String
     let rank: String
     let imagePath: String
-   
+    let player: Player?
     
     init(id: UUID = UUID(), suit: String, rank: String){
         self.id = id
@@ -25,6 +25,21 @@ struct Card: Identifiable, Equatable {
         else {
             self.imagePath = self.rank + "_of_" + self.suit
         }
+        self.player = nil
+    }
+    
+    init(id: UUID = UUID(), suit: String, rank: String, player: Player){
+        self.id = id
+        self.suit = suit
+        self.rank = rank
+        
+        if(self.rank == "joker"){
+            self.imagePath = self.suit + "_" + self.rank
+        }
+        else {
+            self.imagePath = self.rank + "_of_" + self.suit
+        }
+        self.player = player
     }
     
     static func == (lhs: Card, rhs: Card) -> Bool {

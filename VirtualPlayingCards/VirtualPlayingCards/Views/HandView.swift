@@ -12,8 +12,7 @@ struct HandView: View {
     @Binding var hand : [Card]
     @State var cardWidth : CGFloat
     @State var selectedCards : [Card] = []
-    @Binding var activeCards : [Card]
-    
+    @Binding var activeCards : [[Card]]
     
     let yShift : CGFloat = 40
     @State private var cardHeight : CGFloat? = nil
@@ -59,7 +58,8 @@ struct HandView: View {
             .padding(.vertical, -yShift)
             Button(action: {
                 hand = hand.filter { !selectedCards.contains($0)}
-                activeCards = selectedCards
+                activeCards.append(selectedCards)
+                activeCards.remove(at: 0)
                 selectedCards = []
             }, label: {
                 Text("Play Selected Cards")
@@ -77,7 +77,7 @@ struct HandView: View {
 
 #Preview {
     let cardWidth : CGFloat = 200
-    @State var activeCards : [Card] = []
+    @State var activeCards : [[Card]] = [[]]
     @State var hand : [Card] = [
         Card(suit: "diamonds", rank: "ace"),
         Card(suit: "diamonds", rank: "2"),

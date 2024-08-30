@@ -17,11 +17,15 @@ struct OpponentView: View {
                 VStack {
                     Text(player.name)
                         .font(.headline)
-                    Image("back")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 75)
-                        .border(player.turn == activePlayer ? Color.yellow : Color.black)
+                    ZStack {
+                        Image("back")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50)
+                            .border(player.color)
+                            //.border(player.turn == activePlayer ? Color.yellow : Color.black)
+                        Text(String(player.hand.count))
+                    }
                 }
                 Spacer()
             }

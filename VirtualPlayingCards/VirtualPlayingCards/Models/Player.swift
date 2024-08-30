@@ -6,25 +6,31 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Player : Identifiable{
     let id: UUID
     let name: String
     let turn: Int
     let hand: [Card]
+    let color: Color
     
-    init(id: UUID = UUID(), name: String, turn: Int, hand: [Card]) {
+    init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {
         self.id = id
         self.name = name
         self.turn = turn
         self.hand = hand
+        self.color = color
     }
 }
 
 extension Player {
     static let defaultOpponents: [Player] = [
-        Player(name: "Player 1", turn: 0, hand: Card.sampleHand),
-        Player(name: "Player 2", turn: 1, hand: Card.sampleHand),
-        Player(name: "Player 3", turn: 2, hand: Card.sampleHand)
+        Player(name: "Player 1", turn: 0, hand: Card.sampleHand, color: Color.red),
+        Player(name: "Player 2", turn: 1, hand: Card.sampleHand, color: Color.green),
+        Player(name: "Player 3", turn: 2, hand: Card.sampleHand, color: Color.blue)
     ]
+    
+    static let curPlayer: Player = Player(name: "Jimmy", turn: 0, hand: [], color: Color.yellow)
+
 }

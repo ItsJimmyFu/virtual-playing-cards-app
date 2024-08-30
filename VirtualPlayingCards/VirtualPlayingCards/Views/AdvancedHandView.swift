@@ -14,7 +14,7 @@ struct AdvancedHandView: View {
     @State private var offsetRotation : CGFloat = 0
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
-    @Binding var activeCards : [Card]
+    @Binding var activeCards : [[Card]]
     
     let yShift : CGFloat = 40
     
@@ -74,12 +74,14 @@ struct AdvancedHandView: View {
                     }
             )
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 200+yShift, alignment: .bottom)
+            .offset(y:-10)
             .clipped()
             .padding()
         }
         Button(action: {
             hand = hand.filter { !selectedCards.contains($0)}
-            activeCards = selectedCards
+            activeCards.append(selectedCards)
+            activeCards.remove(at: 0)
             selectedCards = []
             offsetRotation = 0
         }, label: {
@@ -97,6 +99,6 @@ struct AdvancedHandView: View {
 #Preview {
     let cardWidth : CGFloat = 120
     @State var hand : [Card] = Card.largeSampleHand
-    @State var activeCards : [Card] = []
+    @State var activeCards : [[Card]] = [[]]
     return AdvancedHandView(cardWidth: cardWidth, hand: $hand, activeCards: $activeCards)
 }
