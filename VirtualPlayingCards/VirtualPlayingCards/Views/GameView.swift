@@ -26,7 +26,7 @@ struct GameView: View {
                 Spacer()
                 
             }
-            HandView(hand: $hand, cardWidth: 200, activeCards: $activeCards)
+            AdvancedHandView(cardWidth: 150, hand: $hand, activeCards: $activeCards)
         }
     }
 }
