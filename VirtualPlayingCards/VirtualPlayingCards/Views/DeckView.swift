@@ -10,7 +10,7 @@ import SwiftUI
 struct DeckView: View {
     @State var deck :[Card] = Card.defaultDeck
     @State var cardWidth : CGFloat
-    @Binding var hand : [Card]
+    @Binding var player : Player
     
     var body: some View {
         ZStack {
@@ -26,7 +26,7 @@ struct DeckView: View {
                         .background(Color.white)
                         .border(Color.black,width:0.5)
                         .onTapGesture {
-                            hand.append(deck.popLast()!)
+                            player.hand.append(deck.popLast()!)
                         }
                 }
                 else{
@@ -46,6 +46,6 @@ struct DeckView: View {
 }
 
 #Preview {
-    @State var hand : [Card] = []
-    return DeckView(cardWidth: 200,hand: $hand)
+    @State var player : Player = Player.examplePlayers[0]
+    return DeckView(cardWidth: 200,player: $player)
 }

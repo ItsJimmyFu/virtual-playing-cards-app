@@ -10,28 +10,30 @@ import SwiftUI
 struct AdvancedHandView: View {
     @State var cardWidth : CGFloat
     @State var cardHeight : CGFloat? = nil
-    @Binding var hand : [Card]
+    @Binding var player : Player
     @State private var offsetRotation : CGFloat = 0
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
     @Binding var activeCards : [[Card]]
+    @Binding var turn: Int
+    @State var playerCount: Int
     
     let yShift : CGFloat = 40
     
     var body: some View {
         VStack {
             ZStack {
-                ForEach(hand.indices, id: \.self) { index in
-                    let selected : Bool = selectedCards.contains(hand[index])
+                ForEach(player.hand.indices, id: \.self) { index in
+                    let selected : Bool = selectedCards.contains(player.hand[index])
                     Button(action: {
                         if(selected){
-                            selectedCards = selectedCards.filter { $0 != hand[index] }
+                            selectedCards = selectedCards.filter { $0 != player.hand[index] }
                         }
                         else {
-                            selectedCards.append(hand[index])
+                            selectedCards.append(player.hand[index])
                         }
                     }) {
-                        Image(hand[index].imagePath)
+                        Image(player.hand[index].imagePath)
                             .resizable()
                             .background(GeometryReader { geometry in
                                 Color.white
@@ -39,14 +41,14 @@ struct AdvancedHandView: View {
                                         cardHeight = geometry.size.height + yShift
                                     }
                             })
-                            .border(selected ? Color.yellow : Color.black, width: selected ? 3 : 0.5)
+                            .border(selected ? player.color : Color.black, width: selected ? 3 : 0.5)
                         
                     }
                     
                     .scaledToFit()
                     .frame(width: cardWidth)
                     .offset(x:0, y: selected ? -yShift : 0)
-                    .rotationEffect(Angle(degrees: Double(10 * (index - hand.count / 2 - 3)) + 5), anchor: UnitPoint(x: 0, y: 1.05))
+                    .rotationEffect(Angle(degrees: Double(10 * (index - player.hand.count / 2 - 3)) + 5), anchor: UnitPoint(x: 0, y: 1.05))
                     .offset(x:cardWidth/2)
                 }
             }
@@ -58,11 +60,11 @@ struct AdvancedHandView: View {
                         
                     }
                     .onEnded { _ in
-                        if(hand.count/2 * 10 <= 50){
+                        if(player.hand.count/2 * 10 <= 50){
                             maxRotation = 0
                         }
                         else{
-                            maxRotation = CGFloat(hand.count/2*10-50)
+                            maxRotation = CGFloat(player.hand.count/2*10-50)
                         }
                         
                         if (offsetRotation > maxRotation) {
@@ -79,18 +81,19 @@ struct AdvancedHandView: View {
             .padding()
         }
         Button(action: {
-            hand = hand.filter { !selectedCards.contains($0)}
+            player.hand = player.hand.filter { !selectedCards.contains($0)}
             activeCards.append(selectedCards)
             activeCards.remove(at: 0)
             selectedCards = []
             offsetRotation = 0
+            turn = (turn + 1) % playerCount
         }, label: {
             Text("Play Selected Cards")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 .foregroundStyle(.black)
                 .bold()
                 .padding(5)
-                .border(Color.yellow, width:3)
+                .border(player.color, width:3)
                 
         })
     }
@@ -98,7 +101,9 @@ struct AdvancedHandView: View {
 
 #Preview {
     let cardWidth : CGFloat = 120
-    @State var hand : [Card] = Card.largeSampleHand
+    @State var player : Player = Player.examplePlayers[0]
     @State var activeCards : [[Card]] = [[]]
-    return AdvancedHandView(cardWidth: cardWidth, hand: $hand, activeCards: $activeCards)
+    @State var turn : Int = 2
+    @State var playerCount: Int = 4
+    return AdvancedHandView(cardWidth: cardWidth, player: $player, activeCards: $activeCards, turn: $turn, playerCount: playerCount)
 }

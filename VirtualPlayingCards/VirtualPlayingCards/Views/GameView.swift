@@ -9,8 +9,8 @@ import SwiftUI
 
 struct GameView: View {
     @State var activeCards : [[Card]] = [[]]
-    @State var opponents : [Player] = Player.defaultOpponents
-    @State var turn: Int = 2
+    @State var players : [Player] = Player.examplePlayers
+    @State var turn: Int = 0
     @State var hand: [Card] = [
         Card(suit: "hearts", rank: "ace",player: Player.curPlayer),
         Card(suit: "diamonds", rank: "5",player: Player.curPlayer),
@@ -21,23 +21,21 @@ struct GameView: View {
         Card(suit: "spades", rank: "10",player: Player.curPlayer)
     ]
         
-       
-    
     var body: some View {
         let cardWidth : CGFloat = 100
         VStack {
             Spacer()
-            OpponentView(players: $opponents, activePlayer: $turn)
+            OpponentView(players: $players, activePlayer: $turn)
             Spacer()
             HStack{
                 Spacer()
-                DeckView(cardWidth: 100, hand: $hand)
+                DeckView(cardWidth: 100, player: $players[turn])
                 Spacer()
                 ActiveCardsView(cardWidth: 100, activeCards: $activeCards)
                 Spacer()
                 
             }
-            AdvancedHandView(cardWidth: 120, hand: $hand, activeCards: $activeCards)
+            AdvancedHandView(cardWidth: 120, player: $players[turn], activeCards: $activeCards, turn: $turn, playerCount: players.count)
             Spacer()
         }
     }

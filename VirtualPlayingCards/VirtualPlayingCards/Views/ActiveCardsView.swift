@@ -12,7 +12,7 @@ struct ActiveCardsView: View {
     @Binding var activeCards : [[Card]]
     
     var body: some View {
-        if(activeCards.count == 0){
+        if(activeCards == [[]]){
             HStack (spacing:0) {
                 EmptyCardView(cardWidth: cardWidth)
             }
@@ -28,8 +28,7 @@ struct ActiveCardsView: View {
                             Image(currentCard.imagePath)
                                 .resizable()
                                 .background(Color.white)
-                                .border(Color.black, width:2)
-                                .border(borderColor, width:1)
+                                .border(borderColor, width:2)
                                 .scaledToFit()
                                 .frame(width: cardWidth)
                                 .offset(x:-CGFloat(cardIdx) * cardWidth + CGFloat(cardIdx)*cardWidth/5,y:  0)
@@ -47,7 +46,7 @@ struct ActiveCardsView: View {
     //@State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2")]
     //@State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2"), Card(suit:"hearts", rank: "2")]
     
-    var players: [Player] = Player.defaultOpponents
+    var players: [Player] = Player.examplePlayers
     @State var activeCards : [[Card]] = [
         [Card(suit:"diamonds", rank: "2",player: players[0]), Card(suit:"hearts", rank: "2",player: players[0]), Card(suit: "clubs", rank: "2",player: players[0])],
         [Card(suit:"diamonds", rank: "4",player: players[1]), Card(suit:"hearts", rank: "4",player: players[1]), Card(suit: "clubs", rank: "4",player: players[1]),

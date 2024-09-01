@@ -12,7 +12,7 @@ struct Player : Identifiable{
     let id: UUID
     let name: String
     let turn: Int
-    let hand: [Card]
+    var hand: [Card]
     let color: Color
     
     init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {
@@ -25,10 +25,11 @@ struct Player : Identifiable{
 }
 
 extension Player {
-    static let defaultOpponents: [Player] = [
-        Player(name: "Player 1", turn: 0, hand: Card.sampleHand, color: Color.red),
-        Player(name: "Player 2", turn: 1, hand: Card.sampleHand, color: Color.green),
-        Player(name: "Player 3", turn: 2, hand: Card.sampleHand, color: Color.blue)
+    static let examplePlayers: [Player] = [
+        Player(name: "Bob", turn: 0, hand: Card.sampleHand, color: Color.red),
+        Player(name: "Cal", turn: 1, hand: Card.sampleHand, color: Color.green),
+        Player(name: "Dom", turn: 2, hand: Card.sampleHand, color: Color.blue),
+        Player(name: "Ede", turn: 2, hand: Card.sampleHand, color: Color.orange)
     ]
     
     static let curPlayer: Player = Player(name: "Jimmy", turn: 0, hand: [], color: Color.yellow)

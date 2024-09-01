@@ -13,20 +13,22 @@ struct OpponentView: View {
     var body: some View {
         HStack {
             Spacer()
-            ForEach(players) {player in
+            ForEach(players.indices, id: \.self) {index in
                 VStack {
-                    Text(player.name)
+                    Text(players[index].name)
                         .font(.headline)
                     ZStack {
                         Image("back")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50)
-                            .border(player.color)
+                            .border(players[index].color)
                             //.border(player.turn == activePlayer ? Color.yellow : Color.black)
-                        Text(String(player.hand.count))
+                        Text(String(players[index].hand.count))
                     }
                 }
+                .padding()
+                .background(activePlayer == index ? Color.gray : Color.clear)
                 Spacer()
             }
         }
@@ -34,7 +36,7 @@ struct OpponentView: View {
 }
 
 #Preview {
-    @State var players: [Player] = Player.defaultOpponents
+    @State var players: [Player] = Player.examplePlayers
     @State var activePlayer: Int = 1
     return OpponentView(players: $players, activePlayer: $activePlayer)
 }
