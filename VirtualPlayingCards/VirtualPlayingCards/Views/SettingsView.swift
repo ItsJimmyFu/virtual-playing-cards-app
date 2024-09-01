@@ -11,8 +11,10 @@ struct SettingsView: View {
     @State var players: [Player] = []
     @State var newPlayerName = ""
     @State var color : Color = Color.blue
+    @State var game : Game = Game.emptyGame
+    @State var isGameViewActive : Bool = false
     
-    let colorOptions: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
+    //let colorOptions: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
     
     var body: some View {
         Form {
@@ -45,6 +47,28 @@ struct SettingsView: View {
                     .disabled(newPlayerName.isEmpty)
                 }
             }
+            Section(header: Text("Cards")){
+                //Allow Selection of User to pick cards in the game
+            }
+            Button(action: {
+                game.deck = Card.defaultDeck.shuffled()
+                game.players = players
+                game.cardsPerHand = 5
+                game.dealHand()
+                isGameViewActive = true
+                
+            }, label: {
+                Text("Start Game")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            })
+            .fullScreenCover(isPresented: $isGameViewActive, content: {
+                GameView(game: $game)
+            })
         }
     }
 }

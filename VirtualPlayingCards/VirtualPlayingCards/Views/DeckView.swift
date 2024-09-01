@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DeckView: View {
-    @State var deck :[Card] = Card.defaultDeck
+    @Binding var deck : [Card]
     @State var cardWidth : CGFloat
     @Binding var player : Player
     
@@ -26,6 +26,7 @@ struct DeckView: View {
                         .background(Color.white)
                         .border(Color.black,width:0.5)
                         .onTapGesture {
+                            print(player.name)
                             player.hand.append(deck.popLast()!)
                         }
                 }
@@ -47,5 +48,6 @@ struct DeckView: View {
 
 #Preview {
     @State var player : Player = Player.examplePlayers[0]
-    return DeckView(cardWidth: 200,player: $player)
+    @State var deck : [Card] = Card.defaultDeck
+    return DeckView(deck: $deck, cardWidth: 200,player: $player)
 }

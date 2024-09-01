@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Player : Identifiable {
+class Player : Identifiable {
     let id: UUID
     var name: String
     var turn: Int
@@ -23,9 +23,6 @@ struct Player : Identifiable {
         self.color = color
     }
     
-    mutating func changeColor(to newColor: Color) {
-        self.color = newColor
-    }
 }
 
 extension Player {
@@ -34,6 +31,13 @@ extension Player {
         Player(name: "Cal", turn: 1, hand: Card.sampleHand, color: Color.green),
         Player(name: "Dom", turn: 2, hand: Card.sampleHand, color: Color.blue),
         Player(name: "Ede", turn: 2, hand: Card.sampleHand, color: Color.orange)
+    ]
+    
+    static let gamePlayers: [Player] = [
+        Player(name: "Bob", turn: 0, hand: [], color: Color.red),
+        Player(name: "Cal", turn: 1, hand: [], color: Color.green),
+        Player(name: "Dom", turn: 2, hand: [], color: Color.blue),
+        Player(name: "Ede", turn: 2, hand: [], color: Color.orange)
     ]
     
     static let curPlayer: Player = Player(name: "Jimmy", turn: 0, hand: [], color: Color.yellow)

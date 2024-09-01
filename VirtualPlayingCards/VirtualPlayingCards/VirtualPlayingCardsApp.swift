@@ -10,11 +10,9 @@ import SwiftUI
 @main
 struct VirtualPlayingCardsApp: App {
     var body: some Scene {
-        //State var players: [Player] = []
         WindowGroup {
             //GameView()
-            
-            SettingsView()
+            MenuView()
         }
     }
 }

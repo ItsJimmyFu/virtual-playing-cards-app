@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MenuView: View {
+    @State private var isPresentingSettingView = false
+    
     var body: some View {
         ZStack {
             GeometryReader { geometry in
@@ -23,21 +25,33 @@ struct MenuView: View {
                 Text("Virtual Playing Cards")
                     .font(.largeTitle)
                     .padding()
-                NavigationLink(destination: GameView()) {
-                    Text("Start Local Game")
+                Button(action: {
+                    isPresentingSettingView = true
+                }, label: {
+                    Text("Local")
                         .font(.title)
-                        .padding()
-                        .background(Color.gray)
-                        .foregroundColor(.black)
-                        .cornerRadius(10)
-                }
-                Text("Start Online Game")
-                    .font(.title)
+                })
                     .padding()
-                Text("Start Online Game")
+                    .background(Color.gray)
+                    .foregroundColor(.black)
+                    .cornerRadius(10)
+                Text("Online")
                     .font(.title)
                     .padding()
                 Spacer()
+            }
+        }
+        .sheet(isPresented: $isPresentingSettingView){
+            NavigationStack {
+                SettingsView()
+                    .navigationTitle("Menu")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction){
+                            Button("Back"){
+                                isPresentingSettingView = false
+                            }
+                        }
+                    }
             }
         }
     }
