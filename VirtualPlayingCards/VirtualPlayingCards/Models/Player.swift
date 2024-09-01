@@ -8,12 +8,12 @@
 import Foundation
 import SwiftUI
 
-struct Player : Identifiable{
+struct Player : Identifiable {
     let id: UUID
-    let name: String
-    let turn: Int
+    var name: String
+    var turn: Int
     var hand: [Card]
-    let color: Color
+    var color: Color
     
     init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {
         self.id = id
@@ -21,6 +21,10 @@ struct Player : Identifiable{
         self.turn = turn
         self.hand = hand
         self.color = color
+    }
+    
+    mutating func changeColor(to newColor: Color) {
+        self.color = newColor
     }
 }
 
