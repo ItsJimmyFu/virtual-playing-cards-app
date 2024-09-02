@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class Player : Identifiable {
+class Player : Identifiable, Equatable {
     let id: UUID
     var name: String
     var turn: Int
@@ -21,6 +21,10 @@ class Player : Identifiable {
         self.turn = turn
         self.hand = hand
         self.color = color
+    }
+    
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return (lhs.name == rhs.name && lhs.color == rhs.color)
     }
     
 }

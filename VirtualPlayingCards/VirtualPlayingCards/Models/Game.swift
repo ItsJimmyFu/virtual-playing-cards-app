@@ -26,12 +26,17 @@ struct Game : Identifiable {
     
     mutating func dealHand(){
         /*
+        //Checking if cardsPerHand exceeds the possible number of cards in deck
         if((cardsPerHand * players.count) < deck.count) {
             cardsPerHand = deck.count / players.count
         }
         */
         for player in players {
-            player.hand = Array(deck.prefix(cardsPerHand))
+            let hand : [Card] = Array(deck.prefix(cardsPerHand))
+            for card in hand {
+                card.player = player
+            }
+            player.hand = hand
             deck = Array(deck.dropFirst(cardsPerHand))
         }
     }

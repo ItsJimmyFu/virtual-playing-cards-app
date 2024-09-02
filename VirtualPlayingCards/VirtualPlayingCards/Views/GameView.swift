@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @State var activeCards : [[Card]] = [[]]
+    @State var activeCards : [[Card]] = []
     @Binding var game : Game
     @State var turn: Int = 0
     var body: some View {

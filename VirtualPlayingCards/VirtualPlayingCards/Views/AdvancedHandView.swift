@@ -81,9 +81,16 @@ struct AdvancedHandView: View {
             .padding()
         }
         Button(action: {
+            print(activeCards)
             player.hand = player.hand.filter { !selectedCards.contains($0)}
-            activeCards.append(selectedCards)
-            activeCards.remove(at: 0)
+
+            if(activeCards.count > 0 && activeCards[0][0].player == player){
+                activeCards.remove(at: 0)
+            }
+            
+            if(selectedCards.count > 0) {
+                activeCards.append(selectedCards)
+            }
             selectedCards = []
             offsetRotation = 0
             turn = (turn + 1) % playerCount
@@ -102,7 +109,7 @@ struct AdvancedHandView: View {
 #Preview {
     let cardWidth : CGFloat = 120
     @State var player : Player = Player.examplePlayers[0]
-    @State var activeCards : [[Card]] = [[]]
+    @State var activeCards : [[Card]] = []
     @State var turn : Int = 2
     @State var playerCount: Int = 4
     return AdvancedHandView(cardWidth: cardWidth, player: $player, activeCards: $activeCards, turn: $turn, playerCount: playerCount)

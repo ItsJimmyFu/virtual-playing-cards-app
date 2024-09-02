@@ -27,7 +27,9 @@ struct DeckView: View {
                         .border(Color.black,width:0.5)
                         .onTapGesture {
                             print(player.name)
-                            player.hand.append(deck.popLast()!)
+                            var newCard : Card = deck.popLast()!
+                            newCard.player = player
+                            player.hand.append(newCard)
                         }
                 }
                 else{

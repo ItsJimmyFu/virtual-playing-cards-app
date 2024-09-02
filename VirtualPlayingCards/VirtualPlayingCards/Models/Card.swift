@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Card: Identifiable, Equatable {
+class Card: Identifiable, Equatable {
     let id: UUID
-    let suit: String
-    let rank: String
-    let imagePath: String
-    let player: Player?
+    var suit: String
+    var rank: String
+    var imagePath: String
+    var player: Player?
     
     init(id: UUID = UUID(), suit: String, rank: String){
         self.id = id
