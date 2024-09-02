@@ -8,27 +8,26 @@
 import SwiftUI
 
 struct OpponentView: View {
-    @Binding var players: [Player]
-    @Binding var activePlayer: Int
+    @ObservedObject var gameState : Game
     var body: some View {
         HStack {
             Spacer()
-            ForEach(players.indices, id: \.self) {index in
+            ForEach(gameState.players.indices, id: \.self) {index in
                 VStack {
-                    Text(players[index].name)
+                    Text(gameState.players[index].name)
                         .font(.headline)
                     ZStack {
                         Image("back")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50)
-                            .border(players[index].color)
+                            .border(gameState.players[index].color)
                             //.border(player.turn == activePlayer ? Color.yellow : Color.black)
-                        Text(String(players[index].hand.count))
+                        Text(String(gameState.players[index].hand.count))
                     }
                 }
                 .padding()
-                .background(activePlayer == index ? Color.gray : Color.clear)
+                .background((gameState.turn == index) ? Color.gray : Color.clear)
                 Spacer()
             }
         }
@@ -37,6 +36,7 @@ struct OpponentView: View {
 
 #Preview {
     @State var players: [Player] = Player.examplePlayers
-    @State var activePlayer: Int = 1
-    return OpponentView(players: $players, activePlayer: $activePlayer)
+    @State var game: Game = Game.sampleGame
+    @State var turn: Int = 0
+    return OpponentView(gameState: game)
 }

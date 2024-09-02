@@ -10,17 +10,16 @@ import SwiftUI
 struct AdvancedHandView: View {
     @State var cardWidth : CGFloat
     @State var cardHeight : CGFloat? = nil
-    @Binding var player : Player
+    @ObservedObject var gameState : Game
     @State private var offsetRotation : CGFloat = 0
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
     @Binding var activeCards : [[Card]]
-    @Binding var turn: Int
-    @State var playerCount: Int
     
     let yShift : CGFloat = 40
     
     var body: some View {
+        let player : Player = gameState.players[gameState.turn]
         VStack {
             ZStack {
                 ForEach(player.hand.indices, id: \.self) { index in
@@ -93,7 +92,8 @@ struct AdvancedHandView: View {
             }
             selectedCards = []
             offsetRotation = 0
-            turn = (turn + 1) % playerCount
+            gameState.nextTurn()
+
         }, label: {
             Text("Play Selected Cards")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
@@ -110,7 +110,7 @@ struct AdvancedHandView: View {
     let cardWidth : CGFloat = 120
     @State var player : Player = Player.examplePlayers[0]
     @State var activeCards : [[Card]] = []
-    @State var turn : Int = 2
     @State var playerCount: Int = 4
-    return AdvancedHandView(cardWidth: cardWidth, player: $player, activeCards: $activeCards, turn: $turn, playerCount: playerCount)
+    @State var gameState : Game = Game.sampleGame
+    return AdvancedHandView(cardWidth: cardWidth, gameState: gameState, activeCards: $activeCards)
 }

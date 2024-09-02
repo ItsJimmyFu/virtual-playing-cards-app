@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Game : Identifiable {
+class Game : Identifiable, ObservableObject {
     let id: UUID
     var name: String
-    var players : [Player]
-    var cardsPerHand : Int
-    var deck : [Card]
-    var turn : Int
+    @Published var players : [Player]
+    @Published var cardsPerHand : Int
+    @Published var deck : [Card]
+    @Published var turn : Int
     
     init(id: UUID = UUID(), name: String, players: [Player], cardsPerHand: Int, deck: [Card], turn : Int) {
         self.id = id
@@ -24,7 +24,7 @@ struct Game : Identifiable {
         self.turn = turn
     }
     
-    mutating func dealHand(){
+    func dealHand(){
         /*
         //Checking if cardsPerHand exceeds the possible number of cards in deck
         if((cardsPerHand * players.count) < deck.count) {
@@ -40,10 +40,18 @@ struct Game : Identifiable {
             deck = Array(deck.dropFirst(cardsPerHand))
         }
     }
+    
+    func nextTurn(){
+        turn = (turn + 1) % players.count
+    }
 }
 
 extension Game {
     static let emptyGame: Game = Game(name: "", players: [], cardsPerHand: 0, deck: [], turn: 0)
-    static let sampleGame: Game = Game(name: "Sample Game", players: Player.gamePlayers, cardsPerHand: 5, deck: Card.defaultDeck, turn: 0)
-    
+    static let sampleGame: Game = {
+        var game = Game(name: "Sample Game", players: Player.gamePlayers, cardsPerHand: 5, deck: Card.defaultDeck, turn: 0)
+        game.deck.shuffle()
+        game.dealHand()
+        return game
+    }()
 }

@@ -10,8 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     @State var players: [Player] = []
     @State var newPlayerName = ""
-    @State var color : Color = Color.blue
-    @State var game : Game = Game.emptyGame
+    //@State var color : Color = Color.blue
+    @StateObject var game : Game = Game.emptyGame
     @State var isGameViewActive : Bool = false
     
     //let colorOptions: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
@@ -67,7 +67,7 @@ struct SettingsView: View {
                     .cornerRadius(10)
             })
             .fullScreenCover(isPresented: $isGameViewActive, content: {
-                GameView(game: $game)
+                GameView(gameState: game)
             })
         }
     }

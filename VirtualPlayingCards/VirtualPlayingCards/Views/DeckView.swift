@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct DeckView: View {
-    @Binding var deck : [Card]
     @State var cardWidth : CGFloat
-    @Binding var player : Player
+    @ObservedObject var gameState : Game
     
     var body: some View {
         ZStack {
-            if(deck.count == 0){
+            if(gameState.deck.count == 0){
                 EmptyCardView(cardWidth: cardWidth)
             }
-            ForEach(deck.indices, id: \.self) { index in
-                if(index == (deck.count-1)){
+            ForEach(gameState.deck.indices, id: \.self) { index in
+                if(index == (gameState.deck.count-1)){
                     Image("back")
                         .resizable()
                         .scaledToFit()
@@ -26,10 +25,9 @@ struct DeckView: View {
                         .background(Color.white)
                         .border(Color.black,width:0.5)
                         .onTapGesture {
-                            print(player.name)
-                            var newCard : Card = deck.popLast()!
-                            newCard.player = player
-                            player.hand.append(newCard)
+                            let newCard : Card = gameState.deck.popLast()!
+                            newCard.player = gameState.players[gameState.turn]
+                            gameState.players[gameState.turn].hand.append(newCard)
                         }
                 }
                 else{
@@ -49,7 +47,6 @@ struct DeckView: View {
 }
 
 #Preview {
-    @State var player : Player = Player.examplePlayers[0]
-    @State var deck : [Card] = Card.defaultDeck
-    return DeckView(deck: $deck, cardWidth: 200,player: $player)
+    @State var game : Game = Game.sampleGame
+    return DeckView(cardWidth: 200, gameState: game)
 }

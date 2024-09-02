@@ -48,10 +48,7 @@ struct ActiveCardsView: View {
 }
 
 #Preview {
-    //@State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2")]
-    //@State var activeCards : [Card] = [Card(suit:"diamonds", rank: "2"), Card(suit:"hearts", rank: "2")]
-    
-    var players: [Player] = Player.examplePlayers
+    @State var players: [Player] = Player.examplePlayers
     @State var activeCards : [[Card]] = [
         [Card(suit:"diamonds", rank: "2",player: players[0]), Card(suit:"hearts", rank: "2",player: players[0]), Card(suit: "clubs", rank: "2",player: players[0])],
         [Card(suit:"diamonds", rank: "4",player: players[1]), Card(suit:"hearts", rank: "4",player: players[1]), Card(suit: "clubs", rank: "4",player: players[1]),

@@ -9,24 +9,23 @@ import SwiftUI
 
 struct GameView: View {
     @State var activeCards : [[Card]] = []
-    @Binding var game : Game
-    @State var turn: Int = 0
+    @ObservedObject var gameState : Game
     var body: some View {
         let cardWidth : CGFloat = 100
         NavigationView {
             VStack {
                 Spacer()
-                OpponentView(players: $game.players, activePlayer: $turn)
+                OpponentView(gameState: gameState)
                 Spacer()
                 HStack{
                     Spacer()
-                    DeckView(deck: $game.deck, cardWidth: 100, player: $game.players[turn])
+                    DeckView(cardWidth: 100, gameState: gameState)
                     Spacer()
                     ActiveCardsView(cardWidth: 100, activeCards: $activeCards)
                     Spacer()
                     
                 }
-                AdvancedHandView(cardWidth: 120, player: $game.players[turn], activeCards: $activeCards, turn: $turn, playerCount: $game.players.count)
+                AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards)
                 Spacer()
             }
         }
@@ -34,7 +33,6 @@ struct GameView: View {
 }
 
 #Preview {
-    @State var game : Game = Game.sampleGame
-    game.dealHand()
-    return GameView(game: $game)
+    @State var gameState : Game = Game.sampleGame
+    return GameView(gameState: gameState)
 }
