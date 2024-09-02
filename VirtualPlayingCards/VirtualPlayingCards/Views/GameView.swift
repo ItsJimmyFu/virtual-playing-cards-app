@@ -10,6 +10,8 @@ import SwiftUI
 struct GameView: View {
     @State var activeCards : [[Card]] = []
     @ObservedObject var gameState : Game
+    @State var isPresentingDetailedActiveCardsSheet : Bool = false
+    
     var body: some View {
         let cardWidth : CGFloat = 100
         NavigationView {
@@ -21,13 +23,33 @@ struct GameView: View {
                     Spacer()
                     DeckView(cardWidth: 100, gameState: gameState)
                     Spacer()
-                    ActiveCardsView(cardWidth: 100, activeCards: $activeCards)
+                    if(activeCards.count == 0){
+                        HStack (spacing:0) {
+                            EmptyCardView(cardWidth: cardWidth)
+                        }
+                        .frame(width: cardWidth)
+                    }
+                    else {
+                        ActiveCardsView(cardWidth: 100, activeCards: $activeCards.last!)
+                            .gesture(
+                                DragGesture(minimumDistance: 0) // Detect touch down and move
+                                    .onChanged { _ in
+                                        isPresentingDetailedActiveCardsSheet = true
+                                    }
+                                    .onEnded { _ in
+                                        isPresentingDetailedActiveCardsSheet = false
+                                    }
+                            )
+                    }
                     Spacer()
                     
                 }
                 AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards)
                 Spacer()
             }
+            .sheet(isPresented: ($isPresentingDetailedActiveCardsSheet), content: {
+                DetailedActiveCardsSheet(cardWidth:100,activeCards: $activeCards, isPresentingDetailedActiveCardsSheet: $isPresentingDetailedActiveCardsSheet)
+            })
         }
     }
 }
