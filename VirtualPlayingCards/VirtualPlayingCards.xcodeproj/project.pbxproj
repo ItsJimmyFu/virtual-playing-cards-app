@@ -18,6 +18,7 @@
 		BFA5A4422C84038600017535 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4412C84038600017535 /* SettingsView.swift */; };
 		BFA5A4442C845AE100017535 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4432C845AE100017535 /* Game.swift */; };
 		BFC212812C859CD50053FCB5 /* DetailedActiveCardsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212802C859CD50053FCB5 /* DetailedActiveCardsSheet.swift */; };
+		BFC212832C85C6620053FCB5 /* TurnTransitionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212822C85C6620053FCB5 /* TurnTransitionSheet.swift */; };
 		BFEF98B12C72353000A01B69 /* VirtualPlayingCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */; };
 		BFEF98B52C72353200A01B69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B42C72353200A01B69 /* Assets.xcassets */; };
 		BFEF98B92C72353200A01B69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B82C72353200A01B69 /* Preview Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		BFA5A4412C84038600017535 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BFA5A4432C845AE100017535 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		BFC212802C859CD50053FCB5 /* DetailedActiveCardsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedActiveCardsSheet.swift; sourceTree = "<group>"; };
+		BFC212822C85C6620053FCB5 /* TurnTransitionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnTransitionSheet.swift; sourceTree = "<group>"; };
 		BFEF98AD2C72353000A01B69 /* VirtualPlayingCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualPlayingCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualPlayingCardsApp.swift; sourceTree = "<group>"; };
 		BFEF98B42C72353200A01B69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				BFA5A43F2C83FECC00017535 /* MenuView.swift */,
 				BFA5A4412C84038600017535 /* SettingsView.swift */,
 				BFC212802C859CD50053FCB5 /* DetailedActiveCardsSheet.swift */,
+				BFC212822C85C6620053FCB5 /* TurnTransitionSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				BFA5A4342C7F461500017535 /* GameView.swift in Sources */,
 				BFA5A4402C83FECC00017535 /* MenuView.swift in Sources */,
 				BFA5A43C2C806EF800017535 /* Player.swift in Sources */,
+				BFC212832C85C6620053FCB5 /* TurnTransitionSheet.swift in Sources */,
 				BFA5A4422C84038600017535 /* SettingsView.swift in Sources */,
 				BFA5A4382C7F4CD400017535 /* EmptyCardView.swift in Sources */,
 				BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */,

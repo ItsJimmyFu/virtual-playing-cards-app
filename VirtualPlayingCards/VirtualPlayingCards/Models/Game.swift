@@ -44,6 +44,10 @@ class Game : Identifiable, ObservableObject {
     func nextTurn(){
         turn = (turn + 1) % players.count
     }
+    
+    func getNextPlayer() -> Player {
+        return players[(turn + 1) % players.count]
+    }
 }
 
 extension Game {

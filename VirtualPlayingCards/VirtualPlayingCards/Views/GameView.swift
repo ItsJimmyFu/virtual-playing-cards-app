@@ -11,6 +11,7 @@ struct GameView: View {
     @State var activeCards : [[Card]] = []
     @ObservedObject var gameState : Game
     @State var isPresentingDetailedActiveCardsSheet : Bool = false
+    @State var isPresentingTurnTransitionSheet : Bool = false
     
     var body: some View {
         let cardWidth : CGFloat = 100
@@ -44,11 +45,14 @@ struct GameView: View {
                     Spacer()
                     
                 }
-                AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards)
+                AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards, isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
                 Spacer()
             }
             .sheet(isPresented: ($isPresentingDetailedActiveCardsSheet), content: {
                 DetailedActiveCardsSheet(cardWidth:100,activeCards: $activeCards, isPresentingDetailedActiveCardsSheet: $isPresentingDetailedActiveCardsSheet)
+            })
+            .sheet(isPresented: $isPresentingTurnTransitionSheet, content: {
+                TurnTransitionSheet(nextPlayer: gameState.players[gameState.turn], isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
             })
         }
     }

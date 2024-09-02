@@ -15,6 +15,7 @@ struct AdvancedHandView: View {
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
     @Binding var activeCards : [[Card]]
+    @Binding var isPresentingTurnTransitionSheet : Bool
     
     let yShift : CGFloat = 40
     
@@ -93,6 +94,8 @@ struct AdvancedHandView: View {
             selectedCards = []
             offsetRotation = 0
             gameState.nextTurn()
+            
+            isPresentingTurnTransitionSheet = true
 
         }, label: {
             Text("Play Selected Cards")
@@ -112,5 +115,6 @@ struct AdvancedHandView: View {
     @State var activeCards : [[Card]] = []
     @State var playerCount: Int = 4
     @State var gameState : Game = Game.sampleGame
-    return AdvancedHandView(cardWidth: cardWidth, gameState: gameState, activeCards: $activeCards)
+    @State var isPresentingTurnTransitionSheet : Bool = false
+    return AdvancedHandView(cardWidth: cardWidth, gameState: gameState, activeCards: $activeCards, isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
 }
