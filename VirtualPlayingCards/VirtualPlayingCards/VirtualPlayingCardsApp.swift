@@ -11,7 +11,6 @@ import SwiftUI
 struct VirtualPlayingCardsApp: App {
     var body: some Scene {
         WindowGroup {
-            //GameView()
             MenuView()
         }
     }

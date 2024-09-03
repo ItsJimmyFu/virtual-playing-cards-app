@@ -13,6 +13,7 @@ class Card: Identifiable, Equatable {
     var rank: String
     var imagePath: String
     var player: Player?
+    var selected: Bool
     
     init(id: UUID = UUID(), suit: String, rank: String){
         self.id = id
@@ -26,6 +27,7 @@ class Card: Identifiable, Equatable {
             self.imagePath = self.rank + "_of_" + self.suit
         }
         self.player = nil
+        self.selected = false
     }
     
     init(id: UUID = UUID(), suit: String, rank: String, player: Player){
@@ -40,6 +42,7 @@ class Card: Identifiable, Equatable {
             self.imagePath = self.rank + "_of_" + self.suit
         }
         self.player = player
+        self.selected = true
     }
     
     static func == (lhs: Card, rhs: Card) -> Bool {

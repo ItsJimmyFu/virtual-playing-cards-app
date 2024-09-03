@@ -14,6 +14,10 @@ struct SettingsView: View {
     @StateObject var game : Game = Game.emptyGame
     @State var isGameViewActive : Bool = false
     
+    @State var deck : [Card] = Card.defaultDeck
+    @State var selected: [Bool] = Array(repeating: false, count: 56)
+    @State var isAllCardsSelected: Bool = false
+    
     //let colorOptions: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
     
     var body: some View {
@@ -47,11 +51,34 @@ struct SettingsView: View {
                     .disabled(newPlayerName.isEmpty)
                 }
             }
-            Section(header: Text("Cards")){
-                //Allow Selection of User to pick cards in the game
-            }
+            Section(content: {
+                CardSettingView(deck: $deck, selected: $selected)
+                    .frame(height: 500) // 4 * cardHeight
+                    .padding(.vertical)
+            }, header: {
+                HStack {
+                    Text("Cards")
+                    Spacer()
+                    Text( isAllCardsSelected ? "Unselect All" : "Select All")
+                    Button(action: {
+                        isAllCardsSelected.toggle()
+                        selected = selected.map { _ in isAllCardsSelected }
+                    }, label: {
+                        Image(systemName: isAllCardsSelected ? "checkmark.square" : "square")
+                            .font(.title)
+                            .foregroundColor(isAllCardsSelected ? .blue : .gray)
+                    })
+                }
+            })
             Button(action: {
-                game.deck = Card.defaultDeck.shuffled()
+                game.deck = []
+                for index in deck.indices {
+                    if(selected[index]) {
+                        let card : Card = deck[index]
+                        game.deck.append(card)
+                    }
+                }
+                 
                 game.players = players
                 game.cardsPerHand = 5
                 game.dealHand()
