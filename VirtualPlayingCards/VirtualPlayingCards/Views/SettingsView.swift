@@ -15,8 +15,11 @@ struct SettingsView: View {
     @State var isGameViewActive : Bool = false
     
     @State var deck : [Card] = Card.defaultDeck
-    @State var selected: [Bool] = Array(repeating: false, count: 56)
+    @State var selected: [Card] = []
+    
     @State var isAllCardsSelected: Bool = false
+    
+    @State var sliderValue : Double = 5
     
     //let colorOptions: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
     
@@ -45,6 +48,8 @@ struct SettingsView: View {
                             newPlayerName = ""
                             
                         }
+                        let maxSliderRange = ((selected.count == 0) || (players.count == 0)) ? Double(deck.count) : floor(Double(selected.count / (players.count == 0 ? 1 : players.count)))
+                        sliderValue = sliderValue > maxSliderRange ? maxSliderRange : sliderValue
                     }) {
                         Image(systemName: "plus.circle.fill")
                     }
@@ -61,8 +66,17 @@ struct SettingsView: View {
                     Spacer()
                     Text( isAllCardsSelected ? "Unselect All" : "Select All")
                     Button(action: {
+                        
                         isAllCardsSelected.toggle()
-                        selected = selected.map { _ in isAllCardsSelected }
+                        if(isAllCardsSelected) {
+                            selected = deck
+                        }
+                        else {
+                            selected = []
+                        }
+                        let maxSliderRange = ((selected.count == 0) || (players.count == 0)) ? Double(deck.count) : floor(Double(selected.count / (players.count == 0 ? 1 : players.count)))
+                        sliderValue = sliderValue > maxSliderRange ? maxSliderRange : sliderValue
+                        
                     }, label: {
                         Image(systemName: isAllCardsSelected ? "checkmark.square" : "square")
                             .font(.title)
@@ -70,17 +84,22 @@ struct SettingsView: View {
                     })
                 }
             })
-            Button(action: {
-                game.deck = []
-                for index in deck.indices {
-                    if(selected[index]) {
-                        let card : Card = deck[index]
-                        game.deck.append(card)
-                    }
+            Section(header: Text("Cards Per Hand")) {
+                VStack {
+                    let maxSliderRange = ((selected.count == 0) || (players.count == 0)) ? Double(deck.count) : floor(Double(selected.count / (players.count == 0 ? 1 : players.count)))
+                    Slider(
+                        value: $sliderValue,
+                        in: 0...(maxSliderRange == 0 ? 1 : maxSliderRange),
+                        step: 1
+                    )
+                    Text("\(Int(sliderValue))")
+                        //.foregroundColor(isEditing ? .red : .blue)
                 }
-                 
+            }
+            Button(action: {
+                game.deck = selected
+                game.cardsPerHand = Int(sliderValue)
                 game.players = players
-                game.cardsPerHand = 5
                 game.dealHand()
                 isGameViewActive = true
                 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CardSettingView: View {
     @Binding var deck : [Card]
-    @Binding var selected : [Bool]
+    @Binding var selected : [Card]
     
     let columns = [
             GridItem(.adaptive(minimum: 80))
@@ -22,17 +22,23 @@ struct CardSettingView: View {
                     ForEach(deck.indices, id: \.self ) {index in
                         VStack {
                             Button (action: {
-                                selected[index].toggle()
+                                if(selected.contains(deck[index])){
+                                    selected.removeAll { $0 == deck[index] }
+                                }
+                                else{
+                                    selected.append(deck[index])
+                                }
+                       
                             }, label: {
                                 Image(deck[index].imagePath)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: geometry.size.width/5)
                                     .border(Color.black)
-                                    .background(selected[index] ? Color.gray.opacity(0.3) : Color.clear)
+                                    .background(selected.contains(deck[index]) ? Color.gray.opacity(0.3) : Color.clear)
                             })
                         
-                            Image(systemName: selected[index] ? "circle.circle.fill" : "circle")
+                            Image(systemName: selected.contains(deck[index]) ? "circle.circle.fill" : "circle")
                         }
                     }
                 }
@@ -44,6 +50,6 @@ struct CardSettingView: View {
 
 #Preview {
     @State var deck : [Card] = Card.defaultDeck
-    @State var selected: [Bool] = Array(repeating: false, count: deck.count)
+    @State var selected: [Card] = [deck[0]]
     return CardSettingView(deck: $deck, selected: $selected)
 }
