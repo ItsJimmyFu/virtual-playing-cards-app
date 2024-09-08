@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class Player : Identifiable, Equatable {
+class Player : Identifiable, Equatable, ObservableObject {
     let id: UUID
     var name: String
     var turn: Int
@@ -30,6 +30,8 @@ class Player : Identifiable, Equatable {
 }
 
 extension Player {
+    static let empty: Player = Player(name: "", turn: -1, hand: [], color: .red)
+    
     static let examplePlayers: [Player] = [
         Player(name: "Bob", turn: 0, hand: Card.sampleHand, color: Color.red),
         Player(name: "Cal", turn: 1, hand: Card.sampleHand, color: Color.green),

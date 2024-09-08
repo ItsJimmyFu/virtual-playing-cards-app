@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
     @State var players: [Player] = []
     @State var newPlayerName = ""
-    //@State var color : Color = Color.blue
     @StateObject var game : Game = Game.emptyGame
     @State var isGameViewActive : Bool = false
     
@@ -21,7 +20,8 @@ struct SettingsView: View {
     
     @State var sliderValue : Double = 5
     
-    //let colorOptions: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
+    @State var isPresentingColorPickerSheet : Bool = false
+    @State var selectedPlayer : Player = Player.empty
     
     var body: some View {
         Form {
@@ -30,8 +30,18 @@ struct SettingsView: View {
                     HStack {
                         Text(player.name)
                         Spacer()
-                        ColorPicker("Select Color", selection: $player.color).pickerStyle(.navigationLink)
+                        ColorPicker("Select Color", selection: $player.color)
+                            .pickerStyle(.navigationLink)
                             .labelsHidden()
+                        /*
+                        Button(action: {
+                            isPresentingColorPickerSheet = true
+                            selectedPlayer = player
+                        }, label: {
+                            Image(systemName: "paintpalette")
+                                .foregroundColor(player.color)
+                        })
+                         */
                     }
                 }
                 .onDelete { indices in
@@ -41,10 +51,8 @@ struct SettingsView: View {
                     TextField("Add Player", text: $newPlayerName)
                     Button(action: {
                         withAnimation {
-                            let newPlayer = Player(name: newPlayerName, turn: players.count, hand: [], color: Color.black)
+                            let newPlayer = Player(name: newPlayerName, turn: players.count, hand: [], color: Color.red)
                             players.append(newPlayer)
-                            print(newPlayer)
-                            print(players)
                             newPlayerName = ""
                             
                         }
@@ -93,7 +101,6 @@ struct SettingsView: View {
                         step: 1
                     )
                     Text("\(Int(sliderValue))")
-                        //.foregroundColor(isEditing ? .red : .blue)
                 }
             }
             Button(action: {
@@ -116,6 +123,9 @@ struct SettingsView: View {
                 GameView(gameState: game)
             })
         }
+        .sheet(isPresented: $isPresentingColorPickerSheet, content: {
+            ColorPickerSheet(selectedColor: $selectedPlayer.color)
+        })
     }
 }
 
