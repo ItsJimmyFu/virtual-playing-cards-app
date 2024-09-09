@@ -23,6 +23,11 @@ struct SettingsView: View {
     @State var isPresentingColorPickerSheet : Bool = false
     @State var selectedPlayer : Player = Player.empty
     
+    @State var showInvalidGameAlert : Bool = false
+    @State var errorMessage : String = ""
+    
+    var colors : [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
+    
     var body: some View {
         Form {
             Section(header: Text("Players")) {
@@ -51,7 +56,15 @@ struct SettingsView: View {
                     TextField("Add Player", text: $newPlayerName)
                     Button(action: {
                         withAnimation {
-                            let newPlayer = Player(name: newPlayerName, turn: players.count, hand: [], color: Color.red)
+                            if(newPlayerName.isEmpty) {
+                                newPlayerName = "Player " + String(players.count+1)
+                            }
+                            
+                            var unusedColors = colors
+                            for player in players {
+                                unusedColors.removeAll {$0 == player.color}
+                            }
+                            let newPlayer = Player(name: newPlayerName, turn: players.count, hand: [], color: unusedColors.count == 0 ? Color(red: Double.random(in: 0...1), green: Double.random(in: 0...1), blue: Double.random(in: 0...1)) : unusedColors[0])
                             players.append(newPlayer)
                             newPlayerName = ""
                             
@@ -61,7 +74,6 @@ struct SettingsView: View {
                     }) {
                         Image(systemName: "plus.circle.fill")
                     }
-                    .disabled(newPlayerName.isEmpty)
                 }
             }
             Section(content: {
@@ -104,11 +116,21 @@ struct SettingsView: View {
                 }
             }
             Button(action: {
-                game.deck = selected
-                game.cardsPerHand = Int(sliderValue)
-                game.players = players
-                game.dealHand()
-                isGameViewActive = true
+                if(players.count == 0){
+                    showInvalidGameAlert = true
+                    errorMessage = "Player"
+                }
+                else if(selected.count == 0) {
+                    showInvalidGameAlert = true
+                    errorMessage = "Deck"
+                }
+                else{
+                    game.deck = selected
+                    game.cardsPerHand = Int(sliderValue)
+                    game.players = players
+                    game.dealHand()
+                    isGameViewActive = true
+                }
                 
             }, label: {
                 Text("Start Game")
@@ -126,6 +148,16 @@ struct SettingsView: View {
         .sheet(isPresented: $isPresentingColorPickerSheet, content: {
             ColorPickerSheet(selectedColor: $selectedPlayer.color)
         })
+        .alert(isPresented: $showInvalidGameAlert) {
+            Alert(
+                title: Text(errorMessage + " Missing"),
+                message: Text("You cannot start the game until " + errorMessage + " is added"),
+                dismissButton: .default(Text("OK")) {
+                    showInvalidGameAlert = false
+                    errorMessage = ""
+                }
+            )
+        }
     }
 }
 
