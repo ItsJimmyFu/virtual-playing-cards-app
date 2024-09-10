@@ -115,6 +115,20 @@ struct SettingsView: View {
                     Text("\(Int(sliderValue))")
                 }
             }
+            //Add DisclosureGroup
+            Section(header: Text("Advanced Settings")) {
+                HStack {
+                    Text("Show Active Cards")
+                    Spacer()
+                    Button(action: {
+                        //isAllCardsSelected.toggle()
+                    }, label: {
+                        Image(systemName: isAllCardsSelected ? "checkmark.square" : "square")
+                            .font(.title)
+                            .foregroundColor(isAllCardsSelected ? .blue : .gray)
+                    })
+                }
+            }
             Button(action: {
                 if(players.count == 0){
                     showInvalidGameAlert = true
