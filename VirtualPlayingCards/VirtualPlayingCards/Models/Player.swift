@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+//Represents the details of a Player in the game and their hand of cards
 class Player : Identifiable, Equatable, ObservableObject {
     let id: UUID
     var name: String
@@ -15,6 +16,7 @@ class Player : Identifiable, Equatable, ObservableObject {
     var hand: [Card]
     var color: Color
     
+    //Initializes a player with name, turn ordering, hand and color
     init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {
         self.id = id
         self.name = name
@@ -24,11 +26,11 @@ class Player : Identifiable, Equatable, ObservableObject {
     }
     
     static func == (lhs: Player, rhs: Player) -> Bool {
-        return (lhs.name == rhs.name && lhs.color == rhs.color)
+        return (lhs.id == rhs.id)
     }
     
 }
-
+//Create custom variables to be used in previews
 extension Player {
     static let empty: Player = Player(name: "", turn: -1, hand: [], color: .red)
     

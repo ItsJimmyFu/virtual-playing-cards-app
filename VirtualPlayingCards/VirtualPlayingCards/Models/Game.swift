@@ -7,6 +7,7 @@
 
 import Foundation
 
+//Represents a State of the Game
 class Game : Identifiable, ObservableObject {
     let id: UUID
     var name: String
@@ -24,13 +25,8 @@ class Game : Identifiable, ObservableObject {
         self.turn = turn
     }
     
+    //Deals cards from deck to all the players equally based on the cardsPerHand
     func dealHand(){
-        /*
-        //Checking if cardsPerHand exceeds the possible number of cards in deck
-        if((cardsPerHand * players.count) < deck.count) {
-            cardsPerHand = deck.count / players.count
-        }
-        */
         for player in players {
             let hand : [Card] = Array(deck.prefix(cardsPerHand))
             for card in hand {
@@ -41,15 +37,18 @@ class Game : Identifiable, ObservableObject {
         }
     }
     
+    //Move to the nex tutrn in the game state
     func nextTurn(){
         turn = (turn + 1) % players.count
     }
     
+    //Get the next player who will be playing the next turn
     func getNextPlayer() -> Player {
         return players[(turn + 1) % players.count]
     }
 }
 
+//Create custom variables to be used in preview and default Game settings
 extension Game {
     static let emptyGame: Game = Game(name: "", players: [], cardsPerHand: 0, deck: [], turn: 0)
     static let sampleGame: Game = {

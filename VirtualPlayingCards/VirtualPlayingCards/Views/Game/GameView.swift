@@ -6,54 +6,32 @@
 //
 
 import SwiftUI
-
+// A view combining multiple different views for the entire game view
 struct GameView: View {
     @State var activeCards : [[Card]] = []
     @ObservedObject var gameState : Game
-    @State var isPresentingDetailedActiveCardsSheet : Bool = false
-    @State var isPresentingTurnTransitionSheet : Bool = false
     
     var body: some View {
+        //Set a constant for the width of a card
         let cardWidth : CGFloat = 100
         NavigationView {
             VStack {
                 Spacer()
-                OpponentView(gameState: gameState)
+                PlayersView(gameState: gameState)
                 Spacer()
                 HStack{
                     Spacer()
                     DeckView(cardWidth: 100, gameState: gameState)
                     Spacer()
-                    if(activeCards.count == 0){
-                        HStack (spacing:0) {
-                            EmptyCardView(cardWidth: cardWidth)
-                        }
-                        .frame(width: cardWidth)
-                    }
-                    else {
-                        ActiveCardsView(cardWidth: 100, activeCards: $activeCards.last!)
-                            .gesture(
-                                DragGesture(minimumDistance: 0) // Detect touch down and move
-                                    .onChanged { _ in
-                                        isPresentingDetailedActiveCardsSheet = true
-                                    }
-                                    .onEnded { _ in
-                                        isPresentingDetailedActiveCardsSheet = false
-                                    }
-                            )
-                    }
+                    ActiveCardsView(activeCards: $activeCards, cardWidth: cardWidth)
                     Spacer()
                     
                 }
-                AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards, isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
+                AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards)
                 Spacer()
             }
-            .sheet(isPresented: ($isPresentingDetailedActiveCardsSheet), content: {
-                DetailedActiveCardsSheet(cardWidth:100,activeCards: $activeCards, isPresentingDetailedActiveCardsSheet: $isPresentingDetailedActiveCardsSheet)
-            })
-            .sheet(isPresented: $isPresentingTurnTransitionSheet, content: {
-                TurnTransitionSheet(nextPlayer: gameState.players[gameState.turn], isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
-            })
+            
+            
         }
     }
 }

@@ -7,15 +7,18 @@
 
 import SwiftUI
 
-struct OpponentView: View {
+//A view to display all of the players in the game and highlight the current player's turn
+struct PlayersView: View {
     @ObservedObject var gameState : Game
     var body: some View {
         HStack {
             Spacer()
             ForEach(gameState.players.indices, id: \.self) {index in
                 VStack {
+                    //Display the player's name
                     Text(gameState.players[index].name)
                         .font(.headline)
+                    //Display the player's number of cards
                     ZStack {
                         Image("back")
                             .resizable()
@@ -27,6 +30,7 @@ struct OpponentView: View {
                     }
                 }
                 .padding()
+                //Highlight the background of it is the player's turn
                 .background((gameState.turn == index) ? Color.gray : Color.clear)
                 Spacer()
             }
@@ -38,5 +42,5 @@ struct OpponentView: View {
     @State var players: [Player] = Player.examplePlayers
     @State var game: Game = Game.sampleGame
     @State var turn: Int = 0
-    return OpponentView(gameState: game)
+    return PlayersView(gameState: game)
 }

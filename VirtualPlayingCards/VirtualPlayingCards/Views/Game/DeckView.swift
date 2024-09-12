@@ -7,16 +7,19 @@
 
 import SwiftUI
 
+//A view to display a deck of cards for the player to draw from
 struct DeckView: View {
     @State var cardWidth : CGFloat
     @ObservedObject var gameState : Game
     
     var body: some View {
         ZStack {
+            //Display the Empty Card View if deck is empty
             if(gameState.deck.count == 0){
                 EmptyCardView(cardWidth: cardWidth)
             }
             ForEach(gameState.deck.indices, id: \.self) { index in
+                //Display the top card at the top of the deck and allow the user to tap and move the card to their hand
                 if(index == (gameState.deck.count-1)){
                     Image("back")
                         .resizable()
@@ -31,6 +34,7 @@ struct DeckView: View {
                         }
                 }
                 else{
+                    //Display the cards at the bottom of deck at a random offset position and rotation
                     let randomOffsetX = CGFloat(Float.random(in: -5...5))
                     let randomOffsetY = CGFloat(Float.random(in: -5...5))
                     let randomDegrees : Angle = .degrees(Double.random(in: -10...10))

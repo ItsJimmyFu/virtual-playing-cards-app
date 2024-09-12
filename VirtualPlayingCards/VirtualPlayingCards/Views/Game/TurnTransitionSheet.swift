@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+//Displays a sheet which tells the user the player who has the next turn
 struct TurnTransitionSheet: View {
     @State var nextPlayer : Player
     @Binding var isPresentingTurnTransitionSheet : Bool
     var body: some View {
         ZStack {
+            //Instructions for user with background of the next player's color
             VStack {
                 Text("Pass to Next Player: \(nextPlayer.name)")
                     .font(.title)
@@ -21,6 +23,7 @@ struct TurnTransitionSheet: View {
                     .font(.headline)
                     .padding()
             }
+            //Add a tap gesture to a clear background to continue
             Color.clear
                 .contentShape(Rectangle())
                 .onTapGesture { _ in

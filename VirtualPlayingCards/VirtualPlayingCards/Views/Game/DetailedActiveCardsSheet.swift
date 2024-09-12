@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Shows a history of the active cards in play from previous turns
 struct DetailedActiveCardsSheet: View {
     @State var cardWidth : CGFloat
     @Binding var activeCards : [[Card]]
@@ -16,7 +17,8 @@ struct DetailedActiveCardsSheet: View {
     var body: some View {
         ZStack {
             ForEach(activeCards.indices, id: \.self) { idx in
-                ActiveCardsView(cardWidth: cardWidth, activeCards: $activeCards[idx])
+                //Display the active cards shifted down based on index
+                SimpleActiveCardsView(cardWidth: cardWidth, activeCards: $activeCards[idx])
                     .frame(width: cardWidth / 5 * (CGFloat(activeCards[idx].count) + 4) ,alignment: .topLeading)
                     .offset(y: cardHeight / 4 * CGFloat(idx))
             }

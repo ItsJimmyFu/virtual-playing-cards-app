@@ -2,38 +2,46 @@
 //  ActiveCardsView.swift
 //  VirtualPlayingCards
 //
-//  Created by Jimmy Fu on 2024-08-28.
+//  Created by Jimmy Fu on 2024-09-10.
 //
 
 import SwiftUI
 
+//A view to display the active cards in play
 struct ActiveCardsView: View {
+    @Binding var activeCards : [[Card]]
     @State var cardWidth : CGFloat
-    @Binding var activeCards : [Card]
-    @State var cardHeight : CGFloat = 150
-    
+    @State var isPresentingDetailedActiveCardsSheet : Bool = false
     var body: some View {
-        HStack (spacing:0) {
-            ForEach(activeCards.indices, id: \.self) { cardIdx in
-                let currentCard : Card = activeCards[cardIdx]
-                let borderColor = currentCard.player?.color ?? Color.black
-                Image(currentCard.imagePath)
-                    .resizable()
-                    .background(Color.white)
-                    .border(borderColor, width:2)
-                    .scaledToFit()
-                    .frame(width: cardWidth, height: cardHeight)
-                    .offset(x:-CGFloat(cardIdx) * cardWidth + CGFloat(cardIdx)*cardWidth/5,y:  0)
+        //If no cards have been played display the empty card view
+        if(activeCards.count == 0){
+            HStack (spacing:0) {
+                EmptyCardView(cardWidth: cardWidth)
             }
+            .frame(width: cardWidth)
         }
-        .frame(width: cardWidth / 5 * (CGFloat(activeCards.count) + 4) ,alignment: .topLeading)
+        else {
+            //Display the simple active cards view and on drag gesture display the detailed active card sheet
+            SimpleActiveCardsView(cardWidth: 100, activeCards: $activeCards.last!)
+                .gesture(
+                    DragGesture(minimumDistance: 0) // Detect touch down and move
+                        .onChanged { _ in
+                            isPresentingDetailedActiveCardsSheet = true
+                        }
+                        .onEnded { _ in
+                            isPresentingDetailedActiveCardsSheet = false
+                        }
+                )
+                .sheet(isPresented: ($isPresentingDetailedActiveCardsSheet), content: {
+                    DetailedActiveCardsSheet(cardWidth:100,activeCards: $activeCards, isPresentingDetailedActiveCardsSheet: $isPresentingDetailedActiveCardsSheet)
+                })
+        }
     }
 }
 
 #Preview {
     @State var players: [Player] = Player.examplePlayers
-    @State var activeCards : [Card] = [
-        Card(suit:"diamonds", rank: "2",player: players[0]), Card(suit:"hearts", rank: "2",player: players[0]), Card(suit: "clubs", rank: "2",player: players[0])]
-    return ActiveCardsView(cardWidth: 200, activeCards: $activeCards)
+    @State var activeCards : [[Card]] = [[
+        Card(suit:"diamonds", rank: "2",player: players[0]), Card(suit:"hearts", rank: "2",player: players[0]), Card(suit: "clubs", rank: "2",player: players[0])]]
+    return ActiveCardsView(activeCards: $activeCards, cardWidth: 150)
 }
-

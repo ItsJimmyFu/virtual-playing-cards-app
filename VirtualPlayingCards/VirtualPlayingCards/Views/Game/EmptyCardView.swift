@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Display for an empty view of cards
 struct EmptyCardView: View {
     @State var cardWidth : CGFloat
     var body: some View {

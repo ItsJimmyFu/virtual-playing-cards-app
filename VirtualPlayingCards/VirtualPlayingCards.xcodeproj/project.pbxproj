@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		BFA5A4322C7ECF8800017535 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4312C7ECF8800017535 /* DeckView.swift */; };
 		BFA5A4342C7F461500017535 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4332C7F461500017535 /* GameView.swift */; };
-		BFA5A4362C7F4BE100017535 /* ActiveCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4352C7F4BE100017535 /* ActiveCardsView.swift */; };
+		BFA5A4362C7F4BE100017535 /* SimpleActiveCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */; };
 		BFA5A4382C7F4CD400017535 /* EmptyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4372C7F4CD400017535 /* EmptyCardView.swift */; };
-		BFA5A43A2C806EC800017535 /* OpponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4392C806EC800017535 /* OpponentView.swift */; };
+		BFA5A43A2C806EC800017535 /* PlayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4392C806EC800017535 /* PlayersView.swift */; };
 		BFA5A43C2C806EF800017535 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43B2C806EF800017535 /* Player.swift */; };
 		BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43D2C80982400017535 /* AdvancedHandView.swift */; };
 		BFA5A4402C83FECC00017535 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43F2C83FECC00017535 /* MenuView.swift */; };
@@ -22,19 +22,22 @@
 		BFC212852C85CB010053FCB5 /* CardSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212842C85CB010053FCB5 /* CardSettingView.swift */; };
 		BFC2128A2C87E18C0053FCB5 /* ColorPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212892C87E18C0053FCB5 /* ColorPickerSheet.swift */; };
 		BFC2128C2C87E7580053FCB5 /* ColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC2128B2C87E7580053FCB5 /* ColorOption.swift */; };
+		BFC212902C9075700053FCB5 /* ActiveCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC2128F2C9075700053FCB5 /* ActiveCardsView.swift */; };
+		BFC212922C91D4550053FCB5 /* PlayerSettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212912C91D4550053FCB5 /* PlayerSettingSection.swift */; };
+		BFC212942C91DCD60053FCB5 /* CardSettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212932C91DCD60053FCB5 /* CardSettingSection.swift */; };
+		BFC212962C927C190053FCB5 /* AdvancedSettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212952C927C190053FCB5 /* AdvancedSettingSection.swift */; };
 		BFEF98B12C72353000A01B69 /* VirtualPlayingCardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */; };
 		BFEF98B52C72353200A01B69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B42C72353200A01B69 /* Assets.xcassets */; };
 		BFEF98B92C72353200A01B69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFEF98B82C72353200A01B69 /* Preview Assets.xcassets */; };
-		BFEF98C02C72361900A01B69 /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98BF2C72361900A01B69 /* HandView.swift */; };
 		BFEF98C42C7236F600A01B69 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF98C32C7236F600A01B69 /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BFA5A4312C7ECF8800017535 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		BFA5A4332C7F461500017535 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		BFA5A4352C7F4BE100017535 /* ActiveCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCardsView.swift; sourceTree = "<group>"; };
+		BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleActiveCardsView.swift; sourceTree = "<group>"; };
 		BFA5A4372C7F4CD400017535 /* EmptyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCardView.swift; sourceTree = "<group>"; };
-		BFA5A4392C806EC800017535 /* OpponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentView.swift; sourceTree = "<group>"; };
+		BFA5A4392C806EC800017535 /* PlayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersView.swift; sourceTree = "<group>"; };
 		BFA5A43B2C806EF800017535 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		BFA5A43D2C80982400017535 /* AdvancedHandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedHandView.swift; sourceTree = "<group>"; };
 		BFA5A43F2C83FECC00017535 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -45,12 +48,15 @@
 		BFC212842C85CB010053FCB5 /* CardSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSettingView.swift; sourceTree = "<group>"; };
 		BFC212892C87E18C0053FCB5 /* ColorPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheet.swift; sourceTree = "<group>"; };
 		BFC2128B2C87E7580053FCB5 /* ColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOption.swift; sourceTree = "<group>"; };
+		BFC2128F2C9075700053FCB5 /* ActiveCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCardsView.swift; sourceTree = "<group>"; };
+		BFC212912C91D4550053FCB5 /* PlayerSettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSettingSection.swift; sourceTree = "<group>"; };
+		BFC212932C91DCD60053FCB5 /* CardSettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSettingSection.swift; sourceTree = "<group>"; };
+		BFC212952C927C190053FCB5 /* AdvancedSettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingSection.swift; sourceTree = "<group>"; };
 		BFEF98AD2C72353000A01B69 /* VirtualPlayingCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualPlayingCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEF98B02C72353000A01B69 /* VirtualPlayingCardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualPlayingCardsApp.swift; sourceTree = "<group>"; };
 		BFEF98B42C72353200A01B69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BFEF98B62C72353200A01B69 /* VirtualPlayingCards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VirtualPlayingCards.entitlements; sourceTree = "<group>"; };
 		BFEF98B82C72353200A01B69 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BFEF98BF2C72361900A01B69 /* HandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandView.swift; sourceTree = "<group>"; };
 		BFEF98C32C7236F600A01B69 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +78,9 @@
 				BFA5A4412C84038600017535 /* SettingsView.swift */,
 				BFC212842C85CB010053FCB5 /* CardSettingView.swift */,
 				BFC212892C87E18C0053FCB5 /* ColorPickerSheet.swift */,
+				BFC212912C91D4550053FCB5 /* PlayerSettingSection.swift */,
+				BFC212932C91DCD60053FCB5 /* CardSettingSection.swift */,
+				BFC212952C927C190053FCB5 /* AdvancedSettingSection.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -79,15 +88,15 @@
 		BFC2128E2C8DC4520053FCB5 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				BFEF98BF2C72361900A01B69 /* HandView.swift */,
 				BFA5A4312C7ECF8800017535 /* DeckView.swift */,
 				BFA5A4332C7F461500017535 /* GameView.swift */,
-				BFA5A4352C7F4BE100017535 /* ActiveCardsView.swift */,
+				BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */,
 				BFA5A4372C7F4CD400017535 /* EmptyCardView.swift */,
-				BFA5A4392C806EC800017535 /* OpponentView.swift */,
+				BFA5A4392C806EC800017535 /* PlayersView.swift */,
 				BFA5A43D2C80982400017535 /* AdvancedHandView.swift */,
 				BFC212802C859CD50053FCB5 /* DetailedActiveCardsSheet.swift */,
 				BFC212822C85C6620053FCB5 /* TurnTransitionSheet.swift */,
+				BFC2128F2C9075700053FCB5 /* ActiveCardsView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -224,10 +233,10 @@
 				BFEF98C42C7236F600A01B69 /* Card.swift in Sources */,
 				BFC2128A2C87E18C0053FCB5 /* ColorPickerSheet.swift in Sources */,
 				BFC212852C85CB010053FCB5 /* CardSettingView.swift in Sources */,
-				BFA5A4362C7F4BE100017535 /* ActiveCardsView.swift in Sources */,
+				BFA5A4362C7F4BE100017535 /* SimpleActiveCardsView.swift in Sources */,
 				BFA5A4442C845AE100017535 /* Game.swift in Sources */,
-				BFA5A43A2C806EC800017535 /* OpponentView.swift in Sources */,
-				BFEF98C02C72361900A01B69 /* HandView.swift in Sources */,
+				BFA5A43A2C806EC800017535 /* PlayersView.swift in Sources */,
+				BFC212902C9075700053FCB5 /* ActiveCardsView.swift in Sources */,
 				BFA5A4322C7ECF8800017535 /* DeckView.swift in Sources */,
 				BFA5A4342C7F461500017535 /* GameView.swift in Sources */,
 				BFA5A4402C83FECC00017535 /* MenuView.swift in Sources */,
@@ -235,8 +244,11 @@
 				BFC212832C85C6620053FCB5 /* TurnTransitionSheet.swift in Sources */,
 				BFC2128C2C87E7580053FCB5 /* ColorOption.swift in Sources */,
 				BFA5A4422C84038600017535 /* SettingsView.swift in Sources */,
+				BFC212962C927C190053FCB5 /* AdvancedSettingSection.swift in Sources */,
+				BFC212942C91DCD60053FCB5 /* CardSettingSection.swift in Sources */,
 				BFA5A4382C7F4CD400017535 /* EmptyCardView.swift in Sources */,
 				BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */,
+				BFC212922C91D4550053FCB5 /* PlayerSettingSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

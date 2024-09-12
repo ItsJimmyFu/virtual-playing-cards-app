@@ -7,19 +7,25 @@
 
 import Foundation
 
+// Represents a Playing Card with Suit or Rank
 class Card: Identifiable, Equatable {
     let id: UUID
+    //Suit of the card: Hearts, Spades, Diamonds, Clubs, (Red or Black for Joker)
     var suit: String
+    
+    //Rank of the card: Ace, 2 - 10, Jack, Queen, King, Joker
     var rank: String
     var imagePath: String
     var player: Player?
     var selected: Bool
     
+    //Initalize a new card with the given Suit and Rank
     init(id: UUID = UUID(), suit: String, rank: String){
         self.id = id
         self.suit = suit
         self.rank = rank
         
+        //Check for a special case if initializing a joker card
         if(self.rank == "joker"){
             self.imagePath = self.suit + "_" + self.rank
         }
@@ -30,11 +36,13 @@ class Card: Identifiable, Equatable {
         self.selected = false
     }
     
+    //Initializes a new card with given Suit and Rank and the Player holding the card
     init(id: UUID = UUID(), suit: String, rank: String, player: Player){
         self.id = id
         self.suit = suit
         self.rank = rank
         
+        //Check for a special case if initializing a joker card
         if(self.rank == "joker"){
             self.imagePath = self.suit + "_" + self.rank
         }
@@ -45,11 +53,13 @@ class Card: Identifiable, Equatable {
         self.selected = true
     }
     
+    //Check if two cards are the same
     static func == (lhs: Card, rhs: Card) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.suit == rhs.suit && lhs.rank == rhs.rank
     }
 }
 
+//Create custom variables to be used in preview and default card settings
 extension Card {
     static let defaultDeck: [Card] = {
         var cards: [Card] = []

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+//Unused model - delete later
 struct ColorOption: Identifiable, Equatable {
     var id = UUID()
     var color: Color
