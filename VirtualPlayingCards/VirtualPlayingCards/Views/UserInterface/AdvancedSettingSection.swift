@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AdvancedSettingSection: View {
-    @State var showActiveCards: Bool = false
+    @Binding var showActiveCards: Bool
     
     var body: some View {
         //TODO Add DisclosureGroup
@@ -31,5 +31,8 @@ struct AdvancedSettingSection: View {
 }
 
 #Preview {
-    AdvancedSettingSection()
+    @State var game : Game = Game.sampleGame
+    return Form {
+        AdvancedSettingSection(showActiveCards: $game.showActiveCards)
+    }
 }

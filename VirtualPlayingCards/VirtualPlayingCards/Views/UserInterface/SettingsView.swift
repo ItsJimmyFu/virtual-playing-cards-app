@@ -23,7 +23,7 @@ struct SettingsView: View {
         Form {
             PlayerSettingSection(players: $game.players)
             CardSettingSection(selected: $game.deck, players: $game.players, cardsPerHand: $cardsPerHand)
-            AdvancedSettingSection()
+            AdvancedSettingSection(showActiveCards: $game.showActiveCards)
             
             Button(action: {
                 if(game.players.count == 0){

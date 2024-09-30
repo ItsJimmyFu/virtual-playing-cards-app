@@ -15,6 +15,7 @@ class Game : Identifiable, ObservableObject {
     @Published var cardsPerHand : Int
     @Published var deck : [Card]
     @Published var turn : Int
+    @Published var showActiveCards : Bool = false
     
     init(id: UUID = UUID(), name: String, players: [Player], cardsPerHand: Int, deck: [Card], turn : Int) {
         self.id = id
@@ -37,7 +38,14 @@ class Game : Identifiable, ObservableObject {
         }
     }
     
-    //Move to the nex tutrn in the game state
+    //Draw a card for the current player in a turn
+    func drawCard(){
+        let newCard : Card = deck.popLast()!
+        newCard.player = players[turn]
+        players[turn].hand.append(newCard)
+    }
+    
+    //Move to the nex turn in the game state
     func nextTurn(){
         turn = (turn + 1) % players.count
     }

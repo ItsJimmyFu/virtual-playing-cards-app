@@ -28,9 +28,7 @@ struct DeckView: View {
                         .background(Color.white)
                         .border(Color.black,width:0.5)
                         .onTapGesture {
-                            let newCard : Card = gameState.deck.popLast()!
-                            newCard.player = gameState.players[gameState.turn]
-                            gameState.players[gameState.turn].hand.append(newCard)
+                            gameState.drawCard()
                         }
                 }
                 else{
