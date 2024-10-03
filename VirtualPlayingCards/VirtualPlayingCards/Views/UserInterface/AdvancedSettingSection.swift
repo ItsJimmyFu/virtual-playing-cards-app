@@ -31,8 +31,8 @@ struct AdvancedSettingSection: View {
 }
 
 #Preview {
-    @State var game : GameState = GameState.sampleGame
+    @State var game : GameManager = GameManager.sampleGame
     return Form {
-        AdvancedSettingSection(showActiveCards: $game.showActiveCards)
+        AdvancedSettingSection(showActiveCards: $game.settings.showActiveCards)
     }
 }

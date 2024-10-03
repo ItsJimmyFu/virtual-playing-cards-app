@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject var game : GameState = GameState.emptyGame
+    @StateObject var game : GameManager = GameManager.emptyGame
     
     @State var isGameViewActive : Bool = false
 
@@ -21,21 +21,21 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
-            PlayerSettingSection(players: $game.players)
-            CardSettingSection(selected: $game.deck, players: $game.players, cardsPerHand: $cardsPerHand)
-            AdvancedSettingSection(showActiveCards: $game.showActiveCards)
+            PlayerSettingSection(players: $game.currentGameState.players)
+            CardSettingSection(selected: $game.currentGameState.deck, players: $game.currentGameState.players, cardsPerHand: $cardsPerHand)
+            AdvancedSettingSection(showActiveCards: $game.settings.showActiveCards)
             
             Button(action: {
-                if(game.players.count == 0){
+                if(game.currentGameState.players.count == 0){
                     showInvalidGameAlert = true
                     errorMessage = "Player"
                 }
-                else if(game.deck.count == 0) {
+                else if(game.currentGameState.deck.count == 0) {
                     showInvalidGameAlert = true
                     errorMessage = "Deck"
                 }
                 else{
-                    game.cardsPerHand = Int(cardsPerHand)
+                    game.settings.cardsPerHand = Int(cardsPerHand)
                     game.dealHand()
                     isGameViewActive = true
                 }
@@ -50,7 +50,7 @@ struct SettingsView: View {
                     .cornerRadius(10)
             })
             .fullScreenCover(isPresented: $isGameViewActive, content: {
-                GameView(gameState: game)
+                GameView(gameManager: game)
             })
         }
         .alert(isPresented: $showInvalidGameAlert) {

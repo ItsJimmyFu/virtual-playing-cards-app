@@ -12,9 +12,7 @@ struct TestFirebaseView: View {
     
     var body: some View {
         Button(action: {
-            let gs : GameState = GameState.sampleGame
-            let set : GameSetting = GameSetting()
-            let gm : GameManager = GameManager(currentGame: gs, settings: set)
+            let gm : GameManager = GameManager.sampleGame
             gameCode = gm.gameCode
         }, label: {
             Text("Create New Data")

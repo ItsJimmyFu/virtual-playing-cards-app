@@ -8,46 +8,24 @@
 import Foundation
 
 //Represents a State of the Game
-class GameState : Identifiable, ObservableObject {
+class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
+
     let id: UUID
     var name: String
     @Published var players : [Player]
-    @Published var cardsPerHand : Int
     @Published var deck : [Card]
     @Published var turn : Int
-    @Published var showActiveCards : Bool = false
     
-    init(id: UUID = UUID(), name: String, players: [Player], cardsPerHand: Int, deck: [Card], turn : Int) {
+    init(id: UUID = UUID(), name: String, players: [Player], deck: [Card], turn : Int) {
         self.id = id
         self.name = name
         self.players = players
-        self.cardsPerHand = cardsPerHand
         self.deck = deck
         self.turn = turn
     }
     
-    //Deals cards from deck to all the players equally based on the cardsPerHand
-    func dealHand(){
-        for player in players {
-            let hand : [Card] = Array(deck.prefix(cardsPerHand))
-            for card in hand {
-                card.player = player
-            }
-            player.hand = hand
-            deck = Array(deck.dropFirst(cardsPerHand))
-        }
-    }
-    
-    //Draw a card for the current player in a turn
-    func drawCard(){
-        let newCard : Card = deck.popLast()!
-        newCard.player = players[turn]
-        players[turn].hand.append(newCard)
-    }
-    
-    //Move to the nex turn in the game state
-    func nextTurn(){
-        turn = (turn + 1) % players.count
+    func copy(with zone: NSZone? = nil) -> Any {
+        return GameState(name: self.name, players: self.players, deck: self.deck, turn: self.turn)
     }
     
     //Get the next player who will be playing the next turn
@@ -58,11 +36,5 @@ class GameState : Identifiable, ObservableObject {
 
 //Create custom variables to be used in preview and default Game settings
 extension GameState {
-    static let emptyGame: GameState = GameState(name: "", players: [], cardsPerHand: 0, deck: [], turn: 0)
-    static let sampleGame: GameState = {
-        var game = GameState(name: "Sample Game", players: Player.gamePlayers, cardsPerHand: 5, deck: Card.defaultDeck, turn: 0)
-        game.deck.shuffle()
-        game.dealHand()
-        return game
-    }()
+    static let emptyGame: GameState = GameState(name: "", players: [], deck: [], turn: 0)
 }

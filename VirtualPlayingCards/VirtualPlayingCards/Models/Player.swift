@@ -11,10 +11,11 @@ import SwiftUI
 //Represents the details of a Player in the game and their hand of cards
 class Player : Identifiable, Equatable, ObservableObject {
     let id: UUID
-    var name: String
-    var turn: Int
-    var hand: [Card]
     var color: Color
+    var name: String
+    @Published var turn: Int
+    @Published var hand: [Card]
+    
     
     //Initializes a player with name, turn ordering, hand and color
     init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {

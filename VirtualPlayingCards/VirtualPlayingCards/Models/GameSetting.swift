@@ -7,8 +7,16 @@
 
 import Foundation
 
-class GameSetting {
-    init(){
-        
+class GameSetting : ObservableObject {
+    @Published var cardsPerHand : Int
+    @Published var showActiveCards : Bool
+    
+    init(cardsPerHand: Int, showActiveCards: Bool) {
+        self.cardsPerHand = cardsPerHand
+        self.showActiveCards = showActiveCards
     }
+}
+
+extension GameSetting {
+    static let defaultSettings = GameSetting(cardsPerHand: 3, showActiveCards: true)
 }
