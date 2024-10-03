@@ -25,6 +25,16 @@ class GameManager : ObservableObject, Identifiable {
         self.ref = Database.database().reference()
     }
     
+    init(gamecode: String){
+        self.ref = Database.database().reference()
+        self.gameCode = gamecode
+        self.history = []
+        self.settings = GameSetting.defaultSettings
+        self.currentGameState = GameState.emptyGame
+        
+        self.fetchItems()
+    }
+    
     //Deals cards from deck to all the players equally based on the cardsPerHand
     func dealHand(){
         for player in currentGameState.players {
@@ -65,11 +75,31 @@ class GameManager : ObservableObject, Identifiable {
     
     func encode() -> [String: Any] {
         let gameData: [String: Any] = [
-            "history": history.map { $0.encode()},
+            "history": Dictionary(uniqueKeysWithValues: history.enumerated().map { (String($0.offset), $0.element.encode()) }),
+            //"history": history.map {$0.encode() }),
             "current_game_state": currentGameState.encode(),
             "settings": settings.encode()
         ]
         return gameData
+    }
+    
+    func decode(from dict: [String: Any]) {
+        guard let history = dict["history"] as? [Any],
+              let curGameState = dict["current_game_state"] as? [String:Any],
+              let settings = dict["settings"] as? [String:Any] else {
+                  print("Invalid GameManager")
+            return  // Return nil if any required field is missing
+        }
+        self.history = []
+        
+        for gameState in history {
+            let newGameState : GameState = GameState.emptyGame
+            newGameState.decode(from: gameState as! [String : Any])
+            self.history.append(newGameState)
+        }
+        
+        self.settings.decode(from: settings)
+        self.currentGameState.decode(from: curGameState)
     }
     
     //Save the game to the database
@@ -78,10 +108,28 @@ class GameManager : ObservableObject, Identifiable {
             if let error = error {
                 print("Error saving user to database: \(error.localizedDescription)")
             } else {
-                print("User saved successfully!")
+                print("Game saved successfully!")
             }
         }
     }
+    
+    func fetchItems() {
+        // Observe changes in the "items" node
+        ref?.child("games").child(gameCode).observe(.value) { snapshot in
+            self.decode(from: snapshot.value as! [String : Any])
+        }
+    }
+
+    /*
+    func updateItem(item: Item) {
+        let itemRef = ref.child("items").child(item.id)
+        do {
+            try itemRef.setValue(["name": item.name, "value": item.value])
+        } catch {
+            print("Error updating item: \(error)")
+        }
+    }
+     */
 }
 
 //Create custom variables to be used in preview and default Game settings

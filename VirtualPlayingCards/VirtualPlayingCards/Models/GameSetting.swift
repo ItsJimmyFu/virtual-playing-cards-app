@@ -24,6 +24,15 @@ class GameSetting : ObservableObject {
         return gameSettings
     }
     
+    func decode(from dict: [String: Any]) {
+        guard let cardsPerHand = dict["cardsPerHand"] as? Int,
+              let showActiveCards = dict["showActiveCards"] as? Bool else {
+                  print("Invalid Game")
+            return
+        }
+        self.cardsPerHand = cardsPerHand
+        self.showActiveCards = showActiveCards
+    }
 }
 
 extension GameSetting {

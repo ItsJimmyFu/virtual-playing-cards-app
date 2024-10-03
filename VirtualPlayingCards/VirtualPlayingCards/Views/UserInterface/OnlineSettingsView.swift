@@ -10,7 +10,7 @@ import SwiftUI
 struct OnlineSettingsView: View {
     @StateObject var game : GameManager = GameManager.emptyGame
     
-    @State var isGameViewActive : Bool = false
+    @State var isOnlineLobbyViewActive : Bool = false
 
     @State var cardsPerHand : Double = 5
     
@@ -34,7 +34,7 @@ struct OnlineSettingsView: View {
                     game.settings.cardsPerHand = Int(cardsPerHand)
                     //game.dealHand()
                     //game.saveToDatabase()
-                    isGameViewActive = true
+                    isOnlineLobbyViewActive = true
                 }
 
                 
@@ -47,8 +47,8 @@ struct OnlineSettingsView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
             })
-            .fullScreenCover(isPresented: $isGameViewActive, content: {
-                GameView(gameManager: game)
+            .fullScreenCover(isPresented: $isOnlineLobbyViewActive, content: {
+                OnlineLobbyView(gameManager: game)
             })
         }
         .alert(isPresented: $showInvalidGameAlert) {

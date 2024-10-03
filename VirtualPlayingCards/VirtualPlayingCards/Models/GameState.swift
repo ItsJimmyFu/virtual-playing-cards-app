@@ -42,6 +42,30 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
         ]
         return gameState
     }
+    
+    func decode(from dict: [String: Any]) {
+        guard let name = dict["name"] as? String,
+              let players = dict["players"] as? [Any],
+              let deck = dict["deck"] as? [Any],
+              let turn = dict["turn"] as? Int else {
+            print("Invalid GameState")
+            return
+        }
+        self.name = name
+        self.players = []
+        for player in players {
+            let newPlayer : Player = Player.empty
+            newPlayer.decode(from: player as! [String : Any])
+            self.players.append(newPlayer)
+        }
+        self.deck = []
+        for card in deck {
+            let newCard : Card = Card.empty
+            newCard.decode(from: card as! [String : Any])
+            self.deck.append(newCard)
+        }
+        self.turn = turn
+    }
 }
 
 //Create custom variables to be used in preview and default Game settings

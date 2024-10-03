@@ -33,7 +33,32 @@ class Player : Identifiable, Equatable, ObservableObject {
     func encode() -> [String: Any] {
         let color = color
         
-        return ["name" : name, "color": color.toHex(), "turn": turn, "hand": hand.map { $0.encode()}]
+        return ["name" : name, "color": color.toRGBString(), "turn": turn, "hand": hand.map { $0.encode()}]
+    }
+    
+    func decode(from dict: [String: Any]) {
+        guard let name = dict["name"] as? String,
+              let turn = dict["turn"] as? Int,
+              let hand = dict["hand"] as? [Any],
+              let colorStr = dict["color"] as? String else {
+            print("Invalid GameState")
+            return
+        }
+        self.name = name
+        self.turn = turn
+        guard let color = Color.fromRGBString(rgbString: colorStr) else {
+            print("Invalid color in player")
+            return
+        }
+        self.hand = []
+        for card in hand {
+            let newCard : Card = Card.empty
+            newCard.decode(from: card as! [String : Any])
+            self.hand.append(newCard)
+        }
+        self.color = color
+        
+        
     }
 }
 //Create custom variables to be used in previews
@@ -59,15 +84,6 @@ extension Player {
 }
 
 extension Color {
-    func toHex() -> String {
-        let components = self.cgColor?.components ?? [0, 0, 0, 0]
-        let r = Int(components[0] * 255)
-        let g = Int(components[1] * 255)
-        let b = Int(components[2] * 255)
-
-        return String(format: "#%02X%02X%02X", r, g, b)
-    }
-    
     func toRGBString() -> String {
         let components = self.cgColor?.components ?? [0, 0, 0, 0]
         let r = Int(components[0] * 255)
@@ -76,4 +92,25 @@ extension Color {
 
         return "RGB(\(r), \(g), \(b))"
     }
+    
+    static func fromRGBString(rgbString: String) -> Color? {
+            // Remove "RGB(" and ")" and trim whitespace
+            let cleanedString = rgbString.replacingOccurrences(of: "RGB(", with: "").replacingOccurrences(of: ")", with: "").trimmingCharacters(in: .whitespaces)
+
+            // Split the string by commas
+            let components = cleanedString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
+
+            // Ensure there are exactly three components
+            guard components.count == 3,
+                  let r = Double(components[0]),
+                  let g = Double(components[1]),
+                  let b = Double(components[2]),
+                  r >= 0, r <= 255,
+                  g >= 0, g <= 255,
+                  b >= 0, b <= 255 else {
+                return nil
+            }
+
+            return Color(red: r / 255.0, green: g / 255.0, blue: b / 255.0)
+        }
 }
