@@ -57,6 +57,10 @@ class Card: Identifiable, Equatable {
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.suit == rhs.suit && lhs.rank == rhs.rank
     }
+    
+    func encode() -> [String: Any] {
+        return ["suit": suit, "rank": rank]
+    }
 }
 
 //Create custom variables to be used in preview and default card settings

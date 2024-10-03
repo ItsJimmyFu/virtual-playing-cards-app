@@ -30,6 +30,11 @@ class Player : Identifiable, Equatable, ObservableObject {
         return (lhs.id == rhs.id)
     }
     
+    func encode() -> [String: Any] {
+        let color = color
+        
+        return ["name" : name, "color": color.toHex(), "turn": turn, "hand": hand.map { $0.encode()}]
+    }
 }
 //Create custom variables to be used in previews
 extension Player {
@@ -51,4 +56,24 @@ extension Player {
     
     static let curPlayer: Player = Player(name: "Jimmy", turn: 0, hand: [], color: Color.yellow)
 
+}
+
+extension Color {
+    func toHex() -> String {
+        let components = self.cgColor?.components ?? [0, 0, 0, 0]
+        let r = Int(components[0] * 255)
+        let g = Int(components[1] * 255)
+        let b = Int(components[2] * 255)
+
+        return String(format: "#%02X%02X%02X", r, g, b)
+    }
+    
+    func toRGBString() -> String {
+        let components = self.cgColor?.components ?? [0, 0, 0, 0]
+        let r = Int(components[0] * 255)
+        let g = Int(components[1] * 255)
+        let b = Int(components[2] * 255)
+
+        return "RGB(\(r), \(g), \(b))"
+    }
 }

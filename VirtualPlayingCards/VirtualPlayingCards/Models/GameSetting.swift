@@ -15,6 +15,15 @@ class GameSetting : ObservableObject {
         self.cardsPerHand = cardsPerHand
         self.showActiveCards = showActiveCards
     }
+    
+    func encode() -> [String: Any]{
+        let gameSettings: [String: Any] = [
+            "cardsPerHand": cardsPerHand,
+            "showActiveCards": showActiveCards
+        ]
+        return gameSettings
+    }
+    
 }
 
 extension GameSetting {

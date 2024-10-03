@@ -32,6 +32,16 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
     func getNextPlayer() -> Player {
         return players[(turn + 1) % players.count]
     }
+    
+    func encode() -> [String: Any] {
+        let gameState : [String: Any] = [
+            "name": name,
+            "players": players.map { $0.encode()},
+            "deck": deck.map { $0.encode()},
+            "turn": turn
+        ]
+        return gameState
+    }
 }
 
 //Create custom variables to be used in preview and default Game settings

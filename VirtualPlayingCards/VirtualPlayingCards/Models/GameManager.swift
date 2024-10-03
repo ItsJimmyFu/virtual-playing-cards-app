@@ -39,7 +39,7 @@ class GameManager : ObservableObject, Identifiable {
     
     //Draw a card for the current player in a turn
     func drawCard(){
-        var newGameState : GameState = currentGameState.copy() as! GameState
+        let newGameState : GameState = currentGameState.copy() as! GameState
         
         let newCard : Card = newGameState.deck.popLast()!
         newCard.player = newGameState.players[newGameState.turn]
@@ -50,7 +50,7 @@ class GameManager : ObservableObject, Identifiable {
     
     //Move to the next turn in the game state
     func nextTurn(){
-        var newGameState : GameState = currentGameState.copy() as! GameState
+        let newGameState : GameState = currentGameState.copy() as! GameState
         
         newGameState.turn = (newGameState.turn + 1) % newGameState.players.count
         
@@ -64,8 +64,9 @@ class GameManager : ObservableObject, Identifiable {
     
     func encode() -> [String: Any] {
         let gameData: [String: Any] = [
-            "history": ["GameState":123],
-            "settings": "abcd"
+            "history": ["history": history.map { $0.encode()}],
+            "current_game_state": currentGameState.encode(),
+            "settings": settings.encode()
         ]
         return gameData
     }
