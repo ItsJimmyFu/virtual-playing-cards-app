@@ -10,7 +10,7 @@ import SwiftUI
 //A view to display a deck of cards for the player to draw from
 struct DeckView: View {
     @State var cardWidth : CGFloat
-    @ObservedObject var gameState : Game
+    @ObservedObject var gameState : GameState
     
     var body: some View {
         ZStack {
@@ -49,6 +49,6 @@ struct DeckView: View {
 }
 
 #Preview {
-    @State var game : Game = Game.sampleGame
+    @State var game : GameState = GameState.sampleGame
     return DeckView(cardWidth: 200, gameState: game)
 }

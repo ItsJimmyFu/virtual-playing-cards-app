@@ -8,7 +8,7 @@
 import Foundation
 
 //Represents a State of the Game
-class Game : Identifiable, ObservableObject {
+class GameState : Identifiable, ObservableObject {
     let id: UUID
     var name: String
     @Published var players : [Player]
@@ -57,10 +57,10 @@ class Game : Identifiable, ObservableObject {
 }
 
 //Create custom variables to be used in preview and default Game settings
-extension Game {
-    static let emptyGame: Game = Game(name: "", players: [], cardsPerHand: 0, deck: [], turn: 0)
-    static let sampleGame: Game = {
-        var game = Game(name: "Sample Game", players: Player.gamePlayers, cardsPerHand: 5, deck: Card.defaultDeck, turn: 0)
+extension GameState {
+    static let emptyGame: GameState = GameState(name: "", players: [], cardsPerHand: 0, deck: [], turn: 0)
+    static let sampleGame: GameState = {
+        var game = GameState(name: "Sample Game", players: Player.gamePlayers, cardsPerHand: 5, deck: Card.defaultDeck, turn: 0)
         game.deck.shuffle()
         game.dealHand()
         return game

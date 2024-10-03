@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject var game : Game = Game.emptyGame
+    @StateObject var game : GameState = GameState.emptyGame
     
     @State var isGameViewActive : Bool = false
 

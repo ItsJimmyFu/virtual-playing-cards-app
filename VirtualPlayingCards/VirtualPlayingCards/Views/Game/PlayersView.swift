@@ -9,7 +9,7 @@ import SwiftUI
 
 //A view to display all of the players in the game and highlight the current player's turn
 struct PlayersView: View {
-    @ObservedObject var gameState : Game
+    @ObservedObject var gameState : GameState
     var body: some View {
         HStack {
             Spacer()
@@ -40,7 +40,7 @@ struct PlayersView: View {
 
 #Preview {
     @State var players: [Player] = Player.examplePlayers
-    @State var game: Game = Game.sampleGame
+    @State var game: GameState = GameState.sampleGame
     @State var turn: Int = 0
     return PlayersView(gameState: game)
 }

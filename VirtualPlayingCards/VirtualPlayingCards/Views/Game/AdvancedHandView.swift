@@ -11,7 +11,7 @@ import SwiftUI
 struct AdvancedHandView: View {
     @State var cardWidth : CGFloat
     @State var cardHeight : CGFloat? = nil
-    @ObservedObject var gameState : Game
+    @ObservedObject var gameState : GameState
     @State private var offsetRotation : CGFloat = 0
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
@@ -126,7 +126,7 @@ struct AdvancedHandView: View {
     @State var player : Player = Player.examplePlayers[0]
     @State var activeCards : [[Card]] = []
     @State var playerCount: Int = 4
-    @State var gameState : Game = Game.sampleGame
+    @State var gameState : GameState = GameState.sampleGame
     @State var isPresentingTurnTransitionSheet : Bool = false
     return AdvancedHandView(cardWidth: cardWidth, gameState: gameState, activeCards: $activeCards)
 }

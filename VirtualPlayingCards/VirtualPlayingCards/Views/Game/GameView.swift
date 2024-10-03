@@ -9,7 +9,7 @@ import SwiftUI
 // A view combining multiple different views for the entire game view
 struct GameView: View {
     @State var activeCards : [[Card]] = []
-    @ObservedObject var gameState : Game
+    @ObservedObject var gameState : GameState
     
     var body: some View {
         //Set a constant for the width of a card
@@ -37,6 +37,6 @@ struct GameView: View {
 }
 
 #Preview {
-    @State var gameState : Game = Game.sampleGame
+    @State var gameState : GameState = GameState.sampleGame
     return GameView(gameState: gameState)
 }
