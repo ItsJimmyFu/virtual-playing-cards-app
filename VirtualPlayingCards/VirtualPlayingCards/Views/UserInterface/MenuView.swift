@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MenuView: View {
-    @State private var isPresentingOnlineSettingView = false
+    @State private var isPresentingHostSettingView = false
+    @State private var isPresentingJoinView = false
     @State private var isPresentingLocalSettingView = false
     
     var body: some View {
@@ -44,7 +45,7 @@ struct MenuView: View {
                     .padding(.vertical)
                 
                 Button(action: {
-                    isPresentingOnlineSettingView = true
+                    isPresentingHostSettingView = true
                 }, label: {
                     Text("Host Game")
                         .font(.title)
@@ -54,7 +55,7 @@ struct MenuView: View {
                 .foregroundColor(.black)
                 .cornerRadius(10)
                 Button(action: {
-                    isPresentingOnlineSettingView = true
+                    isPresentingJoinView = true
                 }, label: {
                     Text("Join Game")
                         .font(.title)
@@ -67,6 +68,18 @@ struct MenuView: View {
                 Spacer()
             }
         }
+        .sheet(isPresented: $isPresentingJoinView) {
+            NavigationStack {
+                JoinView()
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction){
+                            Button("Back"){
+                                isPresentingJoinView = false
+                            }
+                        }
+                    }
+            }
+        }
         .sheet(isPresented: $isPresentingLocalSettingView) {
             NavigationStack {
                 LocalSettingsView()
@@ -75,6 +88,19 @@ struct MenuView: View {
                         ToolbarItem(placement: .cancellationAction){
                             Button("Back"){
                                 isPresentingLocalSettingView = false
+                            }
+                        }
+                    }
+            }
+        }
+        .sheet(isPresented: $isPresentingHostSettingView) {
+            NavigationStack {
+                LocalSettingsView()
+                    .navigationTitle("Menu")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction){
+                            Button("Back"){
+                                isPresentingHostSettingView = false
                             }
                         }
                     }

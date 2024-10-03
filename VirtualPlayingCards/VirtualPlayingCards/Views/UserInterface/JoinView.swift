@@ -15,10 +15,8 @@ struct JoinView: View {
     var body: some View {
         VStack{
             Spacer()
-            Spacer()
             Text("Input Game Code")
                 .font(.title)
-            Spacer()
             ZStack {
                 // Invisible TextField
                 TextField("", text: $gameCode)

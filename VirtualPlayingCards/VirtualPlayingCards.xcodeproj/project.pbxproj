@@ -16,6 +16,7 @@
 		BF3B802B2CAE305600ADCED5 /* TestFirebaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B802A2CAE305600ADCED5 /* TestFirebaseView.swift */; };
 		BF3B802D2CAE79E300ADCED5 /* OnlineSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B802C2CAE79E300ADCED5 /* OnlineSettingsView.swift */; };
 		BF3B802F2CAE835800ADCED5 /* JoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B802E2CAE835800ADCED5 /* JoinView.swift */; };
+		BF3B80332CAE9A2300ADCED5 /* OnlineLobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B80322CAE9A2300ADCED5 /* OnlineLobbyView.swift */; };
 		BFA5A4322C7ECF8800017535 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4312C7ECF8800017535 /* DeckView.swift */; };
 		BFA5A4342C7F461500017535 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4332C7F461500017535 /* GameView.swift */; };
 		BFA5A4362C7F4BE100017535 /* SimpleActiveCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */; };
@@ -48,6 +49,7 @@
 		BF3B802A2CAE305600ADCED5 /* TestFirebaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFirebaseView.swift; sourceTree = "<group>"; };
 		BF3B802C2CAE79E300ADCED5 /* OnlineSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSettingsView.swift; sourceTree = "<group>"; };
 		BF3B802E2CAE835800ADCED5 /* JoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinView.swift; sourceTree = "<group>"; };
+		BF3B80322CAE9A2300ADCED5 /* OnlineLobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineLobbyView.swift; sourceTree = "<group>"; };
 		BFA5A4312C7ECF8800017535 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		BFA5A4332C7F461500017535 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleActiveCardsView.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				BFC212932C91DCD60053FCB5 /* CardSettingSection.swift */,
 				BFC212952C927C190053FCB5 /* AdvancedSettingSection.swift */,
 				BF3B802E2CAE835800ADCED5 /* JoinView.swift */,
+				BF3B80322CAE9A2300ADCED5 /* OnlineLobbyView.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				BF3B802D2CAE79E300ADCED5 /* OnlineSettingsView.swift in Sources */,
 				BFEF98C42C7236F600A01B69 /* Card.swift in Sources */,
 				BF3B80272CAE2C6800ADCED5 /* GameManager.swift in Sources */,
+				BF3B80332CAE9A2300ADCED5 /* OnlineLobbyView.swift in Sources */,
 				BFC2128A2C87E18C0053FCB5 /* ColorPickerSheet.swift in Sources */,
 				BF3B802B2CAE305600ADCED5 /* TestFirebaseView.swift in Sources */,
 				BFC212852C85CB010053FCB5 /* CardSettingView.swift in Sources */,

@@ -21,25 +21,22 @@ struct OnlineSettingsView: View {
     
     var body: some View {
         Form {
-            PlayerSettingSection(players: $game.currentGameState.players)
             CardSettingSection(selected: $game.currentGameState.deck, players: $game.currentGameState.players, cardsPerHand: $cardsPerHand)
             AdvancedSettingSection(showActiveCards: $game.settings.showActiveCards)
             
             Button(action: {
-                if(game.currentGameState.players.count == 0){
-                    showInvalidGameAlert = true
-                    errorMessage = "Player"
-                }
-                else if(game.currentGameState.deck.count == 0) {
+                game.currentGameState.players.append(Player(name: "Jimmy", turn: 0, hand: [], color: .red))
+                if(game.currentGameState.deck.count == 0) {
                     showInvalidGameAlert = true
                     errorMessage = "Deck"
                 }
                 else{
                     game.settings.cardsPerHand = Int(cardsPerHand)
-                    game.dealHand()
-                    game.saveToDatabase()
+                    //game.dealHand()
+                    //game.saveToDatabase()
                     isGameViewActive = true
                 }
+
                 
             }, label: {
                 Text("Start Game")
