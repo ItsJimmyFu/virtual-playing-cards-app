@@ -1,13 +1,13 @@
 //
-//  SettingsView.swift
+//  OnlineSettingsView.swift
 //  VirtualPlayingCards
 //
-//  Created by Jimmy Fu on 2024-09-01.
+//  Created by Jimmy Fu on 2024-10-03.
 //
 
 import SwiftUI
 
-struct SettingsView: View {
+struct OnlineSettingsView: View {
     @StateObject var game : GameManager = GameManager.emptyGame
     
     @State var isGameViewActive : Bool = false
@@ -37,6 +37,7 @@ struct SettingsView: View {
                 else{
                     game.settings.cardsPerHand = Int(cardsPerHand)
                     game.dealHand()
+                    game.saveToDatabase()
                     isGameViewActive = true
                 }
                 
@@ -67,5 +68,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    return SettingsView()
+    return OnlineSettingsView()
 }

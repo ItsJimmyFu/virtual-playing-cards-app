@@ -14,6 +14,8 @@
 		BF3B80272CAE2C6800ADCED5 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B80262CAE2C6800ADCED5 /* GameManager.swift */; };
 		BF3B80292CAE2F7100ADCED5 /* GameSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B80282CAE2F7100ADCED5 /* GameSetting.swift */; };
 		BF3B802B2CAE305600ADCED5 /* TestFirebaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B802A2CAE305600ADCED5 /* TestFirebaseView.swift */; };
+		BF3B802D2CAE79E300ADCED5 /* OnlineSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B802C2CAE79E300ADCED5 /* OnlineSettingsView.swift */; };
+		BF3B802F2CAE835800ADCED5 /* JoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3B802E2CAE835800ADCED5 /* JoinView.swift */; };
 		BFA5A4322C7ECF8800017535 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4312C7ECF8800017535 /* DeckView.swift */; };
 		BFA5A4342C7F461500017535 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4332C7F461500017535 /* GameView.swift */; };
 		BFA5A4362C7F4BE100017535 /* SimpleActiveCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */; };
@@ -22,7 +24,7 @@
 		BFA5A43C2C806EF800017535 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43B2C806EF800017535 /* Player.swift */; };
 		BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43D2C80982400017535 /* AdvancedHandView.swift */; };
 		BFA5A4402C83FECC00017535 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A43F2C83FECC00017535 /* MenuView.swift */; };
-		BFA5A4422C84038600017535 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4412C84038600017535 /* SettingsView.swift */; };
+		BFA5A4422C84038600017535 /* LocalSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4412C84038600017535 /* LocalSettingsView.swift */; };
 		BFA5A4442C845AE100017535 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA5A4432C845AE100017535 /* GameState.swift */; };
 		BFC212812C859CD50053FCB5 /* DetailedActiveCardsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212802C859CD50053FCB5 /* DetailedActiveCardsSheet.swift */; };
 		BFC212832C85C6620053FCB5 /* TurnTransitionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC212822C85C6620053FCB5 /* TurnTransitionSheet.swift */; };
@@ -44,6 +46,8 @@
 		BF3B80262CAE2C6800ADCED5 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		BF3B80282CAE2F7100ADCED5 /* GameSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetting.swift; sourceTree = "<group>"; };
 		BF3B802A2CAE305600ADCED5 /* TestFirebaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFirebaseView.swift; sourceTree = "<group>"; };
+		BF3B802C2CAE79E300ADCED5 /* OnlineSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSettingsView.swift; sourceTree = "<group>"; };
+		BF3B802E2CAE835800ADCED5 /* JoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinView.swift; sourceTree = "<group>"; };
 		BFA5A4312C7ECF8800017535 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		BFA5A4332C7F461500017535 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		BFA5A4352C7F4BE100017535 /* SimpleActiveCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleActiveCardsView.swift; sourceTree = "<group>"; };
@@ -52,7 +56,7 @@
 		BFA5A43B2C806EF800017535 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		BFA5A43D2C80982400017535 /* AdvancedHandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedHandView.swift; sourceTree = "<group>"; };
 		BFA5A43F2C83FECC00017535 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		BFA5A4412C84038600017535 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BFA5A4412C84038600017535 /* LocalSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSettingsView.swift; sourceTree = "<group>"; };
 		BFA5A4432C845AE100017535 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		BFC212802C859CD50053FCB5 /* DetailedActiveCardsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedActiveCardsSheet.swift; sourceTree = "<group>"; };
 		BFC212822C85C6620053FCB5 /* TurnTransitionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnTransitionSheet.swift; sourceTree = "<group>"; };
@@ -89,12 +93,14 @@
 			isa = PBXGroup;
 			children = (
 				BFA5A43F2C83FECC00017535 /* MenuView.swift */,
-				BFA5A4412C84038600017535 /* SettingsView.swift */,
+				BFA5A4412C84038600017535 /* LocalSettingsView.swift */,
+				BF3B802C2CAE79E300ADCED5 /* OnlineSettingsView.swift */,
 				BFC212842C85CB010053FCB5 /* CardSettingView.swift */,
 				BFC212892C87E18C0053FCB5 /* ColorPickerSheet.swift */,
 				BFC212912C91D4550053FCB5 /* PlayerSettingSection.swift */,
 				BFC212932C91DCD60053FCB5 /* CardSettingSection.swift */,
 				BFC212952C927C190053FCB5 /* AdvancedSettingSection.swift */,
+				BF3B802E2CAE835800ADCED5 /* JoinView.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -257,6 +263,7 @@
 			files = (
 				BFC212812C859CD50053FCB5 /* DetailedActiveCardsSheet.swift in Sources */,
 				BFEF98B12C72353000A01B69 /* VirtualPlayingCardsApp.swift in Sources */,
+				BF3B802D2CAE79E300ADCED5 /* OnlineSettingsView.swift in Sources */,
 				BFEF98C42C7236F600A01B69 /* Card.swift in Sources */,
 				BF3B80272CAE2C6800ADCED5 /* GameManager.swift in Sources */,
 				BFC2128A2C87E18C0053FCB5 /* ColorPickerSheet.swift in Sources */,
@@ -273,9 +280,10 @@
 				BFA5A43C2C806EF800017535 /* Player.swift in Sources */,
 				BFC212832C85C6620053FCB5 /* TurnTransitionSheet.swift in Sources */,
 				BFC2128C2C87E7580053FCB5 /* ColorOption.swift in Sources */,
-				BFA5A4422C84038600017535 /* SettingsView.swift in Sources */,
+				BFA5A4422C84038600017535 /* LocalSettingsView.swift in Sources */,
 				BFC212962C927C190053FCB5 /* AdvancedSettingSection.swift in Sources */,
 				BFC212942C91DCD60053FCB5 /* CardSettingSection.swift in Sources */,
+				BF3B802F2CAE835800ADCED5 /* JoinView.swift in Sources */,
 				BFA5A4382C7F4CD400017535 /* EmptyCardView.swift in Sources */,
 				BFA5A43E2C80982400017535 /* AdvancedHandView.swift in Sources */,
 				BFC212922C91D4550053FCB5 /* PlayerSettingSection.swift in Sources */,

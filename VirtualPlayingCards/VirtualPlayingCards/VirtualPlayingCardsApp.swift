@@ -24,8 +24,8 @@ struct VirtualPlayingCardsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TestFirebaseView()
-            //MenuView()
+            //TestFirebaseView()
+            MenuView()
         }
     }
 }

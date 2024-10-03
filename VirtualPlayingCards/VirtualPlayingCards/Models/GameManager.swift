@@ -16,13 +16,13 @@ class GameManager : ObservableObject, Identifiable {
     @Published var currentGameState : GameState
 
     init(currentGame: GameState, settings: GameSetting) {
+        //Create a random gamecode
         self.gameCode = String(format: "%04d", Int.random(in: 0...9999))
         self.history = [currentGame]
         self.currentGameState = currentGame
         self.settings = settings
         
         self.ref = Database.database().reference()
-        self.saveToDatabase()
     }
     
     //Deals cards from deck to all the players equally based on the cardsPerHand
@@ -60,11 +60,12 @@ class GameManager : ObservableObject, Identifiable {
     func nextGameState(newGameState: GameState){
         history.append(self.currentGameState)
         self.currentGameState = newGameState
+        self.saveToDatabase()
     }
     
     func encode() -> [String: Any] {
         let gameData: [String: Any] = [
-            "history": ["history": history.map { $0.encode()}],
+            "history": history.map { $0.encode()},
             "current_game_state": currentGameState.encode(),
             "settings": settings.encode()
         ]
