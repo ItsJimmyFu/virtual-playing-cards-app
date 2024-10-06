@@ -9,11 +9,12 @@ import Foundation
 import FirebaseDatabase
 
 class GameManager : ObservableObject, Identifiable {
-    let gameCode: String
+    @Published var gameCode: String
     @Published var history: [GameState]
     @Published var settings: GameSetting
     @Published var ref: DatabaseReference?
     @Published var currentGameState : GameState
+    var loadedData : Bool
 
     init(currentGame: GameState, settings: GameSetting) {
         //Create a random gamecode
@@ -21,18 +22,45 @@ class GameManager : ObservableObject, Identifiable {
         self.history = [currentGame]
         self.currentGameState = currentGame
         self.settings = settings
-        
+        self.loadedData = true
         self.ref = Database.database().reference()
     }
     
-    init(gamecode: String){
+    init(gamecode: String) async throws{
         self.ref = Database.database().reference()
         self.gameCode = gamecode
         self.history = []
-        self.settings = GameSetting.defaultSettings
-        self.currentGameState = GameState.emptyGame
-        
-        self.fetchItems()
+        self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
+        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1)
+        self.loadedData = false
+        Task {
+            do {
+                try await self.fetchItems()
+                print("Data Loaded successfully!")
+                self.loadedData = true
+            } catch {
+                print("Error saving data: \(error)")
+            }
+        }
+    }
+    
+    func reinit(gamecode: String) async throws {
+        print("REINIT:" + gamecode)
+        self.ref = Database.database().reference()
+        self.gameCode = gamecode
+        self.history = []
+        self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
+        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1)
+        self.loadedData = false
+        Task {
+            do {
+                try await self.fetchItems()
+                print("Data Loaded successfully!")
+                self.loadedData = true
+            } catch {
+                print("Error saving data: \(error)")
+            }
+        }
     }
     
     //Deals cards from deck to all the players equally based on the cardsPerHand
@@ -70,7 +98,7 @@ class GameManager : ObservableObject, Identifiable {
     func nextGameState(newGameState: GameState){
         history.append(self.currentGameState)
         self.currentGameState = newGameState
-        self.saveToDatabase()
+        //self.saveToDatabase()
     }
     
     func encode() -> [String: Any] {
@@ -99,7 +127,17 @@ class GameManager : ObservableObject, Identifiable {
         }
         
         self.settings.decode(from: settings)
+        print("Starting decode ")
         self.currentGameState.decode(from: curGameState)
+        print("START")
+        for card in self.currentGameState.deck {
+            print(card.suit + " " + card.rank)
+        }
+        print("MIDDLE")
+        for card in self.currentGameState.players[0].hand {
+            print(card.suit + " " + card.rank)
+        }
+        print("END")
     }
     
     //Save the game to the database
@@ -113,10 +151,22 @@ class GameManager : ObservableObject, Identifiable {
         }
     }
     
-    func fetchItems() {
+    func fetchItems() async throws {
+        print("Fetching")
         // Observe changes in the "items" node
-        ref?.child("games").child(gameCode).observe(.value) { snapshot in
-            self.decode(from: snapshot.value as! [String : Any])
+        return try await withCheckedThrowingContinuation { continuation in
+            //ref?.child("games").child(gameCode).observe(.value) { snapshot in
+            ref?.child("games").child(gameCode).observeSingleEvent(of: .value) { snapshot in
+                guard snapshot.value is [String: Any] else {
+                    continuation.resume()
+                    return
+                }
+                self.decode(from: snapshot.value as! [String : Any])
+                continuation.resume()
+            } withCancel: { error in
+                // Handle the error case
+                continuation.resume(throwing: error)
+            }
         }
     }
 

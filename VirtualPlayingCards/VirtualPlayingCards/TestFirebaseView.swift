@@ -10,6 +10,7 @@ import SwiftUI
 struct TestFirebaseView: View {
     @State var gameCode : String = "2769"
     
+    
     var body: some View {
         VStack{
             Button(action: {
@@ -23,8 +24,14 @@ struct TestFirebaseView: View {
             
             TextField("Gamecode", text: $gameCode)
             Button(action: {
-                let gm : GameManager = GameManager(gamecode: gameCode)
-                print(gm.currentGameState.name)
+                Task {
+                    do {
+                        let gm : GameManager = try await GameManager(gamecode: gameCode)
+                        print(gm.currentGameState.name)
+                    } catch {
+                        print("Error saving data: \(error)")
+                    }
+                }
             }, label: {
                 Text("Load Data")
             })

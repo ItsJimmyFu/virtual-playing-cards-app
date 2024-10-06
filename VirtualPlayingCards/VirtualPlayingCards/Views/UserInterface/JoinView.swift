@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct JoinView: View {
-    
+    @StateObject var game : GameManager = GameManager.emptyGame
     @State var gameCode: String = ""
     @FocusState private var isFocused: Bool
+    @State var isGameViewActive : Bool = false
     
     var body: some View {
         VStack{
@@ -67,7 +68,17 @@ struct JoinView: View {
             Spacer()
             Button(action: {
                 //MAKE BUTTON SHAKE
-                //if(gameCode.count != 4){
+                if(gameCode.count == 4){
+                    Task {
+                        do {
+                            try await game.reinit(gamecode: gameCode)
+                            print("Data saved successfully!")
+                            isGameViewActive = true
+                        } catch {
+                            print("Error saving data: \(error)")
+                        }
+                    }
+                }
             }, label: {
                 Text("Join Game")
                     .font(.title)
@@ -85,6 +96,12 @@ struct JoinView: View {
         .onAppear {
             // Automatically focus on the TextField when the view appears
             isFocused = true
+        }
+        .fullScreenCover(isPresented: .init(
+            get: { game.loadedData && isGameViewActive }, // Check if both are true
+            set: { _ in } // No setter needed
+        )) {
+            GameView(gameManager: game)
         }
     }
 }

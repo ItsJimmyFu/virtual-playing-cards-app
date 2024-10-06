@@ -62,14 +62,13 @@ class Card: Identifiable, Equatable {
         return ["suit": suit, "rank": rank]
     }
     
-    func decode(from dict: [String: Any]) {
+    static func decode(from dict: [String: Any]) -> Card? {
         guard let rank = dict["rank"] as? String,
               let suit = dict["suit"] as? String else {
             print("Invalid Card")
-            return
+            return nil
         }
-        self.rank = rank
-        self.suit = suit
+        return Card(suit: suit, rank: rank)
     }
 }
 

@@ -54,14 +54,16 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
         self.name = name
         self.players = []
         for player in players {
-            let newPlayer : Player = Player.empty
+            let newPlayer : Player = Player(name: "", turn: -1, hand: [], color: .black)
             newPlayer.decode(from: player as! [String : Any])
             self.players.append(newPlayer)
         }
         self.deck = []
         for card in deck {
-            let newCard : Card = Card.empty
-            newCard.decode(from: card as! [String : Any])
+            guard let newCard = Card.decode(from: card as! [String : Any]) else {
+                    print("Invalid Card")
+                    return
+            }
             self.deck.append(newCard)
         }
         self.turn = turn

@@ -46,14 +46,16 @@ class Player : Identifiable, Equatable, ObservableObject {
         }
         self.name = name
         self.turn = turn
-        guard let color = Color.fromRGBString(rgbString: colorStr) else {
+        guard let color = Color.fromRGBString(colorStr) else {
             print("Invalid color in player")
             return
         }
         self.hand = []
         for card in hand {
-            let newCard : Card = Card.empty
-            newCard.decode(from: card as! [String : Any])
+            guard let newCard = Card.decode(from: card as! [String : Any]) else {
+                    print("Invalid Card")
+                    return
+            }
             self.hand.append(newCard)
         }
         self.color = color
@@ -85,32 +87,34 @@ extension Player {
 
 extension Color {
     func toRGBString() -> String {
-        let components = self.cgColor?.components ?? [0, 0, 0, 0]
-        let r = Int(components[0] * 255)
-        let g = Int(components[1] * 255)
-        let b = Int(components[2] * 255)
+        // Convert SwiftUI Color to UIColor
+        let uiColor = UIColor(self)
 
-        return "RGB(\(r), \(g), \(b))"
+        // Get the RGB components
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: nil)
+
+        // Convert to 0-255 range and format as string
+        let r = Int(red * 255)
+        let g = Int(green * 255)
+        let b = Int(blue * 255)
+        
+        return "\(r),\(g),\(b)"
     }
     
-    static func fromRGBString(rgbString: String) -> Color? {
-            // Remove "RGB(" and ")" and trim whitespace
-            let cleanedString = rgbString.replacingOccurrences(of: "RGB(", with: "").replacingOccurrences(of: ")", with: "").trimmingCharacters(in: .whitespaces)
-
-            // Split the string by commas
-            let components = cleanedString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
-
-            // Ensure there are exactly three components
-            guard components.count == 3,
-                  let r = Double(components[0]),
-                  let g = Double(components[1]),
-                  let b = Double(components[2]),
-                  r >= 0, r <= 255,
-                  g >= 0, g <= 255,
-                  b >= 0, b <= 255 else {
-                return nil
-            }
-
-            return Color(red: r / 255.0, green: g / 255.0, blue: b / 255.0)
+    // Convert RGB string to Color
+    static func fromRGBString(_ rgbString: String) -> Color? {
+        let components = rgbString.split(separator: ",").compactMap { Int($0) }
+        
+        guard components.count == 3,
+              components[0] >= 0, components[0] <= 255,
+              components[1] >= 0, components[1] <= 255,
+              components[2] >= 0, components[2] <= 255 else {
+            return nil 
         }
+        
+        return Color(red: Double(components[0]) / 255.0, green: Double(components[1]) / 255.0, blue: Double(components[2]) / 255.0)
+    }
 }
