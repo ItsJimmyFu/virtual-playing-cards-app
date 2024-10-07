@@ -23,11 +23,11 @@ struct GameView: View {
                     Spacer()
                     DeckView(cardWidth: 100, gameManager: gameManager)
                     Spacer()
-                    ActiveCardsView(activeCards: $activeCards, cardWidth: cardWidth)
+                    ActiveCardsView(gameManager: gameManager, cardWidth: cardWidth)
                     Spacer()
                     
                 }
-                AdvancedHandView(cardWidth: 120, gameManager: gameManager, activeCards: $activeCards)
+                AdvancedHandView(cardWidth: 120, gameManager: gameManager)
                 Spacer()
             }
             

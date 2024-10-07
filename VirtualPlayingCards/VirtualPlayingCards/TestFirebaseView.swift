@@ -25,12 +25,7 @@ struct TestFirebaseView: View {
             TextField("Gamecode", text: $gameCode)
             Button(action: {
                 Task {
-                    do {
-                        let gm : GameManager = try await GameManager(gamecode: gameCode)
-                        print(gm.currentGameState.name)
-                    } catch {
-                        print("Error saving data: \(error)")
-                    }
+                    let _ : GameManager = GameManager(gamecode: gameCode)
                 }
             }, label: {
                 Text("Load Data")

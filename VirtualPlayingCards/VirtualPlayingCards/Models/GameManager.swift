@@ -31,7 +31,7 @@ class GameManager : ObservableObject, Identifiable {
         self.gameCode = gamecode
         self.history = []
         self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
-        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1)
+        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1, activeCards: [])
         self.loadedData = false
         self.fetchSingle()
     }
@@ -41,7 +41,7 @@ class GameManager : ObservableObject, Identifiable {
         self.gameCode = gamecode
         self.history = []
         self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
-        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1)
+        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1, activeCards: [])
         self.loadedData = false
         self.fetchSingle()
     }
@@ -136,7 +136,7 @@ class GameManager : ObservableObject, Identifiable {
 extension GameManager {
     static let emptyGame: GameManager = GameManager(currentGame: GameState.emptyGame, settings: GameSetting.defaultSettings)
     static let sampleGame = {
-        var game = GameManager(currentGame: GameState(name: "Sample Game", players: Player.gamePlayers, deck: Card.defaultDeck, turn: 0), settings: GameSetting.defaultSettings)
+        var game = GameManager(currentGame: GameState(name: "Sample Game", players: Player.gamePlayers, deck: Card.defaultDeck, turn: 0, activeCards: []), settings: GameSetting.defaultSettings)
         game.currentGameState.deck.shuffle()
         game.dealHand()
         return game

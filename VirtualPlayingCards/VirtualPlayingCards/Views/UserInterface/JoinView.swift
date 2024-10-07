@@ -21,7 +21,7 @@ struct JoinView: View {
             ZStack {
                 // Invisible TextField
                 TextField("", text: $gameCode)
-                    .onChange(of: gameCode) { newValue in
+                    .onChange(of: gameCode) { _, newValue in
                         // Limit the input to 4 digits and ensure it only contains numbers
                         let filtered = newValue.filter { "0123456789".contains($0) }
                         if filtered.count > 4 {

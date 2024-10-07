@@ -9,12 +9,12 @@ import SwiftUI
 
 //A view to display the active cards in play
 struct ActiveCardsView: View {
-    @Binding var activeCards : [[Card]]
+    @ObservedObject var gameManager : GameManager
     @State var cardWidth : CGFloat
     @State var isPresentingDetailedActiveCardsSheet : Bool = false
     var body: some View {
         //If no cards have been played display the empty card view
-        if(activeCards.count == 0){
+        if(gameManager.currentGameState.activeCards.count == 0){
             HStack (spacing:0) {
                 EmptyCardView(cardWidth: cardWidth)
             }
@@ -22,7 +22,7 @@ struct ActiveCardsView: View {
         }
         else {
             //Display the simple active cards view and on drag gesture display the detailed active card sheet
-            SimpleActiveCardsView(cardWidth: 100, activeCards: $activeCards.last!)
+            SimpleActiveCardsView(cardWidth: 100, activeCards: $gameManager.currentGameState.activeCards.last!)
                 .gesture(
                     DragGesture(minimumDistance: 0) // Detect touch down and move
                         .onChanged { _ in
@@ -33,7 +33,7 @@ struct ActiveCardsView: View {
                         }
                 )
                 .sheet(isPresented: ($isPresentingDetailedActiveCardsSheet), content: {
-                    DetailedActiveCardsSheet(cardWidth:100,activeCards: $activeCards, isPresentingDetailedActiveCardsSheet: $isPresentingDetailedActiveCardsSheet)
+                    DetailedActiveCardsSheet(cardWidth:100,activeCards: $gameManager.currentGameState.activeCards, isPresentingDetailedActiveCardsSheet: $isPresentingDetailedActiveCardsSheet)
                 })
         }
     }
@@ -43,5 +43,5 @@ struct ActiveCardsView: View {
     @State var players: [Player] = Player.examplePlayers
     @State var activeCards : [[Card]] = [[
         Card(suit:"diamonds", rank: "2",player: players[0]), Card(suit:"hearts", rank: "2",player: players[0]), Card(suit: "clubs", rank: "2",player: players[0])]]
-    return ActiveCardsView(activeCards: $activeCards, cardWidth: 150)
+    return ActiveCardsView(gameManager: GameManager.sampleGame, cardWidth: 150)
 }

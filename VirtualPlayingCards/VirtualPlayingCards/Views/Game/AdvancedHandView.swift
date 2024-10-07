@@ -15,7 +15,6 @@ struct AdvancedHandView: View {
     @State private var offsetRotation : CGFloat = 0
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
-    @Binding var activeCards : [[Card]]
     @State var isPresentingTurnTransitionSheet : Bool = false
     
     let yShift : CGFloat = 40
@@ -92,12 +91,12 @@ struct AdvancedHandView: View {
                 player.hand = player.hand.filter { !selectedCards.contains($0)}
                 
                 //Remove the most recent move from the player
-                if(activeCards.count > 0 && activeCards[0][0].player == player){
-                    activeCards.remove(at: 0)
+                if(gameManager.currentGameState.activeCards.count > 0 && gameManager.currentGameState.activeCards[0][0].player == player){
+                    gameManager.currentGameState.activeCards.remove(at: 0)
                 }
                 //Add the new move
                 if(selectedCards.count > 0) {
-                    activeCards.append(selectedCards)
+                    gameManager.currentGameState.activeCards.append(selectedCards)
                 }
                 selectedCards = []
                 offsetRotation = 0
@@ -128,5 +127,5 @@ struct AdvancedHandView: View {
     @State var playerCount: Int = 4
     @State var gameManager : GameManager = GameManager.sampleGame
     @State var isPresentingTurnTransitionSheet : Bool = false
-    return AdvancedHandView(cardWidth: cardWidth, gameManager: gameManager, activeCards: $activeCards)
+    return AdvancedHandView(cardWidth: cardWidth, gameManager: gameManager)
 }

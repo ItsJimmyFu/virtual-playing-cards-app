@@ -15,17 +15,19 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
     @Published var players : [Player]
     @Published var deck : [Card]
     @Published var turn : Int
+    @Published var activeCards : [[Card]]
     
-    init(id: UUID = UUID(), name: String, players: [Player], deck: [Card], turn : Int) {
+    init(id: UUID = UUID(), name: String, players: [Player], deck: [Card], turn : Int, activeCards: [[Card]]) {
         self.id = id
         self.name = name
         self.players = players
         self.deck = deck
         self.turn = turn
+        self.activeCards = activeCards
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        return GameState(name: self.name, players: self.players, deck: self.deck, turn: self.turn)
+        return GameState(name: self.name, players: self.players, deck: self.deck, turn: self.turn, activeCards: self.activeCards)
     }
     
     //Get the next player who will be playing the next turn
@@ -37,8 +39,13 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
         let gameState : [String: Any] = [
             "name": name,
             "players": players.map { $0.encode()},
-            "deck": deck.map { $0.encode()},
-            "turn": turn
+            "deck": deck.map {$0.encode()},
+            "turn": turn,
+            "activeCards" : activeCards.map { activeCard in
+                activeCard.map { element in
+                    element.encode()
+                }
+            }
         ]
         return gameState
     }
@@ -47,7 +54,9 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
         guard let name = dict["name"] as? String,
               let players = dict["players"] as? [Any],
               let deck = dict["deck"] as? [Any],
-              let turn = dict["turn"] as? Int else {
+              let turn = dict["turn"] as? Int,
+              let activeCards = dict["activeCards"] as? [[Any]] else {
+              
             print("Invalid GameState")
             return
         }
@@ -67,10 +76,22 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
             self.deck.append(newCard)
         }
         self.turn = turn
+        self.activeCards = []
+        for activeCard in activeCards {
+            var newActiveCard : [Card] = []
+            for card in activeCard {
+                guard let newCard = Card.decode(from: card as! [String : Any]) else {
+                        print("Invalid Card")
+                        return
+                }
+                newActiveCard.append(newCard)
+            }
+            self.activeCards.append(newActiveCard)
+        }
     }
 }
 
 //Create custom variables to be used in preview and default Game settings
 extension GameState {
-    static let emptyGame: GameState = GameState(name: "", players: [], deck: [], turn: 0)
+    static let emptyGame: GameState = GameState(name: "", players: [], deck: [], turn: 0, activeCards: [])
 }
