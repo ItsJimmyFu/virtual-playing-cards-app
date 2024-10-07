@@ -91,12 +91,12 @@ struct AdvancedHandView: View {
                 player.hand = player.hand.filter { !selectedCards.contains($0)}
                 
                 //Remove the most recent move from the player
-                if(gameManager.currentGameState.activeCards.count > 0 && gameManager.currentGameState.activeCards[0][0].player == player){
+                if(gameManager.currentGameState.activeCards.count > 0 && gameManager.currentGameState.activeCards[0].0 == player){
                     gameManager.currentGameState.activeCards.remove(at: 0)
                 }
                 //Add the new move
                 if(selectedCards.count > 0) {
-                    gameManager.currentGameState.activeCards.append(selectedCards)
+                    gameManager.currentGameState.activeCards.append((player,selectedCards))
                 }
                 selectedCards = []
                 offsetRotation = 0

@@ -41,7 +41,5 @@ struct ActiveCardsView: View {
 
 #Preview {
     @State var players: [Player] = Player.examplePlayers
-    @State var activeCards : [[Card]] = [[
-        Card(suit:"diamonds", rank: "2",player: players[0]), Card(suit:"hearts", rank: "2",player: players[0]), Card(suit: "clubs", rank: "2",player: players[0])]]
     return ActiveCardsView(gameManager: GameManager.sampleGame, cardWidth: 150)
 }

@@ -50,9 +50,6 @@ class GameManager : ObservableObject, Identifiable {
     func dealHand(){
         for player in currentGameState.players {
             let hand : [Card] = Array(currentGameState.deck.prefix(settings.cardsPerHand))
-            for card in hand {
-                card.player = player
-            }
             player.hand = hand
             currentGameState.deck = Array(currentGameState.deck.dropFirst(settings.cardsPerHand))
         }
@@ -63,7 +60,6 @@ class GameManager : ObservableObject, Identifiable {
         let newGameState : GameState = currentGameState.copy() as! GameState
         
         let newCard : Card = newGameState.deck.popLast()!
-        newCard.player = newGameState.players[newGameState.turn]
         newGameState.players[newGameState.turn].hand.append(newCard)
         
         nextGameState(newGameState: newGameState)
@@ -136,7 +132,7 @@ class GameManager : ObservableObject, Identifiable {
 extension GameManager {
     static let emptyGame: GameManager = GameManager(currentGame: GameState.emptyGame, settings: GameSetting.defaultSettings)
     static let sampleGame = {
-        var game = GameManager(currentGame: GameState(name: "Sample Game", players: Player.gamePlayers, deck: Card.defaultDeck, turn: 0, activeCards: []), settings: GameSetting.defaultSettings)
+        var game = GameManager(currentGame: GameState(name: "Sample Game", players: Player.gamePlayers, deck: Card.defaultDeck, turn: 0, activeCards: [(Player.gamePlayers[0], [Card(suit:"diamonds", rank: "2"), Card(suit:"hearts", rank: "2"), Card(suit: "clubs", rank: "2")])]), settings: GameSetting.defaultSettings)
         game.currentGameState.deck.shuffle()
         game.dealHand()
         return game

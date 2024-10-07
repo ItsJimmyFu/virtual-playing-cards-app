@@ -16,7 +16,6 @@ class Card: Identifiable, Equatable {
     //Rank of the card: Ace, 2 - 10, Jack, Queen, King, Joker
     var rank: String
     var imagePath: String
-    var player: Player?
     var selected: Bool
     
     //Initalize a new card with the given Suit and Rank
@@ -32,25 +31,7 @@ class Card: Identifiable, Equatable {
         else {
             self.imagePath = self.rank + "_of_" + self.suit
         }
-        self.player = nil
         self.selected = false
-    }
-    
-    //Initializes a new card with given Suit and Rank and the Player holding the card
-    init(id: UUID = UUID(), suit: String, rank: String, player: Player){
-        self.id = id
-        self.suit = suit
-        self.rank = rank
-        
-        //Check for a special case if initializing a joker card
-        if(self.rank == "joker"){
-            self.imagePath = self.suit + "_" + self.rank
-        }
-        else {
-            self.imagePath = self.rank + "_of_" + self.suit
-        }
-        self.player = player
-        self.selected = true
     }
     
     //Check if two cards are the same

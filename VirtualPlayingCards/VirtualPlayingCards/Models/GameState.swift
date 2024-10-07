@@ -15,9 +15,9 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
     @Published var players : [Player]
     @Published var deck : [Card]
     @Published var turn : Int
-    @Published var activeCards : [[Card]]
+    @Published var activeCards : [(Player,[Card])]
     
-    init(id: UUID = UUID(), name: String, players: [Player], deck: [Card], turn : Int, activeCards: [[Card]]) {
+    init(id: UUID = UUID(), name: String, players: [Player], deck: [Card], turn : Int, activeCards:  [(Player,[Card])]) {
         self.id = id
         self.name = name
         self.players = players
@@ -36,16 +36,17 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
     }
     
     func encode() -> [String: Any] {
+        var activeCardMapping : [[String: Any]] = []
+        for cards in activeCards {
+            activeCardMapping.append(["player": cards.0.encode(), "cards": cards.1.map {$0.encode()}])
+        }
+        
         let gameState : [String: Any] = [
             "name": name,
             "players": players.map { $0.encode()},
             "deck": deck.map {$0.encode()},
             "turn": turn,
-            "activeCards" : activeCards.map { activeCard in
-                activeCard.map { element in
-                    element.encode()
-                }
-            }
+            "activeCards" : activeCardMapping
         ]
         return gameState
     }
@@ -54,9 +55,7 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
         guard let name = dict["name"] as? String,
               let players = dict["players"] as? [Any],
               let deck = dict["deck"] as? [Any],
-              let turn = dict["turn"] as? Int,
-              let activeCards = dict["activeCards"] as? [[Any]] else {
-              
+              let turn = dict["turn"] as? Int else {
             print("Invalid GameState")
             return
         }
@@ -76,17 +75,41 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
             self.deck.append(newCard)
         }
         self.turn = turn
+        
         self.activeCards = []
-        for activeCard in activeCards {
-            var newActiveCard : [Card] = []
-            for card in activeCard {
-                guard let newCard = Card.decode(from: card as! [String : Any]) else {
+            
+        if (dict.keys.contains("activeCards")) {
+            guard let activeCards = dict["activeCards"] as? [Any] else{
+                print("Invalid ActiveCards")
+                return
+            }
+            for activeCard in activeCards {
+                guard let ac = activeCard as? [String:Any],
+                      let player = ac["player"] as? [String:Any],
+                      let cards = ac["cards"] as? [Any] else {
+                    print("Invalid ActiveCards")
+                    return
+                }
+                let newPlayer : Player = Player(name: "", turn: -1, hand: [], color: .black)
+                newPlayer.decode(from: player)
+                if(newPlayer.turn == -1){
+                    print(newPlayer)
+                }
+                
+                var newActiveCard : [Card] = []
+                for card in cards {
+                    guard let newCard = Card.decode(from: card as! [String : Any]) else {
                         print("Invalid Card")
                         return
+                    }
+                    newActiveCard.append(newCard)
+                    
+                    self.activeCards.append((newPlayer,newActiveCard))
                 }
-                newActiveCard.append(newCard)
             }
-            self.activeCards.append(newActiveCard)
+        }
+        else{
+            print("Empty ActiveCards")
         }
     }
 }
