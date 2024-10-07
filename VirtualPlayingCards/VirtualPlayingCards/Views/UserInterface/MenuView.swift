@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct MenuView: View {
-    @State private var isPresentingSettingView = false
+    @State private var isPresentingHostSettingView = false
+    @State private var isPresentingJoinView = false
+    @State private var isPresentingLocalSettingView = false
     
     var body: some View {
         ZStack {
@@ -22,33 +24,83 @@ struct MenuView: View {
             .edgesIgnoringSafeArea(.all)
             VStack{
                 Spacer()
-                Text("Virtual Playing Cards")
+                Text("Cards with Friends")
                     .font(.largeTitle)
-                    .padding()
+                    .padding(30)
+                    .background(Color.black)
+                    .cornerRadius(20)
+                    .foregroundColor(.white)
+                    .padding(.vertical)
+                
                 Button(action: {
-                    isPresentingSettingView = true
+                    isPresentingLocalSettingView = true
                 }, label: {
-                    Text("Local")
+                    Text("Local Game")
                         .font(.title)
                 })
                     .padding()
                     .background(Color.gray)
                     .foregroundColor(.black)
                     .cornerRadius(10)
-                Text("Online")
-                    .font(.title)
-                    .padding()
+                    .padding(.vertical)
+                
+                Button(action: {
+                    isPresentingHostSettingView = true
+                }, label: {
+                    Text("Host Game")
+                        .font(.title)
+                })
+                .padding()
+                .background(Color.gray)
+                .foregroundColor(.black)
+                .cornerRadius(10)
+                Button(action: {
+                    isPresentingJoinView = true
+                }, label: {
+                    Text("Join Game")
+                        .font(.title)
+                })
+                .padding()
+                .background(Color.gray)
+                .foregroundColor(.black)
+                .cornerRadius(10)
+                .padding(.vertical)
                 Spacer()
             }
         }
-        .sheet(isPresented: $isPresentingSettingView){
+        .sheet(isPresented: $isPresentingJoinView) {
             NavigationStack {
-                SettingsView()
+                JoinView()
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction){
+                            Button("Back"){
+                                isPresentingJoinView = false
+                            }
+                        }
+                    }
+            }
+        }
+        .sheet(isPresented: $isPresentingLocalSettingView) {
+            NavigationStack {
+                LocalSettingsView()
                     .navigationTitle("Menu")
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction){
                             Button("Back"){
-                                isPresentingSettingView = false
+                                isPresentingLocalSettingView = false
+                            }
+                        }
+                    }
+            }
+        }
+        .sheet(isPresented: $isPresentingHostSettingView) {
+            NavigationStack {
+                LocalSettingsView()
+                    .navigationTitle("Menu")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction){
+                            Button("Back"){
+                                isPresentingHostSettingView = false
                             }
                         }
                     }

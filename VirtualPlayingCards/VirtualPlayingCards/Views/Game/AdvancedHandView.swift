@@ -11,7 +11,7 @@ import SwiftUI
 struct AdvancedHandView: View {
     @State var cardWidth : CGFloat
     @State var cardHeight : CGFloat? = nil
-    @ObservedObject var gameState : Game
+    @ObservedObject var gameManager : GameManager
     @State private var offsetRotation : CGFloat = 0
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
@@ -21,7 +21,7 @@ struct AdvancedHandView: View {
     let yShift : CGFloat = 40
     
     var body: some View {
-        let player : Player = gameState.players[gameState.turn]
+        let player : Player = gameManager.currentGameState.players[gameManager.currentGameState.turn]
         VStack {
             ZStack {
                 ForEach(player.hand.indices, id: \.self) { index in
@@ -101,7 +101,7 @@ struct AdvancedHandView: View {
                 }
                 selectedCards = []
                 offsetRotation = 0
-                gameState.nextTurn()
+                gameManager.nextTurn()
                 
                 isPresentingTurnTransitionSheet = true
 
@@ -116,7 +116,7 @@ struct AdvancedHandView: View {
             })
         }
         .sheet(isPresented: $isPresentingTurnTransitionSheet, content: {
-            TurnTransitionSheet(nextPlayer: gameState.players[gameState.turn], isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
+            TurnTransitionSheet(nextPlayer: gameManager.currentGameState.players[gameManager.currentGameState.turn], isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
         })
     }
 }
@@ -126,7 +126,7 @@ struct AdvancedHandView: View {
     @State var player : Player = Player.examplePlayers[0]
     @State var activeCards : [[Card]] = []
     @State var playerCount: Int = 4
-    @State var gameState : Game = Game.sampleGame
+    @State var gameManager : GameManager = GameManager.sampleGame
     @State var isPresentingTurnTransitionSheet : Bool = false
-    return AdvancedHandView(cardWidth: cardWidth, gameState: gameState, activeCards: $activeCards)
+    return AdvancedHandView(cardWidth: cardWidth, gameManager: gameManager, activeCards: $activeCards)
 }

@@ -11,10 +11,11 @@ import SwiftUI
 //Represents the details of a Player in the game and their hand of cards
 class Player : Identifiable, Equatable, ObservableObject {
     let id: UUID
-    var name: String
-    var turn: Int
-    var hand: [Card]
     var color: Color
+    var name: String
+    @Published var turn: Int
+    @Published var hand: [Card]
+    
     
     //Initializes a player with name, turn ordering, hand and color
     init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {
@@ -29,6 +30,38 @@ class Player : Identifiable, Equatable, ObservableObject {
         return (lhs.id == rhs.id)
     }
     
+    func encode() -> [String: Any] {
+        let color = color
+        
+        return ["name" : name, "color": color.toRGBString(), "turn": turn, "hand": hand.map { $0.encode()}]
+    }
+    
+    func decode(from dict: [String: Any]) {
+        guard let name = dict["name"] as? String,
+              let turn = dict["turn"] as? Int,
+              let hand = dict["hand"] as? [Any],
+              let colorStr = dict["color"] as? String else {
+            print("Invalid GameState")
+            return
+        }
+        self.name = name
+        self.turn = turn
+        guard let color = Color.fromRGBString(colorStr) else {
+            print("Invalid color in player")
+            return
+        }
+        self.hand = []
+        for card in hand {
+            guard let newCard = Card.decode(from: card as! [String : Any]) else {
+                    print("Invalid Card")
+                    return
+            }
+            self.hand.append(newCard)
+        }
+        self.color = color
+        
+        
+    }
 }
 //Create custom variables to be used in previews
 extension Player {
@@ -50,4 +83,38 @@ extension Player {
     
     static let curPlayer: Player = Player(name: "Jimmy", turn: 0, hand: [], color: Color.yellow)
 
+}
+
+extension Color {
+    func toRGBString() -> String {
+        // Convert SwiftUI Color to UIColor
+        let uiColor = UIColor(self)
+
+        // Get the RGB components
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: nil)
+
+        // Convert to 0-255 range and format as string
+        let r = Int(red * 255)
+        let g = Int(green * 255)
+        let b = Int(blue * 255)
+        
+        return "\(r),\(g),\(b)"
+    }
+    
+    // Convert RGB string to Color
+    static func fromRGBString(_ rgbString: String) -> Color? {
+        let components = rgbString.split(separator: ",").compactMap { Int($0) }
+        
+        guard components.count == 3,
+              components[0] >= 0, components[0] <= 255,
+              components[1] >= 0, components[1] <= 255,
+              components[2] >= 0, components[2] <= 255 else {
+            return nil 
+        }
+        
+        return Color(red: Double(components[0]) / 255.0, green: Double(components[1]) / 255.0, blue: Double(components[2]) / 255.0)
+    }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 // A view combining multiple different views for the entire game view
 struct GameView: View {
     @State var activeCards : [[Card]] = []
-    @ObservedObject var gameState : Game
+    @ObservedObject var gameManager : GameManager
     
     var body: some View {
         //Set a constant for the width of a card
@@ -17,17 +17,17 @@ struct GameView: View {
         NavigationView {
             VStack {
                 Spacer()
-                PlayersView(gameState: gameState)
+                PlayersView(gameManager: gameManager)
                 Spacer()
                 HStack{
                     Spacer()
-                    DeckView(cardWidth: 100, gameState: gameState)
+                    DeckView(cardWidth: 100, gameManager: gameManager)
                     Spacer()
                     ActiveCardsView(activeCards: $activeCards, cardWidth: cardWidth)
                     Spacer()
                     
                 }
-                AdvancedHandView(cardWidth: 120, gameState: gameState, activeCards: $activeCards)
+                AdvancedHandView(cardWidth: 120, gameManager: gameManager, activeCards: $activeCards)
                 Spacer()
             }
             
@@ -37,6 +37,6 @@ struct GameView: View {
 }
 
 #Preview {
-    @State var gameState : Game = Game.sampleGame
-    return GameView(gameState: gameState)
+    @State var gameManager : GameManager = GameManager.sampleGame
+    return GameView(gameManager: gameManager)
 }

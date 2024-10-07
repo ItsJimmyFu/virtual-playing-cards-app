@@ -57,10 +57,25 @@ class Card: Identifiable, Equatable {
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.suit == rhs.suit && lhs.rank == rhs.rank
     }
+    
+    func encode() -> [String: Any] {
+        return ["suit": suit, "rank": rank]
+    }
+    
+    static func decode(from dict: [String: Any]) -> Card? {
+        guard let rank = dict["rank"] as? String,
+              let suit = dict["suit"] as? String else {
+            print("Invalid Card")
+            return nil
+        }
+        return Card(suit: suit, rank: rank)
+    }
 }
 
 //Create custom variables to be used in preview and default card settings
 extension Card {
+    static let empty: Card = Card(suit: "", rank: "")
+    
     static let defaultDeck: [Card] = {
         var cards: [Card] = []
         var ranks: [String] = ["ace","2","3","4","5","6","7","8","9","10","jack","queen","king"]
