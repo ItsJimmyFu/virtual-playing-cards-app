@@ -27,12 +27,16 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        return GameState(name: self.name, players: self.players, deck: self.deck, turn: self.turn, activeCards: self.activeCards)
+        return GameState(id: self.id, name: self.name, players: self.players.map { $0.copy() as! Player }, deck: self.deck.map { $0.copy() as! Card }, turn: self.turn, activeCards: self.activeCards.map { tuple in (tuple.0.copy() as! Player, tuple.1.map {$0.copy() as! Card} as! [Card]) })
     }
     
     //Get the next player who will be playing the next turn
     func getNextPlayer() -> Player {
         return players[(turn + 1) % players.count]
+    }
+    
+    func getPreviousPlayer() -> Player {
+        return players[(turn - 1 + players.count) % players.count]
     }
     
     func encode() -> [String: Any] {

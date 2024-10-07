@@ -36,6 +36,7 @@ struct LocalSettingsView: View {
                 }
                 else{
                     game.settings.cardsPerHand = Int(cardsPerHand)
+                    game.currentGameState.deck.shuffle()
                     game.dealHand()
                     game.saveToDatabase()
                     isGameViewActive = true

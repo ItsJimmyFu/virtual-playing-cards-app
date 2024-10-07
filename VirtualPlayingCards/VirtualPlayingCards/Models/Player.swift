@@ -9,13 +9,16 @@ import Foundation
 import SwiftUI
 
 //Represents the details of a Player in the game and their hand of cards
-class Player : Identifiable, Equatable, ObservableObject {
+class Player : NSObject, NSCopying, Identifiable, ObservableObject {
     let id: UUID
     var color: Color
     var name: String
     @Published var turn: Int
     @Published var hand: [Card]
     
+    func copy(with zone: NSZone? = nil) -> Any {
+        return Player(id: self.id, name: self.name, turn: self.turn, hand: self.hand.map { $0.copy() as! Card }, color: self.color)
+    }
     
     //Initializes a player with name, turn ordering, hand and color
     init(id: UUID = UUID(), name: String, turn: Int, hand: [Card],color: Color) {

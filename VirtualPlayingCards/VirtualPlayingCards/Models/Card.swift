@@ -8,7 +8,7 @@
 import Foundation
 
 // Represents a Playing Card with Suit or Rank
-class Card: Identifiable, Equatable {
+class Card: NSObject, NSCopying, Identifiable {
     let id: UUID
     //Suit of the card: Hearts, Spades, Diamonds, Clubs, (Red or Black for Joker)
     var suit: String
@@ -32,6 +32,10 @@ class Card: Identifiable, Equatable {
             self.imagePath = self.rank + "_of_" + self.suit
         }
         self.selected = false
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        return Card(id: self.id, suit: self.suit, rank: self.rank)
     }
     
     //Check if two cards are the same

@@ -16,6 +16,7 @@ struct AdvancedHandView: View {
     @State var maxRotation : CGFloat = 0
     @State var selectedCards : [Card] = []
     @State var isPresentingTurnTransitionSheet : Bool = false
+    @State var next : Bool = true
     
     let yShift : CGFloat = 40
     
@@ -87,23 +88,8 @@ struct AdvancedHandView: View {
             .padding()
             //Button to play the cards that are selected and present the turn transition sheet
             Button(action: {
-                //Remove the selected cards from the players hand
-                player.hand = player.hand.filter { !selectedCards.contains($0)}
-                
-                //Remove the most recent move from the player
-                if(gameManager.currentGameState.activeCards.count > 0 && gameManager.currentGameState.activeCards[0].0 == player){
-                    gameManager.currentGameState.activeCards.remove(at: 0)
-                }
-                //Add the new move
-                if(selectedCards.count > 0) {
-                    gameManager.currentGameState.activeCards.append((player,selectedCards))
-                }
-                selectedCards = []
-                offsetRotation = 0
-                gameManager.nextTurn()
-                
                 isPresentingTurnTransitionSheet = true
-
+                next = true
             }, label: {
                 Text("Play Selected Cards")
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
@@ -112,20 +98,49 @@ struct AdvancedHandView: View {
                     .padding(5)
                     .border(player.color, width:3)
                     
-            })
-        }
-        .sheet(isPresented: $isPresentingTurnTransitionSheet, content: {
-            TurnTransitionSheet(nextPlayer: gameManager.currentGameState.players[gameManager.currentGameState.turn], isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
+            })}
+        Button(action: {
+            if(gameManager.history.count > 1) {
+                if(gameManager.history.last?.turn == gameManager.currentGameState.turn){
+                    gameManager.prevGameState()
+                }
+                else {
+                    isPresentingTurnTransitionSheet = true
+                    next = false
+                }
+            }
+        }, label: {
+            Text("Undo Move")
+                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                .foregroundStyle(.black)
+                .bold()
+                .padding(5)
+                .border(player.color, width:3)
+                
         })
+        .padding(.top)
+        .sheet(isPresented: $isPresentingTurnTransitionSheet, content: {
+            TurnTransitionSheet(gameManager: gameManager, next: next, isPresentingTurnTransitionSheet: $isPresentingTurnTransitionSheet)
+        })
+        .onChange(of: isPresentingTurnTransitionSheet) { _, newValue in
+            // Check if the boolean changed from true to false
+            if !newValue {
+                if(next){
+                    gameManager.playCards(selectedCards: selectedCards)
+                    selectedCards = []
+                    offsetRotation = 0
+                    
+                }
+                else{
+                    gameManager.prevGameState()
+                }
+            }
+        }
     }
 }
 
 #Preview {
     let cardWidth : CGFloat = 120
-    @State var player : Player = Player.examplePlayers[0]
-    @State var activeCards : [[Card]] = []
-    @State var playerCount: Int = 4
     @State var gameManager : GameManager = GameManager.sampleGame
-    @State var isPresentingTurnTransitionSheet : Bool = false
     return AdvancedHandView(cardWidth: cardWidth, gameManager: gameManager)
 }

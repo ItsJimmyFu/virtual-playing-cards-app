@@ -65,6 +65,24 @@ class GameManager : ObservableObject, Identifiable {
         nextGameState(newGameState: newGameState)
     }
     
+    //Play the selected cards for the current player in a turn
+    func playCards(selectedCards: [Card]){
+        let newGameState : GameState = currentGameState.copy() as! GameState
+    
+        newGameState.players[newGameState.turn].hand = currentGameState.players[currentGameState.turn].hand.filter { !selectedCards.contains($0)}
+        
+        //Remove the most recent move from the player
+        if(newGameState.activeCards.count > 0 && newGameState.activeCards[0].0 == newGameState.players[newGameState.turn]){
+            newGameState.activeCards.remove(at: 0)
+        }
+        //Add the new move
+        if(selectedCards.count > 0) {
+            newGameState.activeCards.append((newGameState.players[newGameState.turn],selectedCards))
+        }
+        newGameState.turn = (newGameState.turn + 1) % newGameState.players.count
+        nextGameState(newGameState: newGameState)
+    }
+    
     //Move to the next turn in the game state
     func nextTurn(){
         let newGameState : GameState = currentGameState.copy() as! GameState
@@ -77,6 +95,13 @@ class GameManager : ObservableObject, Identifiable {
     func nextGameState(newGameState: GameState){
         history.append(self.currentGameState)
         self.currentGameState = newGameState
+        self.saveToDatabase()
+    }
+    
+    func prevGameState(){
+        if(history.count > 0){
+            currentGameState = history.popLast()!
+        }
         self.saveToDatabase()
     }
     

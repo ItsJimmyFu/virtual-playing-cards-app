@@ -9,9 +9,11 @@ import SwiftUI
 
 //Displays a sheet which tells the user the player who has the next turn
 struct TurnTransitionSheet: View {
-    @State var nextPlayer : Player
+    @State var gameManager : GameManager
+    @State var next : Bool
     @Binding var isPresentingTurnTransitionSheet : Bool
     var body: some View {
+        let nextPlayer : Player = next ? gameManager.currentGameState.getNextPlayer() : gameManager.currentGameState.getPreviousPlayer()
         ZStack {
             //Instructions for user with background of the next player's color
             VStack {
@@ -19,6 +21,7 @@ struct TurnTransitionSheet: View {
                     .font(.title)
                     .padding()
                     .background(nextPlayer.color)
+              
                 Text("Tap to Continue")
                     .font(.headline)
                     .padding()
@@ -34,7 +37,7 @@ struct TurnTransitionSheet: View {
 }
 
 #Preview {
-    @State var nextPlayer : Player = Player.curPlayer
+    @State var gameManager: GameManager = GameManager.sampleGame
     @State var isPresentingTurnTransitionSheet : Bool = true
-    return TurnTransitionSheet(nextPlayer: nextPlayer, isPresentingTurnTransitionSheet : $isPresentingTurnTransitionSheet)
+    return TurnTransitionSheet(gameManager: gameManager, next: false, isPresentingTurnTransitionSheet : $isPresentingTurnTransitionSheet)
 }
