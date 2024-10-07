@@ -69,15 +69,8 @@ struct JoinView: View {
             Button(action: {
                 //MAKE BUTTON SHAKE
                 if(gameCode.count == 4){
-                    Task {
-                        do {
-                            try await game.reinit(gamecode: gameCode)
-                            print("Data saved successfully!")
-                            isGameViewActive = true
-                        } catch {
-                            print("Error saving data: \(error)")
-                        }
-                    }
+                    game.reinit(gamecode: gameCode)
+                    isGameViewActive = true
                 }
             }, label: {
                 Text("Join Game")
