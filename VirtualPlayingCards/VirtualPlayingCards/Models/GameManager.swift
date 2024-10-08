@@ -14,6 +14,7 @@ class GameManager : ObservableObject, Identifiable {
     @Published var settings: GameSetting
     @Published var ref: DatabaseReference?
     @Published var currentGameState : GameState
+    var isLocal: Bool
     var loadedData : Bool
 
     init(currentGame: GameState, settings: GameSetting) {
@@ -23,16 +24,13 @@ class GameManager : ObservableObject, Identifiable {
         self.currentGameState = currentGame
         self.settings = settings
         self.loadedData = true
-        self.ref = Database.database().reference()
+        self.ref = nil
+        self.isLocal = true
     }
     
-    init(gamecode: String) {
+    func makeOnline(){
         self.ref = Database.database().reference()
-        self.gameCode = gamecode
-        self.history = []
-        self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
-        self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1, activeCards: [])
-        self.loadedData = false
+        isLocal = false
         self.fetchSingle()
     }
     
@@ -43,7 +41,13 @@ class GameManager : ObservableObject, Identifiable {
         self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
         self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1, activeCards: [])
         self.loadedData = false
+        self.isLocal = false
         self.fetchSingle()
+    }
+    
+    func start() {
+        currentGameState.deck.shuffle()
+        dealHand()
     }
     
     //Deals cards from deck to all the players equally based on the cardsPerHand
@@ -95,14 +99,18 @@ class GameManager : ObservableObject, Identifiable {
     func nextGameState(newGameState: GameState){
         history.append(self.currentGameState)
         self.currentGameState = newGameState
-        self.saveToDatabase()
+        if(!self.isLocal){
+            self.saveToDatabase()
+        }
     }
     
     func prevGameState(){
         if(history.count > 0){
             currentGameState = history.popLast()!
         }
-        self.saveToDatabase()
+        if(!self.isLocal) {
+            self.saveToDatabase()
+        }
     }
     
     func encode() -> [String: Any] {

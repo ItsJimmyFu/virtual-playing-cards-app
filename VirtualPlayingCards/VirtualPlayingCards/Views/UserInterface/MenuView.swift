@@ -11,6 +11,8 @@ struct MenuView: View {
     @State private var isPresentingHostSettingView = false
     @State private var isPresentingJoinView = false
     @State private var isPresentingLocalSettingView = false
+    @State private var isOnline = false
+    @State var username : String = ""
     
     var body: some View {
         ZStack {
@@ -31,40 +33,76 @@ struct MenuView: View {
                     .cornerRadius(20)
                     .foregroundColor(.white)
                     .padding(.vertical)
-                
-                Button(action: {
-                    isPresentingLocalSettingView = true
-                }, label: {
-                    Text("Local Game")
+                if(isOnline) {
+                    TextField("Username", text: $username)
                         .font(.title)
-                })
+                        .multilineTextAlignment(.center)
+                        .frame(width: 200, height: 50, alignment: .center)
+                        .padding()
+                        .background(Color.white) // Set background color
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10) // Set corner radius here
+                                .stroke(Color.black, lineWidth: 2) // Border color and width
+                        )
+                        .cornerRadius(10) // This is optional if you want the entire TextField to have rounded corners
+                        .padding() // Add padding around the TextField
+                    
+                    Button(action: {
+                        isPresentingHostSettingView = true
+                    }, label: {
+                        Text("Host Game")
+                            .font(.title)
+                    })
+                    .padding()
+                    .background(Color.gray)
+                    .foregroundColor(.black)
+                    .cornerRadius(10)
+                    Button(action: {
+                        isPresentingJoinView = true
+                    }, label: {
+                        Text("Join Game")
+                            .font(.title)
+                    })
                     .padding()
                     .background(Color.gray)
                     .foregroundColor(.black)
                     .cornerRadius(10)
                     .padding(.vertical)
-                
-                Button(action: {
-                    isPresentingHostSettingView = true
-                }, label: {
-                    Text("Host Game")
-                        .font(.title)
-                })
-                .padding()
-                .background(Color.gray)
-                .foregroundColor(.black)
-                .cornerRadius(10)
-                Button(action: {
-                    isPresentingJoinView = true
-                }, label: {
-                    Text("Join Game")
-                        .font(.title)
-                })
-                .padding()
-                .background(Color.gray)
-                .foregroundColor(.black)
-                .cornerRadius(10)
-                .padding(.vertical)
+                    Button(action: {
+                        isOnline = false
+                    }, label: {
+                        Text("Back")
+                            .font(.title3)
+                    })
+                    .padding()
+                    .background(Color.gray)
+                    .foregroundColor(.black)
+                    .cornerRadius(10)
+                    
+                }
+                else {
+                    Button(action: {
+                        isPresentingLocalSettingView = true
+                    }, label: {
+                        Text("Local Game")
+                            .font(.title)
+                    })
+                    .padding()
+                    .background(Color.gray)
+                    .foregroundColor(.black)
+                    .cornerRadius(10)
+                    Button(action: {
+                        isOnline = true
+                    }, label: {
+                        Text("Online Game")
+                            .font(.title)
+                    })
+                    .padding()
+                    .background(Color.gray)
+                    .foregroundColor(.black)
+                    .cornerRadius(10)
+                    .padding(.vertical)
+                }
                 Spacer()
             }
         }

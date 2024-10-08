@@ -30,7 +30,7 @@ struct SettingsView: View {
             AdvancedSettingSection(showActiveCards: $game.settings.showActiveCards)
             
             Button(action: {
-                if(!isOnline && game.currentGameState.players.count == 0){
+                if(game.currentGameState.players.count == 0){
                     showInvalidGameAlert = true
                     errorMessage = "Player"
                 }
@@ -40,15 +40,16 @@ struct SettingsView: View {
                 }
                 else{
                     game.settings.cardsPerHand = Int(cardsPerHand)
-                    game.currentGameState.deck.shuffle()
-                    game.dealHand()
-                    game.saveToDatabase()
+                    game.start()
+                    
                     if(isOnline){
                         game.currentGameState.players.append(Player(name: "", turn: 0, hand: [], color: .red))
+                        game.saveToDatabase()
                         isOnlineLobbyViewActive = true
                     }
                     else{
                         isGameViewActive = true
+                        game.isLocal = true
                     }
                 }
                 
