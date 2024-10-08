@@ -1,17 +1,19 @@
 //
-//  OnlineSettingsView.swift
+//  SettingsView.swift
 //  VirtualPlayingCards
 //
-//  Created by Jimmy Fu on 2024-10-03.
+//  Created by Jimmy Fu on 2024-09-01.
 //
 
 import SwiftUI
 
-struct OnlineSettingsView: View {
+struct SettingsView: View {
     @StateObject var game : GameManager = GameManager.emptyGame
+    @State var isOnline : Bool
     
+    @State var isGameViewActive : Bool = false
     @State var isOnlineLobbyViewActive : Bool = false
-
+    
     @State var cardsPerHand : Double = 5
     
     @State var showInvalidGameAlert : Bool = false
@@ -21,22 +23,34 @@ struct OnlineSettingsView: View {
     
     var body: some View {
         Form {
+            if(!isOnline){
+                PlayerSettingSection(players: $game.currentGameState.players)
+            }
             CardSettingSection(selected: $game.currentGameState.deck, players: $game.currentGameState.players, cardsPerHand: $cardsPerHand)
             AdvancedSettingSection(showActiveCards: $game.settings.showActiveCards)
             
             Button(action: {
-                game.currentGameState.players.append(Player(name: "Jimmy", turn: 0, hand: [], color: .red))
-                if(game.currentGameState.deck.count == 0) {
+                if(!isOnline && game.currentGameState.players.count == 0){
+                    showInvalidGameAlert = true
+                    errorMessage = "Player"
+                }
+                else if(game.currentGameState.deck.count == 0) {
                     showInvalidGameAlert = true
                     errorMessage = "Deck"
                 }
                 else{
                     game.settings.cardsPerHand = Int(cardsPerHand)
-                    //game.dealHand()
-                    //game.saveToDatabase()
-                    isOnlineLobbyViewActive = true
+                    game.currentGameState.deck.shuffle()
+                    game.dealHand()
+                    game.saveToDatabase()
+                    if(isOnline){
+                        game.currentGameState.players.append(Player(name: "", turn: 0, hand: [], color: .red))
+                        isOnlineLobbyViewActive = true
+                    }
+                    else{
+                        isGameViewActive = true
+                    }
                 }
-
                 
             }, label: {
                 Text("Start Game")
@@ -46,6 +60,9 @@ struct OnlineSettingsView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+            })
+            .fullScreenCover(isPresented: $isGameViewActive, content: {
+                GameView(gameManager: game)
             })
             .fullScreenCover(isPresented: $isOnlineLobbyViewActive, content: {
                 OnlineLobbyView(gameManager: game)
@@ -65,5 +82,5 @@ struct OnlineSettingsView: View {
 }
 
 #Preview {
-    return OnlineSettingsView()
+    return SettingsView(isOnline: true)
 }

@@ -82,7 +82,7 @@ struct MenuView: View {
         }
         .sheet(isPresented: $isPresentingLocalSettingView) {
             NavigationStack {
-                LocalSettingsView()
+                SettingsView(isOnline: false)
                     .navigationTitle("Menu")
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction){
@@ -95,7 +95,7 @@ struct MenuView: View {
         }
         .sheet(isPresented: $isPresentingHostSettingView) {
             NavigationStack {
-                LocalSettingsView()
+                SettingsView(isOnline: true)
                     .navigationTitle("Menu")
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction){
