@@ -10,7 +10,7 @@ import SwiftUI
 
 //Represents the details of a Player in the game and their hand of cards
 class Player : NSObject, NSCopying, Identifiable, ObservableObject {
-    let id: UUID
+    var id: UUID
     var color: Color
     var name: String
     @Published var turn: Int
@@ -36,17 +36,25 @@ class Player : NSObject, NSCopying, Identifiable, ObservableObject {
     func encode() -> [String: Any] {
         let color = color
         
-        return ["name" : name, "color": color.toRGBString(), "turn": turn, "hand": hand.map { $0.encode()}]
+        return ["id":id.uuidString , "name" : name, "color": color.toRGBString(), "turn": turn, "hand": hand.map { $0.encode()}]
     }
     
     func decode(from dict: [String: Any]) {
-        guard let name = dict["name"] as? String,
+        
+        guard let idStr = dict["id"] as? String,
+              let name = dict["name"] as? String,
               let turn = dict["turn"] as? Int,
-              let hand = dict["hand"] as? [Any],
               let colorStr = dict["color"] as? String else {
             print("Invalid GameState")
             return
         }
+        
+        guard let id = UUID(uuidString: idStr) else {
+            print("Invalid ID")
+            return
+        }
+        
+        self.id = id
         self.name = name
         self.turn = turn
         guard let color = Color.fromRGBString(colorStr) else {
@@ -54,13 +62,21 @@ class Player : NSObject, NSCopying, Identifiable, ObservableObject {
             return
         }
         self.hand = []
-        for card in hand {
-            guard let newCard = Card.decode(from: card as! [String : Any]) else {
-                    print("Invalid Card")
-                    return
+        if(dict.keys.contains("hand")) {
+            guard let hand = dict["hand"] as? [Any] else {
+                print("Invalid hand in player")
+                return
             }
-            self.hand.append(newCard)
+            for card in hand {
+                guard let newCard = Card.decode(from: card as! [String : Any]) else {
+                        print("Invalid Card")
+                        return
+                }
+                self.hand.append(newCard)
+            }
         }
+        
+        
         self.color = color
         
         

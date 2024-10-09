@@ -12,12 +12,13 @@ struct SettingsView: View {
     @State var isOnline : Bool
     
     @State var isGameViewActive : Bool = false
-    @State var isOnlineLobbyViewActive : Bool = false
+    @State var isOnlineHostViewActive : Bool = false
     
     @State var cardsPerHand : Double = 5
     
     @State var showInvalidGameAlert : Bool = false
     @State var errorMessage : String = ""
+    @State var username: String = ""
     
     var colors : [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
     
@@ -30,26 +31,27 @@ struct SettingsView: View {
             AdvancedSettingSection(showActiveCards: $game.settings.showActiveCards)
             
             Button(action: {
-                if(game.currentGameState.players.count == 0){
-                    showInvalidGameAlert = true
-                    errorMessage = "Player"
-                }
-                else if(game.currentGameState.deck.count == 0) {
+                if(game.currentGameState.deck.count == 0) {
                     showInvalidGameAlert = true
                     errorMessage = "Deck"
                 }
                 else{
-                    game.settings.cardsPerHand = Int(cardsPerHand)
-                    game.start()
-                    
-                    if(isOnline){
-                        game.currentGameState.players.append(Player(name: "", turn: 0, hand: [], color: .red))
-                        game.saveToDatabase()
-                        isOnlineLobbyViewActive = true
+                    if(isOnline) {
+                        game.settings.cardsPerHand = Int(cardsPerHand)
+                        let currentPlayer: Player = Player(name: username, turn: 0, hand: [], color: .red)
+                        game.currentGameState.players.append(currentPlayer)
+                        game.startOnline(playerId: currentPlayer.id)
+                        isOnlineHostViewActive = true
                     }
                     else{
-                        isGameViewActive = true
+                        if(game.currentGameState.players.count == 0){
+                            showInvalidGameAlert = true
+                            errorMessage = "Player"
+                        }
+                        game.settings.cardsPerHand = Int(cardsPerHand)
+                        game.start()
                         game.isLocal = true
+                        isGameViewActive = true
                     }
                 }
                 
@@ -65,8 +67,8 @@ struct SettingsView: View {
             .fullScreenCover(isPresented: $isGameViewActive, content: {
                 GameView(gameManager: game)
             })
-            .fullScreenCover(isPresented: $isOnlineLobbyViewActive, content: {
-                OnlineLobbyView(gameManager: game)
+            .fullScreenCover(isPresented: $isOnlineHostViewActive, content: {
+                OnlineLobbyView(gameManager: game, isHost: true)
             })
         }
         .alert(isPresented: $showInvalidGameAlert) {

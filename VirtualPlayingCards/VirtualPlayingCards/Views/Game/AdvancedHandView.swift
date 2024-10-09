@@ -21,7 +21,7 @@ struct AdvancedHandView: View {
     let yShift : CGFloat = 40
     
     var body: some View {
-        let player : Player = gameManager.currentGameState.players[gameManager.currentGameState.turn]
+        let player : Player = gameManager.getOnlinePlayer()
         VStack {
             ZStack {
                 ForEach(player.hand.indices, id: \.self) { index in
@@ -88,8 +88,16 @@ struct AdvancedHandView: View {
             .padding()
             //Button to play the cards that are selected and present the turn transition sheet
             Button(action: {
-                isPresentingTurnTransitionSheet = true
-                next = true
+                if(gameManager.currentGameState.turn == player.turn) {
+                    if(gameManager.isLocal){
+                        isPresentingTurnTransitionSheet = true
+                        next = true
+                    }
+                    else{
+                        playCards()
+                    }
+                    
+                }
             }, label: {
                 Text("Play Selected Cards")
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
@@ -100,13 +108,20 @@ struct AdvancedHandView: View {
                     
             })}
         Button(action: {
-            if(gameManager.history.count > 1) {
-                if(gameManager.history.last?.turn == gameManager.currentGameState.turn){
-                    gameManager.prevGameState()
-                }
-                else {
-                    isPresentingTurnTransitionSheet = true
-                    next = false
+            if(gameManager.currentGameState.turn == player.turn) {
+                if(gameManager.history.count > 1) {
+                    if(gameManager.history.last?.turn == gameManager.currentGameState.turn){
+                        gameManager.prevGameState()
+                    }
+                    else {
+                        if(gameManager.isLocal){
+                            isPresentingTurnTransitionSheet = true
+                            next = false
+                        }
+                        else {
+                            playCards()
+                        }
+                    }
                 }
             }
         }, label: {
@@ -125,16 +140,20 @@ struct AdvancedHandView: View {
         .onChange(of: isPresentingTurnTransitionSheet) { _, newValue in
             // Check if the boolean changed from true to false
             if !newValue {
-                if(next){
-                    gameManager.playCards(selectedCards: selectedCards)
-                    selectedCards = []
-                    offsetRotation = 0
-                    
-                }
-                else{
-                    gameManager.prevGameState()
-                }
+                playCards()
             }
+        }
+    }
+    
+    func playCards(){
+        if(next){
+            gameManager.playCards(selectedCards: selectedCards)
+            selectedCards = []
+            offsetRotation = 0
+            
+        }
+        else{
+            gameManager.prevGameState()
         }
     }
 }

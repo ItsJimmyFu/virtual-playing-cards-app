@@ -12,6 +12,7 @@ struct JoinView: View {
     @State var gameCode: String = ""
     @FocusState private var isFocused: Bool
     @State var isGameViewActive : Bool = false
+    @State var username : String = ""
     
     var body: some View {
         VStack{
@@ -70,7 +71,6 @@ struct JoinView: View {
                 //MAKE BUTTON SHAKE
                 if(gameCode.count == 4){
                     game.reinit(gamecode: gameCode)
-                    isGameViewActive = true
                 }
             }, label: {
                 Text("Join Game")
@@ -90,11 +90,20 @@ struct JoinView: View {
             // Automatically focus on the TextField when the view appears
             isFocused = true
         }
+        .onChange(of: game.loadedData) {_, newValue in
+            if(newValue == true) {
+                let newPlayer = Player(name: username, turn: game.currentGameState.players.count, hand: [], color: .yellow)
+                game.currentGameState.players.append(newPlayer)
+                game.playerId = newPlayer.id
+                game.saveToDatabase()
+                isGameViewActive = true
+            }
+        }
         .fullScreenCover(isPresented: .init(
             get: { game.loadedData && isGameViewActive }, // Check if both are true
             set: { _ in } // No setter needed
         )) {
-            GameView(gameManager: game)
+            OnlineLobbyView(gameManager: game, isHost: false)
         }
     }
 }

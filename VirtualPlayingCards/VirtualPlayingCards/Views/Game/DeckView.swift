@@ -28,7 +28,9 @@ struct DeckView: View {
                         .background(Color.white)
                         .border(Color.black,width:0.5)
                         .onTapGesture {
-                            gameManager.drawCard()
+                            if(gameManager.currentGameState.turn == gameManager.getOnlinePlayer().turn) {
+                                gameManager.drawCard()
+                            }
                         }
                 }
                 else{

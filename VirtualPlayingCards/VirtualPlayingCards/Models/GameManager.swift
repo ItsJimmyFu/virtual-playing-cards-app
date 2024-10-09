@@ -16,6 +16,8 @@ class GameManager : ObservableObject, Identifiable {
     @Published var currentGameState : GameState
     var isLocal: Bool
     var loadedData : Bool
+    @Published var playerId : UUID?
+    var started: Bool = false
 
     init(currentGame: GameState, settings: GameSetting) {
         //Create a random gamecode
@@ -26,12 +28,17 @@ class GameManager : ObservableObject, Identifiable {
         self.loadedData = true
         self.ref = nil
         self.isLocal = true
+        self.playerId = nil
     }
     
-    func makeOnline(){
+    func startOnline(playerId: UUID){
+        self.isLocal = false
+        self.loadedData = false
+        self.playerId = playerId
         self.ref = Database.database().reference()
-        isLocal = false
+        self.saveToDatabase()
         self.fetchSingle()
+        
     }
     
     func reinit(gamecode: String) {
@@ -48,6 +55,16 @@ class GameManager : ObservableObject, Identifiable {
     func start() {
         currentGameState.deck.shuffle()
         dealHand()
+    }
+    
+    func getOnlinePlayer() -> Player{
+        for player in currentGameState.players {
+            if(player.id == playerId) {
+                return player
+            }
+        }
+        print("Invalid Id")
+        return Player.empty
     }
     
     //Deals cards from deck to all the players equally based on the cardsPerHand
@@ -118,7 +135,8 @@ class GameManager : ObservableObject, Identifiable {
             "history": Dictionary(uniqueKeysWithValues: history.enumerated().map { (String($0.offset), $0.element.encode()) }),
             //"history": history.map {$0.encode() }),
             "current_game_state": currentGameState.encode(),
-            "settings": settings.encode()
+            "settings": settings.encode(),
+            "isStarted" : started
         ]
         return gameData
     }
@@ -126,10 +144,12 @@ class GameManager : ObservableObject, Identifiable {
     func decode(from dict: [String: Any]) {
         guard let history = dict["history"] as? [Any],
               let curGameState = dict["current_game_state"] as? [String:Any],
-              let settings = dict["settings"] as? [String:Any] else {
+              let settings = dict["settings"] as? [String:Any],
+              let started = dict["isStarted"] as? Bool else {
                   print("Invalid GameManager")
             return  // Return nil if any required field is missing
         }
+        self.started = started
         self.history = []
         
         for gameState in history {

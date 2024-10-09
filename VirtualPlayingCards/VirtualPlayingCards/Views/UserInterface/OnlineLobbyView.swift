@@ -9,6 +9,9 @@ import SwiftUI
 
 struct OnlineLobbyView: View {
     @ObservedObject var gameManager : GameManager
+    @State var isHost : Bool
+    @State var isGameViewActive : Bool = false
+
     var body: some View {
         VStack {
             Spacer()
@@ -19,26 +22,45 @@ struct OnlineLobbyView: View {
                 .bold()
                 .padding(.bottom)
             
-            Text("Players 4/8")
+            Text("Players " + String(gameManager.currentGameState.players.count) + "/Max")
             ForEach(gameManager.currentGameState.players) {player in
                 Text(player.name)
                     .frame(width:100, height: 20)
                     .padding()
                     .background(player.color)
             }
-            
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                Text("Start Game")
-            })
-            .padding(.top)
+            if(isHost) {
+                Button(action: {
+                    isGameViewActive = true
+                    gameManager.start()
+                    gameManager.started = true
+                    gameManager.saveToDatabase()
+                }, label: {
+                    Text("Start Game")
+                })
+                .foregroundStyle(Color.black)
+                .padding(.top)
+            }
+            else{
+                Text("Waiting For Host...")
+                    .padding(.top)
+            }
             Spacer()
             
             
+        }
+        .fullScreenCover(isPresented: $isGameViewActive, content: {
+            GameView(gameManager: gameManager)
+        })
+        .onChange(of: gameManager.started) {_,newValue in
+            if(!isHost && newValue == true){
+                isGameViewActive = true
+            }
         }
     }
 }
 
 #Preview {
     @State var gameManager: GameManager = GameManager.sampleGame
-    return OnlineLobbyView(gameManager: gameManager)
+    return OnlineLobbyView(gameManager: gameManager, isHost: false)
 }

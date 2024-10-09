@@ -57,27 +57,39 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
     
     func decode(from dict: [String: Any]) {
         guard let name = dict["name"] as? String,
-              let players = dict["players"] as? [Any],
-              let deck = dict["deck"] as? [Any],
               let turn = dict["turn"] as? Int else {
             print("Invalid GameState")
             return
         }
         self.name = name
         self.players = []
-        for player in players {
-            let newPlayer : Player = Player(name: "", turn: -1, hand: [], color: .black)
-            newPlayer.decode(from: player as! [String : Any])
-            self.players.append(newPlayer)
-        }
-        self.deck = []
-        for card in deck {
-            guard let newCard = Card.decode(from: card as! [String : Any]) else {
-                    print("Invalid Card")
-                    return
+        if(dict.keys.contains("players")) {
+            guard let players = dict["players"] as? [Any] else {
+                print("Invalid Players in gamestate")
+                return
             }
-            self.deck.append(newCard)
+            for player in players {
+                let newPlayer : Player = Player(name: "", turn: -1, hand: [], color: .black)
+                newPlayer.decode(from: player as! [String : Any])
+                self.players.append(newPlayer)
+            }
         }
+        
+        self.deck = []
+        if(dict.keys.contains("deck")) {
+            guard let deck = dict["deck"] as? [Any] else {
+                print("Invalid Deck")
+                return
+            }
+            for card in deck {
+                guard let newCard = Card.decode(from: card as! [String : Any]) else {
+                        print("Invalid Card")
+                        return
+                }
+                self.deck.append(newCard)
+            }
+        }
+        
         self.turn = turn
         
         self.activeCards = []
@@ -111,9 +123,6 @@ class GameState : NSObject, NSCopying, Identifiable, ObservableObject {
                     self.activeCards.append((newPlayer,newActiveCard))
                 }
             }
-        }
-        else{
-            print("Empty ActiveCards")
         }
     }
 }

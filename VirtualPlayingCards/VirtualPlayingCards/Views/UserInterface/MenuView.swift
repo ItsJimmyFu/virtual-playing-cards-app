@@ -48,7 +48,10 @@ struct MenuView: View {
                         .padding() // Add padding around the TextField
                     
                     Button(action: {
-                        isPresentingHostSettingView = true
+                        if(username.count > 0){
+                            print("Menu:" + username)
+                            isPresentingHostSettingView = true
+                        }
                     }, label: {
                         Text("Host Game")
                             .font(.title)
@@ -58,7 +61,9 @@ struct MenuView: View {
                     .foregroundColor(.black)
                     .cornerRadius(10)
                     Button(action: {
-                        isPresentingJoinView = true
+                        if(username.count > 0) {
+                            isPresentingJoinView = true
+                        }
                     }, label: {
                         Text("Join Game")
                             .font(.title)
@@ -108,7 +113,7 @@ struct MenuView: View {
         }
         .sheet(isPresented: $isPresentingJoinView) {
             NavigationStack {
-                JoinView()
+                JoinView(username: username)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction){
                             Button("Back"){
@@ -133,7 +138,7 @@ struct MenuView: View {
         }
         .sheet(isPresented: $isPresentingHostSettingView) {
             NavigationStack {
-                SettingsView(isOnline: true)
+                SettingsView(isOnline: true, username: username)
                     .navigationTitle("Menu")
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction){
