@@ -22,7 +22,7 @@ struct OnlineLobbyView: View {
                 .bold()
                 .padding(.bottom)
             
-            Text("Players " + String(gameManager.currentGameState.players.count) + "/Max")
+            Text("Players " + String(gameManager.currentGameState.players.count) + "/" + String(gameManager.settings.maxPlayers))
             ForEach(gameManager.currentGameState.players) {player in
                 Text(player.name)
                     .frame(width:100, height: 20)

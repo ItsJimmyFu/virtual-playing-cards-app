@@ -92,11 +92,17 @@ struct JoinView: View {
         }
         .onChange(of: game.loadedData) {_, newValue in
             if(newValue == true) {
-                let newPlayer = Player(name: username, turn: game.currentGameState.players.count, hand: [], color: .yellow)
-                game.currentGameState.players.append(newPlayer)
-                game.playerId = newPlayer.id
-                game.saveToDatabase()
-                isGameViewActive = true
+                if(game.currentGameState.players.count >= game.settings.maxPlayers){
+                    print("Game Lobby Full")
+                }
+                else{
+                    let newPlayer = Player(name: username, turn: game.currentGameState.players.count, hand: [], color: .yellow)
+                    
+                    game.currentGameState.players.append(newPlayer)
+                    game.playerId = newPlayer.id
+                    game.saveToDatabase()
+                    isGameViewActive = true
+                }
             }
         }
         .fullScreenCover(isPresented: .init(

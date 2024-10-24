@@ -45,7 +45,7 @@ class GameManager : ObservableObject, Identifiable {
         self.ref = Database.database().reference()
         self.gameCode = gamecode
         self.history = []
-        self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false)
+        self.settings = GameSetting(cardsPerHand: 0, showActiveCards: false, maxPlayers: 1)
         self.currentGameState = GameState(name: "", players: [], deck: [], turn: -1, activeCards: [])
         self.loadedData = false
         self.isLocal = false

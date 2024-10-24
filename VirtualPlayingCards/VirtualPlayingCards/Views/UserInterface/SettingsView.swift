@@ -19,12 +19,25 @@ struct SettingsView: View {
     @State var showInvalidGameAlert : Bool = false
     @State var errorMessage : String = ""
     @State var username: String = ""
+    @State var maxPlayers: Double = 1
     
     var colors : [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink, .brown, .cyan, .indigo, .mint, .teal]
     
     var body: some View {
         Form {
-            if(!isOnline){
+            if(isOnline){
+                Section(header: Text("Max Players")) {
+                    VStack {
+                        Slider(
+                            value: $maxPlayers ,
+                            in: 1...10,
+                            step: 1
+                        )
+                        Text("\(Int(maxPlayers))")
+                    }
+                }
+            }
+            else {
                 PlayerSettingSection(players: $game.currentGameState.players)
             }
             CardSettingSection(selected: $game.currentGameState.deck, players: $game.currentGameState.players, cardsPerHand: $cardsPerHand)
@@ -38,6 +51,7 @@ struct SettingsView: View {
                 else{
                     if(isOnline) {
                         game.settings.cardsPerHand = Int(cardsPerHand)
+                        game.settings.maxPlayers = Int(maxPlayers)
                         let currentPlayer: Player = Player(name: username, turn: 0, hand: [], color: .red)
                         game.currentGameState.players.append(currentPlayer)
                         game.startOnline(playerId: currentPlayer.id)
