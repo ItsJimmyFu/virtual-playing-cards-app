@@ -31,7 +31,7 @@ struct JoinView: View {
                             gameCode = filtered
                         }
                     }
-                    .keyboardType(.numberPad) // Show number pad for input
+                    .keyboardType(.numberPad)
                     .padding()
                     .background(Color.clear)
                     .frame(width: 200, height: 50)
@@ -45,11 +45,11 @@ struct JoinView: View {
                         ZStack {
                             Text(String(digit))
                                 .frame(width:50,height: 150)
-                                .padding() // Padding inside the text field
-                                .background(Color.white) // Background color of the text field
-                                .cornerRadius(10) // Rounded corners
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 10) // Rounded rectangle for the border
+                                    RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color.black, lineWidth: 2)
                                 )
                                 .multilineTextAlignment(.center)
@@ -78,11 +78,11 @@ struct JoinView: View {
             })
             .foregroundColor(.black)
             .padding()
-            .background(gameCode.count == 4 ? Color.green : Color.white) // Background color of the text field
-            .cornerRadius(10) // Rounded corners
+            .background(gameCode.count == 4 ? Color.green : Color.white)
+            .cornerRadius(10)
             .overlay(
-                RoundedRectangle(cornerRadius: 10) // Rounded rectangle for the border
-                .stroke(Color.black, lineWidth: 2) // Border color and width
+                RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.black, lineWidth: 2)
             )
             Spacer()
         }
@@ -106,8 +106,8 @@ struct JoinView: View {
             }
         }
         .fullScreenCover(isPresented: .init(
-            get: { game.loadedData && isGameViewActive }, // Check if both are true
-            set: { _ in } // No setter needed
+            get: { game.loadedData && isGameViewActive }, // Check if game is loaded and game is active
+            set: { _ in }
         )) {
             OnlineLobbyView(gameManager: game, isHost: false)
         }

@@ -21,7 +21,7 @@ struct AdvancedHandView: View {
     let yShift : CGFloat = 40
     
     var body: some View {
-        let player : Player = gameManager.getOnlinePlayer()
+        let player : Player = gameManager.isLocal ? gameManager.currentGameState.players[gameManager.currentGameState.turn] : gameManager.getOnlinePlayer()
         VStack {
             ZStack {
                 ForEach(player.hand.indices, id: \.self) { index in

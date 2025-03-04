@@ -15,13 +15,13 @@ struct InputUsernameView: View {
             .multilineTextAlignment(.center)
             .frame(width: 200, height: 50, alignment: .center)
             .padding()
-            .background(Color.white) // Set background color
+            .background(Color.white)
             .overlay(
-                RoundedRectangle(cornerRadius: 10) // Set corner radius here
-                    .stroke(Color.black, lineWidth: 2) // Border color and width
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.black, lineWidth: 2)
             )
-            .cornerRadius(10) // This is optional if you want the entire TextField to have rounded corners
-            .padding() // Add padding around the TextField
+            .cornerRadius(10)
+            .padding()
     }
 }
 

@@ -17,7 +17,7 @@ struct TurnTransitionSheet: View {
         ZStack {
             //Instructions for user with background of the next player's color
             VStack {
-                Text("Pass to Next Player: \(nextPlayer.name)")
+                Text("Pass to Player: \(nextPlayer.name)")
                     .font(.title)
                     .padding()
                     .background(nextPlayer.color)

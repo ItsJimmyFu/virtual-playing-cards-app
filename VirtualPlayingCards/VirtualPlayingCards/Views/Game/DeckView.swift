@@ -28,8 +28,13 @@ struct DeckView: View {
                         .background(Color.white)
                         .border(Color.black,width:0.5)
                         .onTapGesture {
-                            if(gameManager.currentGameState.turn == gameManager.getOnlinePlayer().turn) {
+                            if(gameManager.isLocal){
                                 gameManager.drawCard()
+                            }
+                            else {
+                                if(gameManager.currentGameState.turn == gameManager.getOnlinePlayer().turn) {
+                                    gameManager.drawCard()
+                                }
                             }
                         }
                 }

@@ -16,7 +16,7 @@ struct ColorPickerSheet: View {
         LazyHGrid(rows: Array(repeating: GridItem(), count: 2), content: {
             ForEach(colors) { color in
                 Image(systemName: selectedColor == color.color ? "circle.circle.fill" : "circle.fill")
-                    .font(.system(size: 40))  // Custom size
+                    .font(.system(size: 40))
                     .foregroundStyle(color.color)
                     .opacity(0.8)
                     .overlay{
